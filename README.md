@@ -8,8 +8,9 @@ Proeed with caution.
 ## Motivation
 
 Scanning byte arrays is at the core of many tasks in string parsing.
-However, I've found that the naive way of doing this using rust iterators does not seem to trigger SIMD instruction generation, at least according to the godbolt compiler explorer.
+However, I've found that the naive way of doing this using rust iterators does not seem to trigger **SIMD** instruction generation, at least according to the godbolt compiler explorer.
 This results in trash performance, as the alg is bottlenecked by fetching single bytes.
+I've tried various compiler flags, but haven't found a way to get SIMD to kick in.
 
 In my most recent Advent of Code, I found that the builtin `.lines()` iterator on string was a significant overhead, which is puzzling.
 I had expected such a core method within the standard library to be optimized.
@@ -20,7 +21,6 @@ So I wanted to understand what's going on.
 This mini project is a benchmark of various ways to scan byte arrays:
 
 * naive iterator-based enumerate/map/filter chain
-* memchr in the standard library
 * memchr crate
 * iteration fetching bytes via u16, u32, u64
 * iteration using SIMD 16, 32, 64 bytes
@@ -38,3 +38,20 @@ This crate uses the Rust library safe SIMD operations.
 It doesn't directly use any intrinsics or hand-crafted assembly.
 We are just trying to understand how fairly normal Rust code performs under this workload,
 and perhaps understand how vectorisation kicks in with the compiler, or why it doesn't.
+
+## Results
+
+On my local PC, I get the following results for the long inputs.
+
+<div style="background-color: white">
+
+![Benchmark results for A Tale of Two Cities](images/A_TALE_OF_TWO_CITIES.svg)
+![Benchmark results for the Bacillus subtilis genome as fasta](images/BACILLUS_FASTA.svg)
+![Benchmark results for the Bacillus subtilis genome as embl](images/BACILLUS_EMBL.svg)
+
+</div>
+
+The pattern is consistent.
+Memchr performs really well.
+The naive iterator-based approach is the very slowest implementation.
+The SIMD operation processing 64 bytes at a time is the clear winner.

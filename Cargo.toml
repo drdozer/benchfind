@@ -5,3 +5,10 @@ edition = "2021"
 
 [dependencies]
 memchr = "2.7.4"
+
+[dev-dependencies]
+criterion = { version = "0.5.1", features = ["html_reports"] }
+
+[[bench]]
+name = "benchfind"
+harness = false
