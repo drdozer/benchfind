@@ -1,7 +1,7 @@
 #![feature(portable_simd)]
 
 use std::simd::cmp::SimdPartialEq;
-use std::simd::{self, Simd};
+use std::simd::Simd;
 
 
 pub fn find_all_iterating<'a>(needle: u8, haystack: &'a [u8]) -> impl Iterator<Item = usize> + 'a {
