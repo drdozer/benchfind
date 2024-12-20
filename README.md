@@ -27,10 +27,8 @@ This mini project is a benchmark of various ways to scan byte arrays:
 
 We also look at a range of workloads:
 
-* Short strings, under 100 chars with one or two newlines
-* Source files with ragged line newlines
-* FASTA bioinformatics data files, with regularly spaced newlines
-* Large text, searching for period (`.`) characters
+* Finding the newlines in large text files
+* Parsing CSV files
 
 ## Impl note
 
@@ -39,9 +37,15 @@ It doesn't directly use any intrinsics or hand-crafted assembly.
 We are just trying to understand how fairly normal Rust code performs under this workload,
 and perhaps understand how vectorisation kicks in with the compiler, or why it doesn't.
 
-## Results
+## Big File Newline Results
 
-On my local PC, I get the following results for the long inputs.
+I am using three long inputs.
+| Name | Description | Size | Newlines |
+|-|-|-|-|
+| A Tale of Two Cities | The full text of the Dickens novel | 789k | 16k |
+| Bacillus subtilis genome (fasta format) | The DNA sequence for Bacillus subtilis | 4.1M | 70k |
+| Bacillus subtlist genome (embl format) | The DNA sequence and genome annotatinos for Bacillus subtlis | 11M | 160k |
+
 
 <div style="background-color: white">
 
@@ -55,3 +59,51 @@ The pattern is consistent.
 Memchr performs really well.
 The naive iterator-based approach is the very slowest implementation.
 The SIMD operation processing 64 bytes at a time is the clear winner.
+
+The approaches that try to load in multiple bytes using a wider unsigned type are a bit hit and miss.
+On my machine, it really does not like u16 for some reason. I've seen this in other benchmarks.
+Moving data via  u32 and u64 loads is the fastest option, and are fairly comparable, with u64 tending to be slightly faster.
+
+The SIMD solutions get faster the larger the lanes.
+I do not know if this is due mainly to loading the data into register, or the `to_bitmask` operation being more efficient with the wider types.
+
+
+## CSV Parsing
+
+I have a country codes CSV file.
+The benchmark parses it using two different strategies.
+The nested parser first identifies lines, makes a slice for those, and then identifies commas within those lines.
+The flat parser has an iterator for all newlines, and another one for all commas.
+It then advances the two iterators by turns, to intereave the searches.
+
+<div style="background-color: white">
+
+![Benchmark results for parsing CSV with the nested parser](images/country_codes_nested.svg)
+![Benchmark results for parsing CSV with the flat aprser](images/country_codes_flat.svg)
+
+</div>
+
+These results are completely different between the two parsers.
+For the nested parser, memchr is the very clear winner.
+For the flat parser, the SIMD64 approach is the fastest.
+
+The nested parser is really unkind to the various search algorithms.
+For each line, it makes a new slice, and searches within that.
+These slices are likely to be poorly aligned, and may be shorter than the SIMD length.
+So it will keep falling back to the slow byte-by-byte search.
+The memchr alg seems to be coping with this really well, which is amazing.
+
+The flat parser is faster over-all than the nested parser.
+It also shows the SIMD64 approach winning out over memchr by a large margin.
+It is extremely kind to SIMD load, as it lets both iterators loop over the entire input data.
+And as they are looping in lockstep, the data they process will tend to be the same or neighbouring chunks.
+We do see some bi-valued behaviour, for example, in SIMD32, which may be due to SIMD blocks for commas that are entirely before vs overlapping a newline.
+
+## Conclusion
+
+These benchmarks seem to show that the rust compiler, at least in this naive setup, is not working very hard to vectorise byte-scanning algs.
+This can be seen by the very large gap between the performance of the naive byte-by-byte approach to SIMD64.
+We also find that SIMD64 seems to win over memchr for workloads that are friendly to SIMD, which is surprising.
+
+It would be interesting to systematically explore compiler flags, particularly feature flags, to see if this closes the performance gap.
+If you are interested in contributing new benchmark cases, or have a plan for making many different feature-flag builds to compare, please open a github issue or send me a PR.

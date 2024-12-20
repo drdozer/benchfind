@@ -10,5 +10,9 @@ memchr = "2.7.4"
 criterion = { version = "0.5.1", features = ["html_reports"] }
 
 [[bench]]
-name = "benchfind"
+name = "bench_newlines"
+harness = false
+
+[[bench]]
+name = "bench_csv"
 harness = false
