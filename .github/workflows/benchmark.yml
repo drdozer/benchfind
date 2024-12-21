@@ -12,8 +12,8 @@ jobs:
           toolchain: stable
       - name: Run benchmarks
         run: |
-          cargo criterion
-          RUSTFLAGS="-C target-cpu=native" cargo criterion
+          cargo bench  -- --save-baseline default
+          RUSTFLAGS="-C target-cpu=native" cargo bench -- --save-baseline native
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
         with:
