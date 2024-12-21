@@ -13,7 +13,11 @@ fn bench_parse_full_nested_csv(c: &mut Criterion) {
     group.measurement_time(std::time::Duration::from_secs(15));
 
     parse_csv_nested::<FindAllIterating>(&mut group, stringify!(FindAllIterating), COUNTRY_CODES);
-    parse_csv_nested::<FindAllMemchrCrate>(&mut group, stringify!(FindAllMemchrCrate), COUNTRY_CODES);
+    parse_csv_nested::<FindAllMemchrCrate>(
+        &mut group,
+        stringify!(FindAllMemchrCrate),
+        COUNTRY_CODES,
+    );
     parse_csv_nested::<FindAllViaU16>(&mut group, stringify!(FindAllViaU16), COUNTRY_CODES);
     parse_csv_nested::<FindAllViaU32>(&mut group, stringify!(FindAllViaU32), COUNTRY_CODES);
     parse_csv_nested::<FindAllViaU64>(&mut group, stringify!(FindAllViaU64), COUNTRY_CODES);
@@ -21,7 +25,6 @@ fn bench_parse_full_nested_csv(c: &mut Criterion) {
     parse_csv_nested::<FindAllViaSimd32>(&mut group, stringify!(FindAllViaSimd32), COUNTRY_CODES);
     parse_csv_nested::<FindAllViaSimd64>(&mut group, stringify!(FindAllViaSimd64), COUNTRY_CODES);
 }
-
 
 fn bench_parse_full_flat_csv(c: &mut Criterion) {
     let mut group = c.benchmark_group("parse full csv flat");
@@ -51,9 +54,9 @@ fn parse_csv_nested<F: FindNeedleInHaystack>(
         |b, st| {
             b.iter(|| {
                 let mut last_line = 0;
-                for next_line in F::find_all(b'\n', csv_text.as_bytes()) {
+                for next_line in F::find_all(b'\n', st.as_bytes()) {
                     let mut last_col = 0;
-                    let line = csv_text[last_line..next_line].as_bytes();
+                    let line = st[last_line..next_line].as_bytes();
                     for next_col in F::find_all(b',', line) {
                         black_box(&line[last_col..next_col]);
                         last_col = next_col;
@@ -102,5 +105,9 @@ fn parse_csv_flat<F: FindNeedleInHaystack>(
     );
 }
 
-criterion_group!(benches, bench_parse_full_nested_csv, bench_parse_full_flat_csv);
+criterion_group!(
+    benches,
+    bench_parse_full_nested_csv,
+    bench_parse_full_flat_csv
+);
 criterion_main!(benches);
