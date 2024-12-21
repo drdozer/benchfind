@@ -1,0 +1,21 @@
+name: Benchmark
+
+on: [push, pull_request]
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Run benchmarks
+        run: |
+          cargo criterion
+          RUSTFLAGS="-C target-cpu=native" cargo criterion
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v2
+        with:
+          name: criterion-results
+          path: target/criterion
