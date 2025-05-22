@@ -107,3 +107,27 @@ We also find that SIMD64 seems to win over memchr for workloads that are friendl
 
 It would be interesting to systematically explore compiler flags, particularly feature flags, to see if this closes the performance gap.
 If you are interested in contributing new benchmark cases, or have a plan for making many different feature-flag builds to compare, please open a github issue or send me a PR.
+
+## Extended Benchmarking and SIMD Detection
+
+The `bench_all.sh` script has been enhanced to benchmark against several specific CPU target microarchitectures in addition to `default` and `native`. These targets are:
+- `x86-64-v2`
+- `x86-64-v3`
+- `x86-64-v4`
+
+These targets allow testing for SIMD (Single Instruction, Multiple Data) auto-vectorization across different instruction set levels (SSE, AVX, AVX2, AVX-512).
+
+### SIMD Instruction Check
+
+After each benchmark run for a specific target, the `check_simd.sh` script is automatically invoked. This script performs the following steps:
+1. Compiles the benchmarks (`bench_csv.rs`, `bench_newlines.rs`) for the given target, emitting assembly code.
+2. Analyzes the generated assembly for common SIMD instruction mnemonics.
+3. Reports whether SIMD instructions were detected for each benchmark and target combination.
+
+This allows for a more automated way to assess if the compiler is leveraging SIMD instructions for different CPU targets.
+
+To run the extended benchmarks and SIMD checks:
+```bash
+./bench_all.sh
+```
+The output will include messages from `check_simd.sh` indicating whether SIMD instructions were found for each test case.
