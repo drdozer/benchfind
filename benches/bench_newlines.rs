@@ -1,7 +1,7 @@
 use benchfind::*;
 use criterion::{
-    black_box, criterion_group, criterion_main, measurement::WallTime, BenchmarkGroup, BenchmarkId,
-    Criterion,
+    BenchmarkGroup, BenchmarkId, Criterion, black_box, criterion_group, criterion_main,
+    measurement::WallTime,
 };
 
 const A_TALE_OF_TWO_CITIES: &str = include_str!("../fixtures/a_tale_of_two_cities.txt");
@@ -14,6 +14,7 @@ const INPUT_TEXTS: [&str; 3] = [A_TALE_OF_TWO_CITIES, BACILLUS_FASTA, BACILLUS_E
 fn bench_large_texts(c: &mut Criterion) {
     let mut group = c.benchmark_group("large texts");
     group.measurement_time(std::time::Duration::from_secs(15));
+    group.sample_size(50);
     for (name, text) in INPUT_NAMES.iter().zip(INPUT_TEXTS.iter()) {
         bench_with_finder::<FindAllIterating>(&mut group, stringify!(FindAllIterating), name, text);
         bench_with_finder::<FindAllMemchrCrate>(
