@@ -1,7 +1,7 @@
 #![feature(portable_simd)]
 
-use std::simd::cmp::SimdPartialEq;
 use std::simd::Simd;
+use std::simd::cmp::SimdPartialEq;
 
 pub trait FindNeedleInHaystack {
     fn find_all<'a>(needle: u8, haystack: &'a [u8]) -> impl Iterator<Item = usize> + 'a;
@@ -20,7 +20,7 @@ impl FindNeedleInHaystack for FindAllIterating {
         haystack
             .iter()
             .enumerate()
-            .filter(move |(_, &b)| b == needle)
+            .filter(move |&(_, &b)| b == needle)
             .map(|(i, _)| i)
     }
 }
