@@ -1,2 +1,10 @@
 /target
 .vscode/
+
+# Results directory - keep most data, ignore only very large files if needed
+# /results/runs/*/raw-results/criterion/  # Uncomment to ignore large criterion data
+# /results/runs/*/assembly/*/complete_benchmark.s  # Uncomment to ignore large assembly files
+
+# Exclude large Criterion report directories (HTML, SVG, CSS, JS)
+/results/runs/*/raw-results/criterion/*/report/
+/results/runs/*/raw-results/criterion/*/*/report/

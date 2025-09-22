@@ -1,0 +1,11 @@
+{
+  "collection_time": "2025-09-22T20:42:57+01:00",
+  "files": {
+    "src/lib.rs": "3c83ea58512f4525f8d9768f6307ea0ee3ce21c541af04271645ea9923393c85",
+    "benches/bench_newlines.rs": "25be5efc3ce29d1cdf7ac1203f29a4c01532946b05a22498583534f48cdbd6f0",
+    "benches/bench_csv.rs": "355960c407049b397766d2307a18010839c252125a701f6c971ac8bbee1bc70e",
+    "Cargo.toml": "faaea581600dfd9cce10f3682e41da6ea5c99965de4ada8ba96a7c3e4c7f1ee1",
+    "Cargo.lock": "228448f23f18ff8f190be0dfad4a657e9d9648f53d05a7dadff9a5256a3e77bb"
+  },
+  "combined_hash": "f4f39234"
+}

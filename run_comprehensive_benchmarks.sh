@@ -283,18 +283,29 @@ run_simd_analysis() {
 EOF
 }
 
-# Function to copy criterion results
+# Function to copy criterion results (excluding large report directories)
 copy_criterion_results() {
     local run_dir="$1"
 
-    log_info "Copying raw Criterion results..."
+    log_info "Copying raw Criterion results (excluding report directories)..."
 
     local raw_results_dir="$run_dir/raw-results"
     mkdir -p "$raw_results_dir"
 
     if [ -d "target/criterion" ]; then
-        cp -r target/criterion "$raw_results_dir/"
-        log_success "Criterion results copied"
+        # Copy criterion directory structure but exclude report subdirectories
+        rsync -av --exclude='*/report/' target/criterion/ "$raw_results_dir/criterion/" || {
+            # Fallback to manual copy if rsync is not available
+            log_warning "rsync not available, using manual copy with report exclusion..."
+            cp -r target/criterion "$raw_results_dir/"
+            # Remove report directories after copying
+            find "$raw_results_dir/criterion" -type d -name "report" -exec rm -rf {} + 2>/dev/null || true
+        }
+
+        # Calculate space saved
+        local original_size=$(du -sh target/criterion 2>/dev/null | cut -f1)
+        local copied_size=$(du -sh "$raw_results_dir/criterion" 2>/dev/null | cut -f1)
+        log_success "Criterion results copied (excluding reports): $copied_size (was $original_size)"
     else
         log_warning "No Criterion results found to copy"
     fi

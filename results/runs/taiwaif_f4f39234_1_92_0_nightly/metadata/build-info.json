@@ -1,0 +1,27 @@
+{
+  "collection_time": "2025-09-22T20:42:57+01:00",
+  "rust": {
+    "rustc_version": "rustc 1.92.0-nightly (9f32ccf35 2025-09-21)",
+    "rustc_verbose": {
+    "binary": "rustc",
+    "commit-hash": "9f32ccf35fb877270bc44a86a126440f04d676d0",
+    "commit-date": "2025-09-21",
+    "host": "x86_64-unknown-linux-gnu",
+    "release": "1.92.0-nightly",
+    "LLVM version": "21.1.1"
+},
+    "cargo_version": "cargo 1.92.0-nightly (966f94733 2025-09-16)"
+  },
+  "git": {
+    "commit_hash": "44425fafd01558ff58965cc28fcb2274ce7a135b",
+    "branch": "main",
+    "status_clean": false,
+    "status_output": " M .gitignore
+ M README.md
+?? results/runs/
+?? results/schema/"
+  },
+  "target": {
+    "default": "x86_64-unknown-linux-gnu"
+  }
+}

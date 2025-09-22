@@ -57,10 +57,52 @@ The `check_simd.sh` script automatically analyzes generated assembly code after 
 
 ## Usage
 
-To run all benchmarks with SIMD detection:
+### Quick Benchmarking
+
+To run benchmarks with basic SIMD detection:
 
 ```bash
 ./bench_all.sh
 ```
 
-The output includes benchmark results and SIMD instruction detection reports for each CPU target.
+### Comprehensive Data Collection
+
+For complete benchmark data collection with metadata, assembly analysis, and structured results storage:
+
+```bash
+./run_comprehensive_benchmarks.sh
+```
+
+This comprehensive system:
+- Collects complete system and build environment metadata
+- Generates assembly code for each implementation/target combination
+- Performs detailed SIMD instruction analysis
+- Stores all results in a structured format for future analysis
+- Automatically skips runs if results already exist for the current source code and compiler version
+
+### Testing the Data Collection System
+
+To verify the data collection system works correctly:
+
+```bash
+./test_data_collection.sh
+```
+
+## Results Structure
+
+The comprehensive benchmarking system stores results in `results/runs/` with the following structure:
+
+```
+results/runs/{hostname}_{source-hash}_{rustc-version}/
+├── metadata/           # System, build, and source information
+├── raw-results/        # Complete Criterion benchmark data
+├── assembly/           # Generated assembly code per implementation
+├── logs/              # Execution logs and error reports
+```
+
+Each run is uniquely identified by:
+- **Hostname**: The system where benchmarks were run
+- **Source Hash**: Hash of benchmark-relevant source files
+- **Rustc Version**: The Rust compiler version used
+
+Results are automatically organized to support cross-system analysis and performance tracking over time.

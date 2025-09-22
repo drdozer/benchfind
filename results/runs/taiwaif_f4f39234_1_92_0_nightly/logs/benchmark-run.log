@@ -1,0 +1,147 @@
+[0;34m[INFO][0m All output is now being logged to: results/runs/taiwaif_f4f39234_1_92_0_nightly/logs/benchmark-run.log
+[0;34m[INFO][0m Starting benchmark execution...
+Starting benchmark suite...
+This script will skip configurations that already have complete results.
+========================================================================
+
+=======================================================================
+Processing benchmark configuration: default
+With default RUSTFLAGS
+=======================================================================
+SKIPPED: Complete benchmark results already exist for default
+
+=======================================================================
+Processing benchmark configuration: native
+With RUSTFLAGS: -C target-cpu=native
+=======================================================================
+SKIPPED: Complete benchmark results already exist for native
+
+=======================================================================
+Processing benchmark configuration: x86-64-v2
+With RUSTFLAGS: -C target-cpu=x86-64-v2
+=======================================================================
+SKIPPED: Complete benchmark results already exist for x86-64-v2
+
+=======================================================================
+Processing benchmark configuration: x86-64-v3
+With RUSTFLAGS: -C target-cpu=x86-64-v3
+=======================================================================
+SKIPPED: Complete benchmark results already exist for x86-64-v3
+
+=======================================================================
+Processing benchmark configuration: x86-64-v4
+With RUSTFLAGS: -C target-cpu=x86-64-v4
+=======================================================================
+No existing results found for x86-64-v4, proceeding with benchmark...
+Running: cargo bench -- --save-baseline x86-64-v4
+Benchmark failed with exit code: 101
+ERROR: Illegal instruction detected - CPU does not support required features for x86-64-v4
+This is expected on CPUs that don't support the target instruction set.
+Benchmark output:
+   Compiling num-traits v0.2.19
+   Compiling serde_json v1.0.133
+   Compiling ciborium v0.2.2
+error: failed to run custom build command for `num-traits v0.2.19`
+
+Caused by:
+  process didn't exit successfully: `/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/build/num-traits-18700d5fcf5881df/build-script-build` (signal: 4, SIGILL: illegal instruction)
+warning: build failed, waiting for other jobs to finish...
+error: rustc interrupted by SIGILL, printing backtrace
+
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x3bf243f)[0x7f47fb1f243f]
+/lib/x86_64-linux-gnu/libc.so.6(+0x3c050)[0x7f47ff215050]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x160600)[0x7f47e2360600]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x138630)[0x7f47e2338630]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x1390f4)[0x7f47e23390f4]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x138b2d)[0x7f47e2338b2d]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x125645)[0x7f47e2325645]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x120a88)[0x7f47e2320a88]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x15fac5)[0x7f47e235fac5]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x12426f)[0x7f47e232426f]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x123e77)[0x7f47e2323e77]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x135e40)[0x7f47e2335e40]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x11e0a6)[0x7f47e231e0a6]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x11e286)[0x7f47e231e286]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x1230a6)[0x7f47e23230a6]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x120a3a)[0x7f47e2320a3a]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x16159e)[0x7f47e236159e]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x13a61b)[0x7f47e233a61b]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x122c14)[0x7f47e2322c14]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x142d7e)[0x7f47e2342d7e]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x9b19c)[0x7f47e229b19c]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x9a96c)[0x7f47e229a96c]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0xbca36)[0x7f47e22bca36]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x141e1b)[0x7f47e2341e1b]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x1453de)[0x7f47e23453de]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x1269b6)[0x7f47e23269b6]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x126936)[0x7f47e2326936]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x153271)[0x7f47e2353271]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x1267aa)[0x7f47e23267aa]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x135570)[0x7f47e2335570]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x153cac)[0x7f47e2353cac]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x12cf9b)[0x7f47e232cf9b]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x126093)[0x7f47e2326093]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x12698e)[0x7f47e232698e]
+/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x125c97)[0x7f47e2325c97]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x5ee5141)[0x7f47fd4e5141]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x5ee4e56)[0x7f47fd4e4e56]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(_RNvXs1_NtCs2U4LuDOPjKZ_12rustc_expand10proc_macroNtB5_15DeriveProcMacroNtNtB7_4base17MultiItemModifier6expand+0x104)[0x7f47fd4e34a2]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(_RNvMs1_NtCs2U4LuDOPjKZ_12rustc_expand6expandNtB5_13MacroExpander21fully_expand_fragment+0x146f4)[0x7f47fdcc6706]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(_RNvMs1_NtCs2U4LuDOPjKZ_12rustc_expand6expandNtB5_13MacroExpander12expand_crate+0x2a9)[0x7f47fdcb1bbf]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x5791c88)[0x7f47fcd91c88]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(_RNvNtCsh87wADxGY5i_15rustc_interface6passes25resolver_for_lowering_raw+0x297)[0x7f47fdab0617]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x64b035b)[0x7f47fdab035b]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x64b0349)[0x7f47fdab0349]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(_RINvNtNtCs156M8FkBPv2_18rustc_query_system5query8plumbing17try_execute_queryINtCs2veS5KE0p24_16rustc_query_impl13DynamicConfigINtNtB4_6caches11SingleCacheINtNtNtCs8VhIOvBOOcV_12rustc_middle5query5erase6ErasedAhj10_EEKb0_KB3t_KB3t_ENtNtB1f_8plumbing9QueryCtxtKB3t_EB1f_+0x21f)[0x7f47fd84465f]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x62441bc)[0x7f47fd8441bc]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x64576fa)[0x7f47fda576fa]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x644957e)[0x7f47fda4957e]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x6383178)[0x7f47fd983178]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x6382e5c)[0x7f47fd982e5c]
+/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x6388d8d)[0x7f47fd988d8d]
+/lib/x86_64-linux-gnu/libc.so.6(+0x891f5)[0x7f47ff2621f5]
+/lib/x86_64-linux-gnu/libc.so.6(+0x1098dc)[0x7f47ff2e28dc]
+
+note: we would appreciate a report at https://github.com/rust-lang/rust
+note: backtrace dumped due to SIGILL! resuming signal
+error: could not compile `ciborium` (lib)
+
+Caused by:
+  process didn't exit successfully: `/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc --crate-name ciborium --edition=2021 /home/nmrp3/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-0.2.2/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata,link -C opt-level=3 -C embed-bitcode=no --cfg 'feature="default"' --cfg 'feature="std"' --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values("default", "std"))' -C metadata=1feeee2beb21c32c -C extra-filename=-fedc9fa0ca3fa48f --out-dir /home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps -C strip=debuginfo -L dependency=/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps --extern ciborium_io=/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libciborium_io-6566bb4b109490fc.rmeta --extern ciborium_ll=/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libciborium_ll-961646fe4eb7c252.rmeta --extern serde=/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde-ece199f11012b58c.rmeta --cap-lints allow -C target-cpu=x86-64-v4` (signal: 4, SIGILL: illegal instruction)
+--- End of benchmark output ---
+Configuration x86-64-v4 failed during benchmarking
+
+=======================================================================
+BENCHMARK SUITE SUMMARY
+=======================================================================
+Total configurations: 5
+Successful: 0
+Skipped: 4
+Failed: 1
+
+Detailed results:
+  default     : SKIPPED
+  native      : SKIPPED
+  x86-64-v2   : SKIPPED
+  x86-64-v3   : SKIPPED
+  x86-64-v4   : FAILED
+
+NOTE: Some configurations failed. This is expected on CPUs that don't
+      support advanced instruction sets (e.g., x86-64-v4 requiring AVX-512).
+Benchmark suite completed with some successful results.
+[0;32m[SUCCESS][0m Benchmarks completed in 1s
+[0;34m[INFO][0m Copying raw Criterion results...
+[0;32m[SUCCESS][0m Criterion results copied
+[1;33m[WARNING][0m Skipping assembly generation for bench_newlines/default - no benchmark results found
+[1;33m[WARNING][0m Skipping assembly generation for bench_newlines/native - no benchmark results found
+[1;33m[WARNING][0m Skipping assembly generation for bench_newlines/x86-64-v2 - no benchmark results found
+[1;33m[WARNING][0m Skipping assembly generation for bench_newlines/x86-64-v3 - no benchmark results found
+[1;33m[WARNING][0m Skipping assembly generation for bench_newlines/x86-64-v4 - no benchmark results found
+[1;33m[WARNING][0m Skipping assembly generation for bench_csv/default - no benchmark results found
+[1;33m[WARNING][0m Skipping assembly generation for bench_csv/native - no benchmark results found
+[1;33m[WARNING][0m Skipping assembly generation for bench_csv/x86-64-v2 - no benchmark results found
+[1;33m[WARNING][0m Skipping assembly generation for bench_csv/x86-64-v3 - no benchmark results found
+[1;33m[WARNING][0m Skipping assembly generation for bench_csv/x86-64-v4 - no benchmark results found
+[0;34m[INFO][0m Updating index...
+[0;32m[SUCCESS][0m Comprehensive benchmark data collection completed!
+[0;34m[INFO][0m Results stored in: results/runs/taiwaif_f4f39234_1_92_0_nightly

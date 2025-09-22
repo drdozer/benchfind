@@ -1,0 +1,20 @@
+{
+  "collection_time": "2025-09-22T20:42:57+01:00",
+  "targets": [
+    "default",
+    "native",
+    "x86-64-v2",
+    "x86-64-v3",
+    "x86-64-v4"
+  ],
+  "benchmarks": [
+    "bench_newlines",
+    "bench_csv"
+  ],
+  "measurement_time_seconds": 15,
+  "sample_sizes": {
+    "bench_newlines": 50,
+    "bench_csv": 100
+  },
+  "script_version": "1.0.0"
+}

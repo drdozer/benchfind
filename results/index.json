@@ -1,6 +1,14 @@
 {
-  "runs": [],
-  "last_updated": "",
+  "runs": [
+    {
+      "run_id": "taiwaif_f4f39234_1_92_0_nightly",
+      "timestamp": "2025-09-22T20:42:59+01:00",
+      "hostname": "taiwaif",
+      "source_hash": "f4f39234",
+      "rustc_version": "1_92_0_nightly"
+    }
+  ],
+  "last_updated": "2025-09-22T20:42:59+01:00",
   "schema_version": "1.0.0",
   "description": "Index of all benchmark runs collected by the comprehensive benchmarking system"
 }
