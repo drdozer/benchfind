@@ -1,0 +1,44 @@
+Detailed Pattern Matches
+Target: native-avx2
+Generated: 2025-09-23T03:03:28+01:00
+
+=== bit_manipulation ===
+Pattern: bsf|bsr|tzcnt|popcnt
+Matches: 24
+
+Line 31021: 	tzcntl	%ebx, %eax
+	notl	%ebx
+.LBB160_7:
+	tzcntl	%ebx, %eax
+	movq	%r12, %rcx
+	shll	$6, %eax
+---
+Line 31129: 	tzcntl	%ebp, %eax
+	notl	%ebp
+.LBB160_26:
+	tzcntl	%ebp, %eax
+	movq	%r12, %rcx
+	shll	$5, %eax
+---
+Line 32888: 	tzcntl	%ebp, %eax
+	notl	%ebp
+.LBB175_6:
+	tzcntl	%ebp, %eax
+	negq	%rax
+	leaq	(%rax,%rax,2), %rax
+---
+Line 54241: 	tzcntq	%rcx, %rbx
+	testq	%rcx, %rcx
+	je	.LBB260_26
+	tzcntq	%rcx, %rbx
+	xorl	%edi, %edi
+	btrq	%rbx, %rcx
+---
+Line 54263: 	tzcntq	%rbp, %rcx
+.LBB260_22:
+	movq	24(%rsp), %rbx
+	tzcntq	%rbp, %rcx
+	movl	$1, %edi
+	btrq	%rcx, %rbp
+---
+

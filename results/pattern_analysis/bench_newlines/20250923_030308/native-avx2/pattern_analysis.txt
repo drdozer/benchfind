@@ -1,0 +1,44 @@
+Assembly Pattern Analysis
+Target: native-avx2
+Assembly file: bench_newlines-0c53cc3d1b440316.s
+Size: 19M
+Generated: 2025-09-23T03:03:28+01:00
+
+Pattern Detection Results:
+=========================
+
+✗ auto_vector_avx: no matches
+✗ scalar_basic: no matches
+✗ scalar_64bit: no matches
+✗ memchr_opt: no matches
+✗ portable_simd_64: no matches
+✓ bit_manipulation: 24 matches
+✗ portable_simd_32: no matches
+✗ auto_vector_sse: no matches
+✗ scalar_unrolled: no matches
+✗ portable_simd_16: no matches
+✗ string_ops: no matches
+
+Assembly Statistics:
+===================
+Total functions: 320
+SIMD instruction occurrences: 6462
+Patterns detected: 1/11
+
+Implementation Classification:
+============================
+Primary implementation: Auto-vectorized scalar code
+Confidence: medium
+
+Performance Expectations:
+========================
+Based on detected patterns:
+
+- Performance depends on compiler's vectorization success
+- May be inconsistent across different data patterns
+- Generally good but may not match hand-optimized SIMD
+
+Files created:
+- pattern_analysis.txt (this file)
+- pattern_details.txt (detailed matches with context)
+- assembly_excerpt.txt (key sections)

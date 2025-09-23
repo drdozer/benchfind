@@ -1,0 +1,5 @@
+SIMD Instruction Counts:
+- vpcmpeqb: 10
+- vpmovmskb: 26
+- xmm registers: 4106
+- ymm registers: 2361

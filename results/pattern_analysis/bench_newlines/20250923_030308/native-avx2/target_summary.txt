@@ -1,0 +1,22 @@
+Target Summary: native-avx2
+Benchmark: bench_newlines
+Generated: 2025-09-23T03:03:28+01:00
+
+Configuration:
+- RUSTFLAGS: -C target-cpu=native -C target-feature=+avx2,+avx,+sse4.2,+ssse3,+sse3,+sse2
+- Assembly size: 19M
+- Classification: [0;34m[INFO][0m Analyzing implementation patterns in assembly...
+[0;32m[SUCCESS][0m Pattern analysis complete: 1 patterns found, classified as 'auto_vectorized'
+auto_vectorized
+
+Key Files:
+- benchmark_assembly.s (full assembly)
+- pattern_analysis.txt (pattern detection results)
+- pattern_details.txt (detailed pattern matches)
+- assembly_excerpt.txt (key assembly sections)
+
+Quick Analysis Commands:
+- View patterns: cat pattern_analysis.txt
+- Find SIMD: grep -E "vpcmpeqb|vpmovmskb" benchmark_assembly.s
+- Count vector ops: grep -c "xmm\|ymm" benchmark_assembly.s
+- Compare targets: diff ../other_target/pattern_analysis.txt pattern_analysis.txt

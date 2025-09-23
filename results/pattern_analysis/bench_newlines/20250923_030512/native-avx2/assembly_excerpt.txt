@@ -1,0 +1,108 @@
+Key Assembly Sections
+Target: native-avx2
+Generated: 2025-09-23T03:05:33+01:00
+
+=== SIMD Comparison Sections ===
+	orb	%cl, %dil
+	jne	.LBB260_25
+	xorl	%edi, %edi
+	.p2align	4
+.LBB260_20:
+	vpcmpeqb	(%rdx), %xmm0, %xmm1
+	vpmovmskb	%xmm1, %ecx
+	testl	%ecx, %ecx
+	jne	.LBB260_21
+	addq	$16, %rdx
+	decq	%rdi
+	cmpq	%rsi, %rdx
+	jne	.LBB260_20
+	movq	(%rsp), %rcx
+	xorl	%ebp, %ebp
+	subq	%rdi, %rcx
+--
+	orb	%sil, %dil
+	jne	.LBB266_25
+	xorl	%edi, %edi
+	.p2align	4
+.LBB266_20:
+	vpcmpeqb	32(%rdx), %ymm0, %ymm2
+	vpcmpeqb	(%rdx), %ymm0, %ymm1
+	addq	$64, %rdx
+	vpmovmskb	%ymm2, %r15d
+	vpmovmskb	%ymm1, %esi
+	shlq	$32, %r15
+	orq	%rsi, %r15
+	jne	.LBB266_21
+	decq	%rdi
+	cmpq	%r10, %rdx
+	jne	.LBB266_20
+	movq	(%rsp), %rcx
+--
+	jmp	.LBB271_26
+.LBB271_19:
+	xorl	%ecx, %ecx
+	.p2align	4
+.LBB271_20:
+	vpcmpeqb	(%rdi), %xmm0, %xmm1
+	vpmovmskb	%xmm1, %esi
+	testl	%esi, %esi
+	jne	.LBB271_21
+	addq	$16, %rdi
+	decq	%rcx
+	cmpq	%r8, %rdi
+	jne	.LBB271_20
+	movq	8(%rsp), %rsi
+	subq	%rcx, %rsi
+	leaq	-1(%rsi), %rcx
+--
+	orb	%cl, %dil
+	jne	.LBB272_25
+	xorl	%edi, %edi
+	.p2align	4
+.LBB272_20:
+	vpcmpeqb	(%rdx), %ymm0, %ymm1
+	vpmovmskb	%ymm1, %ecx
+	testl	%ecx, %ecx
+	jne	.LBB272_21
+	addq	$32, %rdx
+	decq	%rdi
+	cmpq	%rsi, %rdx
+	jne	.LBB272_20
+	movq	(%rsp), %rcx
+	xorl	%r15d, %r15d
+	subq	%rdi, %rcx
+--
+	orb	%cl, %sil
+	jne	.LBB273_24
+	xorl	%ecx, %ecx
+	.p2align	4
+.LBB273_19:
+	vpcmpeqb	32(%rdi), %ymm0, %ymm2
+	vpcmpeqb	(%rdi), %ymm0, %ymm1
+	addq	$64, %rdi
+	vpmovmskb	%ymm2, %eax
+	vpmovmskb	%ymm1, %esi
+	shlq	$32, %rax
+	orq	%rsi, %rax
+	jne	.LBB273_20
+	decq	%rcx
+	cmpq	%r8, %rdi
+	jne	.LBB273_19
+	movq	8(%rsp), %rax
+--
+	jmp	.LBB274_26
+.LBB274_19:
+	xorl	%ecx, %ecx
+	.p2align	4
+.LBB274_20:
+	vpcmpeqb	(%rdi), %ymm0, %ymm1
+	vpmovmskb	%ymm1, %esi
+	testl	%esi, %esi
+	jne	.LBB274_21
+	addq	$32, %rdi
+	decq	%rcx
+	cmpq	%r8, %rdi
+	jne	.LBB274_20
+
+=== SIMD Bitmask Processing ===
+

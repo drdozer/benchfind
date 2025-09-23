@@ -1,0 +1,7 @@
+Benchmark Pattern Analysis Summary
+Benchmark: bench_newlines
+Generated: 2025-09-23T03:05:12+01:00
+
+Target Analysis Results:
+=======================
+

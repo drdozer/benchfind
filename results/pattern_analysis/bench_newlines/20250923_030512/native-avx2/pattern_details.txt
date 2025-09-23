@@ -1,0 +1,197 @@
+Detailed Pattern Matches
+Target: native-avx2
+Generated: 2025-09-23T03:05:31+01:00
+
+=== portable_simd_32_mask ===
+Pattern: vpmovmskb.*%ymm
+Matches: 6
+
+Line 55667: 	vpmovmskb	%ymm2, %r15d
+	vpcmpeqb	(%rdx), %ymm0, %ymm1
+	addq	$64, %rdx
+	vpmovmskb	%ymm2, %r15d
+	vpmovmskb	%ymm1, %esi
+	shlq	$32, %r15
+---
+Line 55668: 	vpmovmskb	%ymm1, %esi
+	addq	$64, %rdx
+	vpmovmskb	%ymm2, %r15d
+	vpmovmskb	%ymm1, %esi
+	shlq	$32, %r15
+	orq	%rsi, %r15
+---
+Line 56753: 	vpmovmskb	%ymm1, %ecx
+.LBB272_20:
+	vpcmpeqb	(%rdx), %ymm0, %ymm1
+	vpmovmskb	%ymm1, %ecx
+	testl	%ecx, %ecx
+	jne	.LBB272_21
+---
+Line 57023: 	vpmovmskb	%ymm2, %eax
+	vpcmpeqb	(%rdi), %ymm0, %ymm1
+	addq	$64, %rdi
+	vpmovmskb	%ymm2, %eax
+	vpmovmskb	%ymm1, %esi
+	shlq	$32, %rax
+---
+Line 57024: 	vpmovmskb	%ymm1, %esi
+	addq	$64, %rdi
+	vpmovmskb	%ymm2, %eax
+	vpmovmskb	%ymm1, %esi
+	shlq	$32, %rax
+	orq	%rsi, %rax
+---
+
+=== bit_manipulation ===
+Pattern: bsf|bsr|tzcnt|popcnt
+Matches: 24
+
+Line 31021: 	tzcntl	%ebx, %eax
+	notl	%ebx
+.LBB160_7:
+	tzcntl	%ebx, %eax
+	movq	%r12, %rcx
+	shll	$6, %eax
+---
+Line 31129: 	tzcntl	%ebp, %eax
+	notl	%ebp
+.LBB160_26:
+	tzcntl	%ebp, %eax
+	movq	%r12, %rcx
+	shll	$5, %eax
+---
+Line 32888: 	tzcntl	%ebp, %eax
+	notl	%ebp
+.LBB175_6:
+	tzcntl	%ebp, %eax
+	negq	%rax
+	leaq	(%rax,%rax,2), %rax
+---
+Line 54241: 	tzcntq	%rcx, %rbx
+	testq	%rcx, %rcx
+	je	.LBB260_26
+	tzcntq	%rcx, %rbx
+	xorl	%edi, %edi
+	btrq	%rbx, %rcx
+---
+Line 54263: 	tzcntq	%rbp, %rcx
+.LBB260_22:
+	movq	24(%rsp), %rbx
+	tzcntq	%rbp, %rcx
+	movl	$1, %edi
+	btrq	%rcx, %rbp
+---
+
+=== portable_simd_32_compare ===
+Pattern: vpcmpeqb.*%ymm
+Matches: 6
+
+Line 55664: 	vpcmpeqb	32(%rdx), %ymm0, %ymm2
+	.p2align	4
+.LBB266_20:
+	vpcmpeqb	32(%rdx), %ymm0, %ymm2
+	vpcmpeqb	(%rdx), %ymm0, %ymm1
+	addq	$64, %rdx
+---
+Line 55665: 	vpcmpeqb	(%rdx), %ymm0, %ymm1
+.LBB266_20:
+	vpcmpeqb	32(%rdx), %ymm0, %ymm2
+	vpcmpeqb	(%rdx), %ymm0, %ymm1
+	addq	$64, %rdx
+	vpmovmskb	%ymm2, %r15d
+---
+Line 56752: 	vpcmpeqb	(%rdx), %ymm0, %ymm1
+	.p2align	4
+.LBB272_20:
+	vpcmpeqb	(%rdx), %ymm0, %ymm1
+	vpmovmskb	%ymm1, %ecx
+	testl	%ecx, %ecx
+---
+Line 57020: 	vpcmpeqb	32(%rdi), %ymm0, %ymm2
+	.p2align	4
+.LBB273_19:
+	vpcmpeqb	32(%rdi), %ymm0, %ymm2
+	vpcmpeqb	(%rdi), %ymm0, %ymm1
+	addq	$64, %rdi
+---
+Line 57021: 	vpcmpeqb	(%rdi), %ymm0, %ymm1
+.LBB273_19:
+	vpcmpeqb	32(%rdi), %ymm0, %ymm2
+	vpcmpeqb	(%rdi), %ymm0, %ymm1
+	addq	$64, %rdi
+	vpmovmskb	%ymm2, %eax
+---
+
+=== portable_simd_16_compare ===
+Pattern: vpcmpeqb.*%xmm
+Matches: 4
+
+Line 54221: 	vpcmpeqb	(%rdx), %xmm0, %xmm1
+	.p2align	4
+.LBB260_20:
+	vpcmpeqb	(%rdx), %xmm0, %xmm1
+	vpmovmskb	%xmm1, %ecx
+	testl	%ecx, %ecx
+---
+Line 56471: 	vpcmpeqb	(%rdi), %xmm0, %xmm1
+	.p2align	4
+.LBB271_20:
+	vpcmpeqb	(%rdi), %xmm0, %xmm1
+	vpmovmskb	%xmm1, %esi
+	testl	%esi, %esi
+---
+Line 87806: 	vpcmpeqb	%xmm1, %xmm3, %xmm0
+	andq	%r9, %r15
+	vmovdqu	(%r10,%r15), %xmm3
+	vpcmpeqb	%xmm1, %xmm3, %xmm0
+	vpmovmskb	%xmm0, %r13d
+	testl	%r13d, %r13d
+---
+Line 87866: 	vpcmpeqb	%xmm2, %xmm3, %xmm0
+	andq	%r9, %rsi
+.LBB314_11:
+	vpcmpeqb	%xmm2, %xmm3, %xmm0
+	vpmovmskb	%xmm0, %eax
+	testl	%eax, %eax
+---
+
+=== portable_simd_16_mask ===
+Pattern: vpmovmskb.*%xmm
+Matches: 20
+
+Line 30998: 	vpmovmskb	%xmm0, %ebx
+	vmovdqa	(%r12), %xmm0
+	leaq	16(%r12), %rbp
+	vpmovmskb	%xmm0, %ebx
+	notl	%ebx
+	jmp	.LBB160_4
+---
+Line 31016: 	vpmovmskb	%xmm0, %ebx
+	addq	$-1024, %r12
+	addq	$16, %rbp
+	vpmovmskb	%xmm0, %ebx
+	cmpl	$65535, %ebx
+	je	.LBB160_5
+---
+Line 31108: 	vpmovmskb	%xmm0, %ebp
+	vmovdqa	(%r12), %xmm0
+	leaq	16(%r12), %r13
+	vpmovmskb	%xmm0, %ebp
+	notl	%ebp
+	jmp	.LBB160_23
+---
+Line 31124: 	vpmovmskb	%xmm0, %ebp
+	addq	$-512, %r12
+	addq	$16, %r13
+	vpmovmskb	%xmm0, %ebp
+	cmpl	$65535, %ebp
+	je	.LBB160_24
+---
+Line 32867: 	vpmovmskb	%xmm0, %ebp
+	vmovdqa	(%r12), %xmm0
+	leaq	16(%r12), %r13
+	vpmovmskb	%xmm0, %ebp
+	notl	%ebp
+	jmp	.LBB175_3
+---
+

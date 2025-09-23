@@ -1,0 +1,48 @@
+Assembly Pattern Analysis
+Target: native-avx2
+Assembly file: bench_newlines-0c53cc3d1b440316.s
+Size: 19M
+Generated: 2025-09-23T03:05:31+01:00
+
+Pattern Detection Results:
+=========================
+
+✓ portable_simd_32_mask: 6 matches
+✗ auto_vector_avx: no matches
+✗ simd_bitmask_ops: no matches
+✗ scalar_basic: no matches
+✗ scalar_64bit: no matches
+✗ portable_simd_64_pattern: no matches
+✗ memchr_opt: no matches
+✓ bit_manipulation: 24 matches
+✓ portable_simd_32_compare: 6 matches
+✗ auto_vector_sse: no matches
+✓ portable_simd_16_compare: 4 matches
+✗ scalar_unrolled: no matches
+✗ string_ops: no matches
+✓ portable_simd_16_mask: 20 matches
+
+Assembly Statistics:
+===================
+Total functions: 320
+SIMD instruction occurrences: 6462
+Patterns detected: 5/14
+
+Implementation Classification:
+============================
+Primary implementation: Portable SIMD (explicit SIMD operations with bitmask processing)
+Confidence: high
+
+Performance Expectations:
+========================
+Based on detected patterns:
+
+- Should show excellent performance on vectorized workloads
+- Performance scales with SIMD width (16-byte vs 32-byte vs 64-byte)
+- Uses explicit vpcmpeqb + vpmovmskb + tzcnt pattern
+- Expect consistent performance across different data patterns
+
+Files created:
+- pattern_analysis.txt (this file)
+- pattern_details.txt (detailed matches with context)
+- assembly_excerpt.txt (key sections)
