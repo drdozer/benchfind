@@ -1,0 +1,20 @@
+SIMD Analysis Summary - Target: native-sse4
+Generated: 2025-09-23T02:04:54+01:00
+
+Function-by-Function SIMD Detection:
+- full_library: ✗ No SIMD
+
+- via_simd16_find_all: ✗ No SIMD
+
+- via_simd32_find_all: ✗ No SIMD
+
+- via_simd64_find_all: ✗ No SIMD
+
+- via_u16_find_all: ✗ No SIMD
+
+- via_u32_find_all: ✗ No SIMD
+
+- via_u64_find_all: ✗ No SIMD
+
+Summary: 0
+0 of 7 functions contain SIMD instructions

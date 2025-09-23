@@ -1,12 +1,15 @@
 #!/bin/bash
 
-# 1. Define an array of target configurations
+# 1. Define an array of progressive native target configurations
+# These test incremental SIMD capabilities on the host CPU
 TARGET_CONFIGS=(
   "default"
   "RUSTFLAGS='-C target-cpu=native' native"
-  "RUSTFLAGS='-C target-cpu=x86-64-v2' x86-64-v2"
-  "RUSTFLAGS='-C target-cpu=x86-64-v3' x86-64-v3"
-  "RUSTFLAGS='-C target-cpu=x86-64-v4' x86-64-v4"
+  "RUSTFLAGS='-C target-cpu=native -C target-feature=+sse2' native-sse2"
+  "RUSTFLAGS='-C target-cpu=native -C target-feature=+sse4.2,+ssse3,+sse3,+sse2' native-sse4"
+  "RUSTFLAGS='-C target-cpu=native -C target-feature=+avx,+sse4.2,+ssse3,+sse3,+sse2' native-avx"
+  "RUSTFLAGS='-C target-cpu=native -C target-feature=+avx2,+avx,+sse4.2,+ssse3,+sse3,+sse2' native-avx2"
+  "RUSTFLAGS='-C target-cpu=native -C target-feature=+avx512f,+avx512bw,+avx2,+avx,+sse4.2,+ssse3,+sse3,+sse2' native-avx512"
 )
 
 # Function to check if baseline results already exist
@@ -57,7 +60,7 @@ run_benchmark_safely() {
   local baseline_name="$1"
   local rustflags_val="$2"
 
-  echo "Running: cargo bench -- --save-baseline $baseline_name"
+  echo "🏃 Running: cargo bench -- --save-baseline $baseline_name"
 
   # Set RUSTFLAGS if provided
   if [ -n "$rustflags_val" ]; then
@@ -66,36 +69,37 @@ run_benchmark_safely() {
     unset RUSTFLAGS
   fi
 
-  # Run the benchmark with timeout and error capture
-  local benchmark_output
+  # Run the benchmark with timeout and streaming output
   local benchmark_exit_code
 
-  # Capture both stdout and stderr, with a reasonable timeout
-  if benchmark_output=$(timeout 3600 cargo bench -- --save-baseline "$baseline_name" 2>&1); then
+  echo "📊 Benchmark output (streaming):"
+  echo "----------------------------------------"
+
+  # Run with streaming output and capture exit code
+  if timeout 3600 cargo bench -- --save-baseline "$baseline_name" 2>&1 | tee /tmp/bench_output_$$; then
     benchmark_exit_code=0
-    echo "Benchmark completed successfully"
+    echo "----------------------------------------"
+    echo "✅ Benchmark completed successfully"
   else
     benchmark_exit_code=$?
-    echo "Benchmark failed with exit code: $benchmark_exit_code"
+    echo "----------------------------------------"
+    echo "❌ Benchmark failed with exit code: $benchmark_exit_code"
 
-    # Check for common failure patterns
-    if echo "$benchmark_output" | grep -qi "illegal instruction"; then
+    # Check for common failure patterns in the captured output
+    if grep -qi "illegal instruction" /tmp/bench_output_$$; then
       echo "ERROR: Illegal instruction detected - CPU does not support required features for $baseline_name"
       echo "This is expected on CPUs that don't support the target instruction set."
-    elif echo "$benchmark_output" | grep -qi "sigill"; then
+    elif grep -qi "sigill" /tmp/bench_output_$$; then
       echo "ERROR: SIGILL (illegal instruction signal) - CPU incompatible with $baseline_name target"
     elif [ $benchmark_exit_code -eq 124 ]; then
       echo "ERROR: Benchmark timed out after 1 hour"
     else
       echo "ERROR: Benchmark failed for unknown reason"
     fi
-
-    echo "Benchmark output:"
-    echo "$benchmark_output"
-    echo "--- End of benchmark output ---"
   fi
 
-  # Always unset RUSTFLAGS before returning
+  # Clean up temporary file and unset RUSTFLAGS before returning
+  rm -f /tmp/bench_output_$$
   unset RUSTFLAGS
   return $benchmark_exit_code
 }
@@ -104,7 +108,7 @@ run_benchmark_safely() {
 run_simd_check_safely() {
   local baseline_name="$1"
 
-  echo "Running: ./check_simd.sh $baseline_name"
+  echo "🔬 Running: ./check_simd.sh $baseline_name"
 
   if ./check_simd.sh "$baseline_name" 2>&1; then
     echo "SIMD check completed successfully"
@@ -127,6 +131,10 @@ echo "Starting benchmark suite..."
 echo "This script will skip configurations that already have complete results."
 echo "========================================================================"
 
+# Track current target for progress
+current_target=1
+total_targets=${#TARGET_CONFIGS[@]}
+
 # 3. Iterate over the configuration array
 for config in "${TARGET_CONFIGS[@]}"; do
   # 3.a. Parse the configuration string
@@ -142,15 +150,16 @@ for config in "${TARGET_CONFIGS[@]}"; do
     BASELINE_NAME="$config"
   fi
 
-  # 3.b. Print a message
+  # 3.b. Print a message with progress
   echo ""
   echo "======================================================================="
-  echo "Processing benchmark configuration: $BASELINE_NAME"
+  echo "Processing benchmark configuration: $BASELINE_NAME [$current_target/$total_targets]"
   if [ -n "$RUSTFLAGS_VAL" ]; then
     echo "With RUSTFLAGS: $RUSTFLAGS_VAL"
   else
     echo "With default RUSTFLAGS"
   fi
+  echo "Progress: $(( (current_target * 100) / total_targets ))% complete"
   echo "======================================================================="
 
   # 3.c. Check if results already exist
@@ -164,29 +173,36 @@ for config in "${TARGET_CONFIGS[@]}"; do
   fi
 
   # 3.d. Run cargo bench with error handling
+  echo "🚀 Starting benchmark execution for $BASELINE_NAME..."
+  echo "⏰ $(date '+%H:%M:%S') - This may take 15-30 minutes per target"
   if run_benchmark_safely "$BASELINE_NAME" "$RUSTFLAGS_VAL"; then
     echo "Benchmark phase completed successfully for $BASELINE_NAME"
 
+    echo "✅ Benchmarks completed for $BASELINE_NAME at $(date '+%H:%M:%S')"
+
     # 3.e. Run SIMD check
+    echo "🔍 Running SIMD analysis for $BASELINE_NAME..."
     if run_simd_check_safely "$BASELINE_NAME"; then
-      echo "Configuration $BASELINE_NAME completed successfully"
+      echo "✅ Configuration $BASELINE_NAME completed successfully"
       results["$BASELINE_NAME"]="SUCCESS"
       ((successful_configs++))
     else
-      echo "Configuration $BASELINE_NAME completed with SIMD check warnings"
+      echo "⚠️  Configuration $BASELINE_NAME completed with SIMD check warnings"
       results["$BASELINE_NAME"]="SUCCESS (SIMD check failed)"
       ((successful_configs++))
     fi
   else
-    echo "Configuration $BASELINE_NAME failed during benchmarking"
+    echo "❌ Configuration $BASELINE_NAME failed during benchmarking"
     results["$BASELINE_NAME"]="FAILED"
     ((failed_configs++))
 
     # Continue with the next configuration instead of exiting
+    ((current_target++))
     continue
   fi
 
-  echo "Configuration $BASELINE_NAME processing complete"
+  echo "✅ Configuration $BASELINE_NAME processing complete"
+  ((current_target++))
   echo ""
 done
 

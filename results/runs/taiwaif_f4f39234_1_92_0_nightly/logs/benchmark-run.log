@@ -5,143 +5,2620 @@ This script will skip configurations that already have complete results.
 ========================================================================
 
 =======================================================================
-Processing benchmark configuration: default
+Processing benchmark configuration: default [1/7]
 With default RUSTFLAGS
+Progress: 14% complete
 =======================================================================
 SKIPPED: Complete benchmark results already exist for default
 
 =======================================================================
-Processing benchmark configuration: native
+Processing benchmark configuration: native [1/7]
 With RUSTFLAGS: -C target-cpu=native
+Progress: 14% complete
 =======================================================================
 SKIPPED: Complete benchmark results already exist for native
 
 =======================================================================
-Processing benchmark configuration: x86-64-v2
-With RUSTFLAGS: -C target-cpu=x86-64-v2
+Processing benchmark configuration: native-sse2 [1/7]
+With RUSTFLAGS: -C target-cpu=native -C target-feature=+sse2
+Progress: 14% complete
 =======================================================================
-SKIPPED: Complete benchmark results already exist for x86-64-v2
+SKIPPED: Complete benchmark results already exist for native-sse2
 
 =======================================================================
-Processing benchmark configuration: x86-64-v3
-With RUSTFLAGS: -C target-cpu=x86-64-v3
+Processing benchmark configuration: native-sse4 [1/7]
+With RUSTFLAGS: -C target-cpu=native -C target-feature=+sse4.2,+ssse3,+sse3,+sse2
+Progress: 14% complete
 =======================================================================
-SKIPPED: Complete benchmark results already exist for x86-64-v3
+SKIPPED: Complete benchmark results already exist for native-sse4
 
 =======================================================================
-Processing benchmark configuration: x86-64-v4
-With RUSTFLAGS: -C target-cpu=x86-64-v4
+Processing benchmark configuration: native-avx [1/7]
+With RUSTFLAGS: -C target-cpu=native -C target-feature=+avx,+sse4.2,+ssse3,+sse3,+sse2
+Progress: 14% complete
 =======================================================================
-No existing results found for x86-64-v4, proceeding with benchmark...
-Running: cargo bench -- --save-baseline x86-64-v4
-Benchmark failed with exit code: 101
-ERROR: Illegal instruction detected - CPU does not support required features for x86-64-v4
-This is expected on CPUs that don't support the target instruction set.
-Benchmark output:
+SKIPPED: Complete benchmark results already exist for native-avx
+
+=======================================================================
+Processing benchmark configuration: native-avx2 [1/7]
+With RUSTFLAGS: -C target-cpu=native -C target-feature=+avx2,+avx,+sse4.2,+ssse3,+sse3,+sse2
+Progress: 14% complete
+=======================================================================
+SKIPPED: Complete benchmark results already exist for native-avx2
+
+=======================================================================
+Processing benchmark configuration: native-avx512 [1/7]
+With RUSTFLAGS: -C target-cpu=native -C target-feature=+avx512f,+avx512bw,+avx2,+avx,+sse4.2,+ssse3,+sse3,+sse2
+Progress: 14% complete
+=======================================================================
+No existing results found for native-avx512, proceeding with benchmark...
+🚀 Starting benchmark execution for native-avx512...
+⏰ 02:04:52 - This may take 15-30 minutes per target
+🏃 Running: cargo bench -- --save-baseline native-avx512
+📊 Benchmark output (streaming):
+----------------------------------------
+   Compiling proc-macro2 v1.0.92
+   Compiling crossbeam-utils v0.8.21
    Compiling num-traits v0.2.19
-   Compiling serde_json v1.0.133
-   Compiling ciborium v0.2.2
+   Compiling benchfind v0.1.0 (/home/nmrp3/devel/turingatemyhamster/benchfind)
+error: failed to run custom build command for `crossbeam-utils v0.8.21`
+
+Caused by:
+  process didn't exit successfully: `/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/build/crossbeam-utils-628f245e8bee607f/build-script-build` (signal: 4, SIGILL: illegal instruction)
+  --- stdout
+  cargo:rerun-if-changed=no_atomic.rs
+  cargo:rustc-check-cfg=cfg(crossbeam_no_atomic,crossbeam_sanitize_thread)
+warning: build failed, waiting for other jobs to finish...
+error: failed to run custom build command for `proc-macro2 v1.0.92`
+
+Caused by:
+  process didn't exit successfully: `/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/build/proc-macro2-dc5d71ab1b186927/build-script-build` (signal: 4, SIGILL: illegal instruction)
+  --- stdout
+  cargo:rustc-check-cfg=cfg(fuzzing)
+  cargo:rustc-check-cfg=cfg(no_is_available)
+  cargo:rustc-check-cfg=cfg(no_literal_byte_character)
+  cargo:rustc-check-cfg=cfg(no_literal_c_string)
+  cargo:rustc-check-cfg=cfg(no_source_text)
+  cargo:rustc-check-cfg=cfg(proc_macro_span)
+  cargo:rustc-check-cfg=cfg(procmacro2_backtrace)
+  cargo:rustc-check-cfg=cfg(procmacro2_nightly_testing)
+  cargo:rustc-check-cfg=cfg(procmacro2_semver_exempt)
+  cargo:rustc-check-cfg=cfg(randomize_layout)
+  cargo:rustc-check-cfg=cfg(span_locations)
+  cargo:rustc-check-cfg=cfg(super_unstable)
+  cargo:rustc-check-cfg=cfg(wrap_proc_macro)
+  cargo:rerun-if-changed=build/probe.rs
 error: failed to run custom build command for `num-traits v0.2.19`
 
 Caused by:
-  process didn't exit successfully: `/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/build/num-traits-18700d5fcf5881df/build-script-build` (signal: 4, SIGILL: illegal instruction)
-warning: build failed, waiting for other jobs to finish...
-error: rustc interrupted by SIGILL, printing backtrace
+  process didn't exit successfully: `/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/build/num-traits-410b3dd9e0b08507/build-script-build` (signal: 4, SIGILL: illegal instruction)
+----------------------------------------
+✅ Benchmark completed successfully
+Benchmark phase completed successfully for native-avx512
+✅ Benchmarks completed for native-avx512 at 02:04:52
+🔍 Running SIMD analysis for native-avx512...
+🔬 Running: ./check_simd.sh native-avx512
+./bench_all.sh: line 113: ./check_simd.sh: No such file or directory
+ERROR: SIMD check failed with exit code: 127
+This may indicate compilation issues or unsupported target features.
+⚠️  Configuration native-avx512 completed with SIMD check warnings
+✅ Configuration native-avx512 processing complete
 
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x3bf243f)[0x7f47fb1f243f]
-/lib/x86_64-linux-gnu/libc.so.6(+0x3c050)[0x7f47ff215050]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x160600)[0x7f47e2360600]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x138630)[0x7f47e2338630]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x1390f4)[0x7f47e23390f4]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x138b2d)[0x7f47e2338b2d]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x125645)[0x7f47e2325645]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x120a88)[0x7f47e2320a88]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x15fac5)[0x7f47e235fac5]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x12426f)[0x7f47e232426f]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x123e77)[0x7f47e2323e77]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x135e40)[0x7f47e2335e40]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x11e0a6)[0x7f47e231e0a6]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x11e286)[0x7f47e231e286]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x1230a6)[0x7f47e23230a6]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x120a3a)[0x7f47e2320a3a]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x16159e)[0x7f47e236159e]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x13a61b)[0x7f47e233a61b]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x122c14)[0x7f47e2322c14]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x142d7e)[0x7f47e2342d7e]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x9b19c)[0x7f47e229b19c]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x9a96c)[0x7f47e229a96c]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0xbca36)[0x7f47e22bca36]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x141e1b)[0x7f47e2341e1b]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x1453de)[0x7f47e23453de]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x1269b6)[0x7f47e23269b6]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x126936)[0x7f47e2326936]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x153271)[0x7f47e2353271]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x1267aa)[0x7f47e23267aa]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x135570)[0x7f47e2335570]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x153cac)[0x7f47e2353cac]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x12cf9b)[0x7f47e232cf9b]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x126093)[0x7f47e2326093]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x12698e)[0x7f47e232698e]
-/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde_derive-709e27eefd5eafb7.so(+0x125c97)[0x7f47e2325c97]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x5ee5141)[0x7f47fd4e5141]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x5ee4e56)[0x7f47fd4e4e56]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(_RNvXs1_NtCs2U4LuDOPjKZ_12rustc_expand10proc_macroNtB5_15DeriveProcMacroNtNtB7_4base17MultiItemModifier6expand+0x104)[0x7f47fd4e34a2]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(_RNvMs1_NtCs2U4LuDOPjKZ_12rustc_expand6expandNtB5_13MacroExpander21fully_expand_fragment+0x146f4)[0x7f47fdcc6706]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(_RNvMs1_NtCs2U4LuDOPjKZ_12rustc_expand6expandNtB5_13MacroExpander12expand_crate+0x2a9)[0x7f47fdcb1bbf]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x5791c88)[0x7f47fcd91c88]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(_RNvNtCsh87wADxGY5i_15rustc_interface6passes25resolver_for_lowering_raw+0x297)[0x7f47fdab0617]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x64b035b)[0x7f47fdab035b]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x64b0349)[0x7f47fdab0349]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(_RINvNtNtCs156M8FkBPv2_18rustc_query_system5query8plumbing17try_execute_queryINtCs2veS5KE0p24_16rustc_query_impl13DynamicConfigINtNtB4_6caches11SingleCacheINtNtNtCs8VhIOvBOOcV_12rustc_middle5query5erase6ErasedAhj10_EEKb0_KB3t_KB3t_ENtNtB1f_8plumbing9QueryCtxtKB3t_EB1f_+0x21f)[0x7f47fd84465f]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x62441bc)[0x7f47fd8441bc]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x64576fa)[0x7f47fda576fa]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x644957e)[0x7f47fda4957e]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x6383178)[0x7f47fd983178]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x6382e5c)[0x7f47fd982e5c]
-/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/librustc_driver-37c25f9240306b8c.so(+0x6388d8d)[0x7f47fd988d8d]
-/lib/x86_64-linux-gnu/libc.so.6(+0x891f5)[0x7f47ff2621f5]
-/lib/x86_64-linux-gnu/libc.so.6(+0x1098dc)[0x7f47ff2e28dc]
-
-note: we would appreciate a report at https://github.com/rust-lang/rust
-note: backtrace dumped due to SIGILL! resuming signal
-error: could not compile `ciborium` (lib)
-
-Caused by:
-  process didn't exit successfully: `/home/nmrp3/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc --crate-name ciborium --edition=2021 /home/nmrp3/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ciborium-0.2.2/src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type lib --emit=dep-info,metadata,link -C opt-level=3 -C embed-bitcode=no --cfg 'feature="default"' --cfg 'feature="std"' --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values("default", "std"))' -C metadata=1feeee2beb21c32c -C extra-filename=-fedc9fa0ca3fa48f --out-dir /home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps -C strip=debuginfo -L dependency=/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps --extern ciborium_io=/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libciborium_io-6566bb4b109490fc.rmeta --extern ciborium_ll=/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libciborium_ll-961646fe4eb7c252.rmeta --extern serde=/home/nmrp3/devel/turingatemyhamster/benchfind/target/release/deps/libserde-ece199f11012b58c.rmeta --cap-lints allow -C target-cpu=x86-64-v4` (signal: 4, SIGILL: illegal instruction)
---- End of benchmark output ---
-Configuration x86-64-v4 failed during benchmarking
 
 =======================================================================
 BENCHMARK SUITE SUMMARY
 =======================================================================
-Total configurations: 5
-Successful: 0
-Skipped: 4
-Failed: 1
+Total configurations: 7
+Successful: 1
+Skipped: 6
+Failed: 0
 
 Detailed results:
   default     : SKIPPED
   native      : SKIPPED
-  x86-64-v2   : SKIPPED
-  x86-64-v3   : SKIPPED
-  x86-64-v4   : FAILED
+  native-sse2 : SKIPPED
+  native-sse4 : SKIPPED
+  native-avx  : SKIPPED
+  native-avx2 : SKIPPED
+  native-avx512: SUCCESS (SIMD check failed)
 
-NOTE: Some configurations failed. This is expected on CPUs that don't
-      support advanced instruction sets (e.g., x86-64-v4 requiring AVX-512).
 Benchmark suite completed with some successful results.
 [0;32m[SUCCESS][0m Benchmarks completed in 1s
-[0;34m[INFO][0m Copying raw Criterion results...
-[0;32m[SUCCESS][0m Criterion results copied
-[1;33m[WARNING][0m Skipping assembly generation for bench_newlines/default - no benchmark results found
-[1;33m[WARNING][0m Skipping assembly generation for bench_newlines/native - no benchmark results found
-[1;33m[WARNING][0m Skipping assembly generation for bench_newlines/x86-64-v2 - no benchmark results found
-[1;33m[WARNING][0m Skipping assembly generation for bench_newlines/x86-64-v3 - no benchmark results found
-[1;33m[WARNING][0m Skipping assembly generation for bench_newlines/x86-64-v4 - no benchmark results found
-[1;33m[WARNING][0m Skipping assembly generation for bench_csv/default - no benchmark results found
-[1;33m[WARNING][0m Skipping assembly generation for bench_csv/native - no benchmark results found
-[1;33m[WARNING][0m Skipping assembly generation for bench_csv/x86-64-v2 - no benchmark results found
-[1;33m[WARNING][0m Skipping assembly generation for bench_csv/x86-64-v3 - no benchmark results found
-[1;33m[WARNING][0m Skipping assembly generation for bench_csv/x86-64-v4 - no benchmark results found
+[0;34m[INFO][0m Copying raw Criterion results (excluding report directories)...
+sending incremental file list
+created directory results/runs/taiwaif_f4f39234_1_92_0_nightly/raw-results/criterion
+./
+large texts/
+large texts/A_TALE_OF_TWO_CITIES/
+large texts/BACILLUS_EMBL/
+large texts/BACILLUS_FASTA/
+large texts/FindAllIterating/
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/default/
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/default/benchmark.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/default/estimates.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/default/sample.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/default/tukey.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx/
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx2/
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse2/
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse4/
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native/
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native/benchmark.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native/estimates.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native/sample.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/native/tukey.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/new/
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/new/benchmark.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/new/estimates.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/new/sample.json
+large texts/FindAllIterating/A_TALE_OF_TWO_CITIES/new/tukey.json
+large texts/FindAllIterating/BACILLUS_EMBL/
+large texts/FindAllIterating/BACILLUS_EMBL/default/
+large texts/FindAllIterating/BACILLUS_EMBL/default/benchmark.json
+large texts/FindAllIterating/BACILLUS_EMBL/default/estimates.json
+large texts/FindAllIterating/BACILLUS_EMBL/default/sample.json
+large texts/FindAllIterating/BACILLUS_EMBL/default/tukey.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-avx/
+large texts/FindAllIterating/BACILLUS_EMBL/native-avx/benchmark.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-avx/estimates.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-avx/sample.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-avx/tukey.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-avx2/
+large texts/FindAllIterating/BACILLUS_EMBL/native-avx2/benchmark.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-avx2/estimates.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-avx2/sample.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-avx2/tukey.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-sse2/
+large texts/FindAllIterating/BACILLUS_EMBL/native-sse2/benchmark.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-sse2/estimates.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-sse2/sample.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-sse2/tukey.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-sse4/
+large texts/FindAllIterating/BACILLUS_EMBL/native-sse4/benchmark.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-sse4/estimates.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-sse4/sample.json
+large texts/FindAllIterating/BACILLUS_EMBL/native-sse4/tukey.json
+large texts/FindAllIterating/BACILLUS_EMBL/native/
+large texts/FindAllIterating/BACILLUS_EMBL/native/benchmark.json
+large texts/FindAllIterating/BACILLUS_EMBL/native/estimates.json
+large texts/FindAllIterating/BACILLUS_EMBL/native/sample.json
+large texts/FindAllIterating/BACILLUS_EMBL/native/tukey.json
+large texts/FindAllIterating/BACILLUS_EMBL/new/
+large texts/FindAllIterating/BACILLUS_EMBL/new/benchmark.json
+large texts/FindAllIterating/BACILLUS_EMBL/new/estimates.json
+large texts/FindAllIterating/BACILLUS_EMBL/new/sample.json
+large texts/FindAllIterating/BACILLUS_EMBL/new/tukey.json
+large texts/FindAllIterating/BACILLUS_FASTA/
+large texts/FindAllIterating/BACILLUS_FASTA/default/
+large texts/FindAllIterating/BACILLUS_FASTA/default/benchmark.json
+large texts/FindAllIterating/BACILLUS_FASTA/default/estimates.json
+large texts/FindAllIterating/BACILLUS_FASTA/default/sample.json
+large texts/FindAllIterating/BACILLUS_FASTA/default/tukey.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-avx/
+large texts/FindAllIterating/BACILLUS_FASTA/native-avx/benchmark.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-avx/estimates.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-avx/sample.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-avx/tukey.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-avx2/
+large texts/FindAllIterating/BACILLUS_FASTA/native-avx2/benchmark.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-avx2/estimates.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-avx2/sample.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-avx2/tukey.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-sse2/
+large texts/FindAllIterating/BACILLUS_FASTA/native-sse2/benchmark.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-sse2/estimates.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-sse2/sample.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-sse2/tukey.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-sse4/
+large texts/FindAllIterating/BACILLUS_FASTA/native-sse4/benchmark.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-sse4/estimates.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-sse4/sample.json
+large texts/FindAllIterating/BACILLUS_FASTA/native-sse4/tukey.json
+large texts/FindAllIterating/BACILLUS_FASTA/native/
+large texts/FindAllIterating/BACILLUS_FASTA/native/benchmark.json
+large texts/FindAllIterating/BACILLUS_FASTA/native/estimates.json
+large texts/FindAllIterating/BACILLUS_FASTA/native/sample.json
+large texts/FindAllIterating/BACILLUS_FASTA/native/tukey.json
+large texts/FindAllIterating/BACILLUS_FASTA/new/
+large texts/FindAllIterating/BACILLUS_FASTA/new/benchmark.json
+large texts/FindAllIterating/BACILLUS_FASTA/new/estimates.json
+large texts/FindAllIterating/BACILLUS_FASTA/new/sample.json
+large texts/FindAllIterating/BACILLUS_FASTA/new/tukey.json
+large texts/FindAllMemchrCrate/
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/default/
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/default/benchmark.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/default/estimates.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/default/sample.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/default/tukey.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx/
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx2/
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse2/
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse4/
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native/
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native/benchmark.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native/estimates.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native/sample.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native/tukey.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/new/
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/new/benchmark.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/new/estimates.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/new/sample.json
+large texts/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/new/tukey.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/default/
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/default/benchmark.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/default/estimates.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/default/sample.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/default/tukey.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-avx/
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-avx/benchmark.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-avx/estimates.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-avx/sample.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-avx/tukey.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-avx2/
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-avx2/benchmark.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-avx2/estimates.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-avx2/sample.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-avx2/tukey.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-sse2/
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-sse2/benchmark.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-sse2/estimates.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-sse2/sample.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-sse2/tukey.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-sse4/
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-sse4/benchmark.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-sse4/estimates.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-sse4/sample.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native-sse4/tukey.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native/
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native/benchmark.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native/estimates.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native/sample.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/native/tukey.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/new/
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/new/benchmark.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/new/estimates.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/new/sample.json
+large texts/FindAllMemchrCrate/BACILLUS_EMBL/new/tukey.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/default/
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/default/benchmark.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/default/estimates.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/default/sample.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/default/tukey.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-avx/
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-avx/benchmark.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-avx/estimates.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-avx/sample.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-avx/tukey.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-avx2/
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-avx2/benchmark.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-avx2/estimates.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-avx2/sample.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-avx2/tukey.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-sse2/
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-sse2/benchmark.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-sse2/estimates.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-sse2/sample.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-sse2/tukey.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-sse4/
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-sse4/benchmark.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-sse4/estimates.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-sse4/sample.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native-sse4/tukey.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native/
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native/benchmark.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native/estimates.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native/sample.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/native/tukey.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/new/
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/new/benchmark.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/new/estimates.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/new/sample.json
+large texts/FindAllMemchrCrate/BACILLUS_FASTA/new/tukey.json
+large texts/FindAllViaSimd16/
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/default/
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/default/benchmark.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/default/estimates.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/default/sample.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/default/tukey.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx/
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx2/
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse2/
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse4/
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native/
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native/benchmark.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native/estimates.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native/sample.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native/tukey.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/new/
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/new/benchmark.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/new/estimates.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/new/sample.json
+large texts/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/new/tukey.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/
+large texts/FindAllViaSimd16/BACILLUS_EMBL/default/
+large texts/FindAllViaSimd16/BACILLUS_EMBL/default/benchmark.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/default/estimates.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/default/sample.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/default/tukey.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-avx/
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-avx/benchmark.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-avx/estimates.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-avx/sample.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-avx/tukey.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-avx2/
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-avx2/benchmark.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-avx2/estimates.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-avx2/sample.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-avx2/tukey.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-sse2/
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-sse2/benchmark.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-sse2/estimates.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-sse2/sample.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-sse2/tukey.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-sse4/
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-sse4/benchmark.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-sse4/estimates.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-sse4/sample.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native-sse4/tukey.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native/
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native/benchmark.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native/estimates.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native/sample.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/native/tukey.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/new/
+large texts/FindAllViaSimd16/BACILLUS_EMBL/new/benchmark.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/new/estimates.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/new/sample.json
+large texts/FindAllViaSimd16/BACILLUS_EMBL/new/tukey.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/
+large texts/FindAllViaSimd16/BACILLUS_FASTA/default/
+large texts/FindAllViaSimd16/BACILLUS_FASTA/default/benchmark.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/default/estimates.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/default/sample.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/default/tukey.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-avx/
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-avx/benchmark.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-avx/estimates.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-avx/sample.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-avx/tukey.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-avx2/
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-avx2/benchmark.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-avx2/estimates.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-avx2/sample.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-avx2/tukey.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-sse2/
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-sse2/benchmark.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-sse2/estimates.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-sse2/sample.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-sse2/tukey.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-sse4/
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-sse4/benchmark.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-sse4/estimates.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-sse4/sample.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native-sse4/tukey.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native/
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native/benchmark.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native/estimates.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native/sample.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/native/tukey.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/new/
+large texts/FindAllViaSimd16/BACILLUS_FASTA/new/benchmark.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/new/estimates.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/new/sample.json
+large texts/FindAllViaSimd16/BACILLUS_FASTA/new/tukey.json
+large texts/FindAllViaSimd32/
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/default/
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/default/benchmark.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/default/estimates.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/default/sample.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/default/tukey.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx/
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx2/
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse2/
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse4/
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native/
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native/benchmark.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native/estimates.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native/sample.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native/tukey.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/new/
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/new/benchmark.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/new/estimates.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/new/sample.json
+large texts/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/new/tukey.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/
+large texts/FindAllViaSimd32/BACILLUS_EMBL/default/
+large texts/FindAllViaSimd32/BACILLUS_EMBL/default/benchmark.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/default/estimates.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/default/sample.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/default/tukey.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-avx/
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-avx/benchmark.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-avx/estimates.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-avx/sample.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-avx/tukey.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-avx2/
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-avx2/benchmark.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-avx2/estimates.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-avx2/sample.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-avx2/tukey.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-sse2/
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-sse2/benchmark.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-sse2/estimates.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-sse2/sample.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-sse2/tukey.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-sse4/
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-sse4/benchmark.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-sse4/estimates.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-sse4/sample.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native-sse4/tukey.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native/
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native/benchmark.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native/estimates.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native/sample.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/native/tukey.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/new/
+large texts/FindAllViaSimd32/BACILLUS_EMBL/new/benchmark.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/new/estimates.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/new/sample.json
+large texts/FindAllViaSimd32/BACILLUS_EMBL/new/tukey.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/
+large texts/FindAllViaSimd32/BACILLUS_FASTA/default/
+large texts/FindAllViaSimd32/BACILLUS_FASTA/default/benchmark.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/default/estimates.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/default/sample.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/default/tukey.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-avx/
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-avx/benchmark.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-avx/estimates.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-avx/sample.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-avx/tukey.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-avx2/
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-avx2/benchmark.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-avx2/estimates.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-avx2/sample.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-avx2/tukey.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-sse2/
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-sse2/benchmark.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-sse2/estimates.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-sse2/sample.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-sse2/tukey.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-sse4/
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-sse4/benchmark.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-sse4/estimates.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-sse4/sample.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native-sse4/tukey.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native/
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native/benchmark.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native/estimates.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native/sample.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/native/tukey.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/new/
+large texts/FindAllViaSimd32/BACILLUS_FASTA/new/benchmark.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/new/estimates.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/new/sample.json
+large texts/FindAllViaSimd32/BACILLUS_FASTA/new/tukey.json
+large texts/FindAllViaSimd64/
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/default/
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/default/benchmark.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/default/estimates.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/default/sample.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/default/tukey.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx/
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx2/
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse2/
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse4/
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native/
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native/benchmark.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native/estimates.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native/sample.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native/tukey.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/new/
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/new/benchmark.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/new/estimates.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/new/sample.json
+large texts/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/new/tukey.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/
+large texts/FindAllViaSimd64/BACILLUS_EMBL/default/
+large texts/FindAllViaSimd64/BACILLUS_EMBL/default/benchmark.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/default/estimates.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/default/sample.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/default/tukey.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-avx/
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-avx/benchmark.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-avx/estimates.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-avx/sample.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-avx/tukey.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-avx2/
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-avx2/benchmark.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-avx2/estimates.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-avx2/sample.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-avx2/tukey.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-sse2/
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-sse2/benchmark.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-sse2/estimates.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-sse2/sample.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-sse2/tukey.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-sse4/
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-sse4/benchmark.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-sse4/estimates.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-sse4/sample.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native-sse4/tukey.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native/
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native/benchmark.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native/estimates.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native/sample.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/native/tukey.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/new/
+large texts/FindAllViaSimd64/BACILLUS_EMBL/new/benchmark.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/new/estimates.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/new/sample.json
+large texts/FindAllViaSimd64/BACILLUS_EMBL/new/tukey.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/
+large texts/FindAllViaSimd64/BACILLUS_FASTA/default/
+large texts/FindAllViaSimd64/BACILLUS_FASTA/default/benchmark.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/default/estimates.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/default/sample.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/default/tukey.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-avx/
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-avx/benchmark.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-avx/estimates.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-avx/sample.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-avx/tukey.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-avx2/
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-avx2/benchmark.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-avx2/estimates.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-avx2/sample.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-avx2/tukey.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-sse2/
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-sse2/benchmark.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-sse2/estimates.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-sse2/sample.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-sse2/tukey.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-sse4/
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-sse4/benchmark.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-sse4/estimates.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-sse4/sample.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native-sse4/tukey.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native/
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native/benchmark.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native/estimates.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native/sample.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/native/tukey.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/new/
+large texts/FindAllViaSimd64/BACILLUS_FASTA/new/benchmark.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/new/estimates.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/new/sample.json
+large texts/FindAllViaSimd64/BACILLUS_FASTA/new/tukey.json
+large texts/FindAllViaU16/
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/default/
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/default/benchmark.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/default/estimates.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/default/sample.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/default/tukey.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx/
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx2/
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse2/
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse4/
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native/
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native/benchmark.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native/estimates.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native/sample.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/native/tukey.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/new/
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/new/benchmark.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/new/estimates.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/new/sample.json
+large texts/FindAllViaU16/A_TALE_OF_TWO_CITIES/new/tukey.json
+large texts/FindAllViaU16/BACILLUS_EMBL/
+large texts/FindAllViaU16/BACILLUS_EMBL/default/
+large texts/FindAllViaU16/BACILLUS_EMBL/default/benchmark.json
+large texts/FindAllViaU16/BACILLUS_EMBL/default/estimates.json
+large texts/FindAllViaU16/BACILLUS_EMBL/default/sample.json
+large texts/FindAllViaU16/BACILLUS_EMBL/default/tukey.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-avx/
+large texts/FindAllViaU16/BACILLUS_EMBL/native-avx/benchmark.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-avx/estimates.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-avx/sample.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-avx/tukey.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-avx2/
+large texts/FindAllViaU16/BACILLUS_EMBL/native-avx2/benchmark.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-avx2/estimates.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-avx2/sample.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-avx2/tukey.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-sse2/
+large texts/FindAllViaU16/BACILLUS_EMBL/native-sse2/benchmark.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-sse2/estimates.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-sse2/sample.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-sse2/tukey.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-sse4/
+large texts/FindAllViaU16/BACILLUS_EMBL/native-sse4/benchmark.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-sse4/estimates.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-sse4/sample.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native-sse4/tukey.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native/
+large texts/FindAllViaU16/BACILLUS_EMBL/native/benchmark.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native/estimates.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native/sample.json
+large texts/FindAllViaU16/BACILLUS_EMBL/native/tukey.json
+large texts/FindAllViaU16/BACILLUS_EMBL/new/
+large texts/FindAllViaU16/BACILLUS_EMBL/new/benchmark.json
+large texts/FindAllViaU16/BACILLUS_EMBL/new/estimates.json
+large texts/FindAllViaU16/BACILLUS_EMBL/new/sample.json
+large texts/FindAllViaU16/BACILLUS_EMBL/new/tukey.json
+large texts/FindAllViaU16/BACILLUS_FASTA/
+large texts/FindAllViaU16/BACILLUS_FASTA/default/
+large texts/FindAllViaU16/BACILLUS_FASTA/default/benchmark.json
+large texts/FindAllViaU16/BACILLUS_FASTA/default/estimates.json
+large texts/FindAllViaU16/BACILLUS_FASTA/default/sample.json
+large texts/FindAllViaU16/BACILLUS_FASTA/default/tukey.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-avx/
+large texts/FindAllViaU16/BACILLUS_FASTA/native-avx/benchmark.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-avx/estimates.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-avx/sample.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-avx/tukey.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-avx2/
+large texts/FindAllViaU16/BACILLUS_FASTA/native-avx2/benchmark.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-avx2/estimates.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-avx2/sample.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-avx2/tukey.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-sse2/
+large texts/FindAllViaU16/BACILLUS_FASTA/native-sse2/benchmark.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-sse2/estimates.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-sse2/sample.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-sse2/tukey.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-sse4/
+large texts/FindAllViaU16/BACILLUS_FASTA/native-sse4/benchmark.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-sse4/estimates.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-sse4/sample.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native-sse4/tukey.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native/
+large texts/FindAllViaU16/BACILLUS_FASTA/native/benchmark.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native/estimates.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native/sample.json
+large texts/FindAllViaU16/BACILLUS_FASTA/native/tukey.json
+large texts/FindAllViaU16/BACILLUS_FASTA/new/
+large texts/FindAllViaU16/BACILLUS_FASTA/new/benchmark.json
+large texts/FindAllViaU16/BACILLUS_FASTA/new/estimates.json
+large texts/FindAllViaU16/BACILLUS_FASTA/new/sample.json
+large texts/FindAllViaU16/BACILLUS_FASTA/new/tukey.json
+large texts/FindAllViaU32/
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/default/
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/default/benchmark.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/default/estimates.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/default/sample.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/default/tukey.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx/
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx2/
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse2/
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse4/
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native/
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native/benchmark.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native/estimates.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native/sample.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/native/tukey.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/new/
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/new/benchmark.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/new/estimates.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/new/sample.json
+large texts/FindAllViaU32/A_TALE_OF_TWO_CITIES/new/tukey.json
+large texts/FindAllViaU32/BACILLUS_EMBL/
+large texts/FindAllViaU32/BACILLUS_EMBL/default/
+large texts/FindAllViaU32/BACILLUS_EMBL/default/benchmark.json
+large texts/FindAllViaU32/BACILLUS_EMBL/default/estimates.json
+large texts/FindAllViaU32/BACILLUS_EMBL/default/sample.json
+large texts/FindAllViaU32/BACILLUS_EMBL/default/tukey.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-avx/
+large texts/FindAllViaU32/BACILLUS_EMBL/native-avx/benchmark.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-avx/estimates.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-avx/sample.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-avx/tukey.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-avx2/
+large texts/FindAllViaU32/BACILLUS_EMBL/native-avx2/benchmark.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-avx2/estimates.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-avx2/sample.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-avx2/tukey.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-sse2/
+large texts/FindAllViaU32/BACILLUS_EMBL/native-sse2/benchmark.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-sse2/estimates.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-sse2/sample.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-sse2/tukey.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-sse4/
+large texts/FindAllViaU32/BACILLUS_EMBL/native-sse4/benchmark.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-sse4/estimates.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-sse4/sample.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native-sse4/tukey.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native/
+large texts/FindAllViaU32/BACILLUS_EMBL/native/benchmark.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native/estimates.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native/sample.json
+large texts/FindAllViaU32/BACILLUS_EMBL/native/tukey.json
+large texts/FindAllViaU32/BACILLUS_EMBL/new/
+large texts/FindAllViaU32/BACILLUS_EMBL/new/benchmark.json
+large texts/FindAllViaU32/BACILLUS_EMBL/new/estimates.json
+large texts/FindAllViaU32/BACILLUS_EMBL/new/sample.json
+large texts/FindAllViaU32/BACILLUS_EMBL/new/tukey.json
+large texts/FindAllViaU32/BACILLUS_FASTA/
+large texts/FindAllViaU32/BACILLUS_FASTA/default/
+large texts/FindAllViaU32/BACILLUS_FASTA/default/benchmark.json
+large texts/FindAllViaU32/BACILLUS_FASTA/default/estimates.json
+large texts/FindAllViaU32/BACILLUS_FASTA/default/sample.json
+large texts/FindAllViaU32/BACILLUS_FASTA/default/tukey.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-avx/
+large texts/FindAllViaU32/BACILLUS_FASTA/native-avx/benchmark.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-avx/estimates.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-avx/sample.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-avx/tukey.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-avx2/
+large texts/FindAllViaU32/BACILLUS_FASTA/native-avx2/benchmark.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-avx2/estimates.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-avx2/sample.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-avx2/tukey.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-sse2/
+large texts/FindAllViaU32/BACILLUS_FASTA/native-sse2/benchmark.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-sse2/estimates.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-sse2/sample.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-sse2/tukey.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-sse4/
+large texts/FindAllViaU32/BACILLUS_FASTA/native-sse4/benchmark.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-sse4/estimates.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-sse4/sample.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native-sse4/tukey.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native/
+large texts/FindAllViaU32/BACILLUS_FASTA/native/benchmark.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native/estimates.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native/sample.json
+large texts/FindAllViaU32/BACILLUS_FASTA/native/tukey.json
+large texts/FindAllViaU32/BACILLUS_FASTA/new/
+large texts/FindAllViaU32/BACILLUS_FASTA/new/benchmark.json
+large texts/FindAllViaU32/BACILLUS_FASTA/new/estimates.json
+large texts/FindAllViaU32/BACILLUS_FASTA/new/sample.json
+large texts/FindAllViaU32/BACILLUS_FASTA/new/tukey.json
+large texts/FindAllViaU64/
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/default/
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/default/benchmark.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/default/estimates.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/default/sample.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/default/tukey.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx/
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx2/
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse2/
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse4/
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native/
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native/benchmark.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native/estimates.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native/sample.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/native/tukey.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/new/
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/new/benchmark.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/new/estimates.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/new/sample.json
+large texts/FindAllViaU64/A_TALE_OF_TWO_CITIES/new/tukey.json
+large texts/FindAllViaU64/BACILLUS_EMBL/
+large texts/FindAllViaU64/BACILLUS_EMBL/default/
+large texts/FindAllViaU64/BACILLUS_EMBL/default/benchmark.json
+large texts/FindAllViaU64/BACILLUS_EMBL/default/estimates.json
+large texts/FindAllViaU64/BACILLUS_EMBL/default/sample.json
+large texts/FindAllViaU64/BACILLUS_EMBL/default/tukey.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-avx/
+large texts/FindAllViaU64/BACILLUS_EMBL/native-avx/benchmark.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-avx/estimates.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-avx/sample.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-avx/tukey.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-avx2/
+large texts/FindAllViaU64/BACILLUS_EMBL/native-avx2/benchmark.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-avx2/estimates.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-avx2/sample.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-avx2/tukey.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-sse2/
+large texts/FindAllViaU64/BACILLUS_EMBL/native-sse2/benchmark.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-sse2/estimates.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-sse2/sample.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-sse2/tukey.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-sse4/
+large texts/FindAllViaU64/BACILLUS_EMBL/native-sse4/benchmark.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-sse4/estimates.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-sse4/sample.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native-sse4/tukey.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native/
+large texts/FindAllViaU64/BACILLUS_EMBL/native/benchmark.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native/estimates.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native/sample.json
+large texts/FindAllViaU64/BACILLUS_EMBL/native/tukey.json
+large texts/FindAllViaU64/BACILLUS_EMBL/new/
+large texts/FindAllViaU64/BACILLUS_EMBL/new/benchmark.json
+large texts/FindAllViaU64/BACILLUS_EMBL/new/estimates.json
+large texts/FindAllViaU64/BACILLUS_EMBL/new/sample.json
+large texts/FindAllViaU64/BACILLUS_EMBL/new/tukey.json
+large texts/FindAllViaU64/BACILLUS_FASTA/
+large texts/FindAllViaU64/BACILLUS_FASTA/default/
+large texts/FindAllViaU64/BACILLUS_FASTA/default/benchmark.json
+large texts/FindAllViaU64/BACILLUS_FASTA/default/estimates.json
+large texts/FindAllViaU64/BACILLUS_FASTA/default/sample.json
+large texts/FindAllViaU64/BACILLUS_FASTA/default/tukey.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-avx/
+large texts/FindAllViaU64/BACILLUS_FASTA/native-avx/benchmark.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-avx/estimates.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-avx/sample.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-avx/tukey.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-avx2/
+large texts/FindAllViaU64/BACILLUS_FASTA/native-avx2/benchmark.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-avx2/estimates.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-avx2/sample.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-avx2/tukey.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-sse2/
+large texts/FindAllViaU64/BACILLUS_FASTA/native-sse2/benchmark.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-sse2/estimates.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-sse2/sample.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-sse2/tukey.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-sse4/
+large texts/FindAllViaU64/BACILLUS_FASTA/native-sse4/benchmark.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-sse4/estimates.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-sse4/sample.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native-sse4/tukey.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native/
+large texts/FindAllViaU64/BACILLUS_FASTA/native/benchmark.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native/estimates.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native/sample.json
+large texts/FindAllViaU64/BACILLUS_FASTA/native/tukey.json
+large texts/FindAllViaU64/BACILLUS_FASTA/new/
+large texts/FindAllViaU64/BACILLUS_FASTA/new/benchmark.json
+large texts/FindAllViaU64/BACILLUS_FASTA/new/estimates.json
+large texts/FindAllViaU64/BACILLUS_FASTA/new/sample.json
+large texts/FindAllViaU64/BACILLUS_FASTA/new/tukey.json
+lines iterators/
+lines iterators/A_TALE_OF_TWO_CITIES/
+lines iterators/BACILLUS_EMBL/
+lines iterators/BACILLUS_FASTA/
+lines iterators/FindAllIterating/
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/default/
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/default/benchmark.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/default/estimates.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/default/sample.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/default/tukey.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx/
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx2/
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse2/
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse4/
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native/
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native/benchmark.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native/estimates.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native/sample.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/native/tukey.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/new/
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/new/benchmark.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/new/estimates.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/new/sample.json
+lines iterators/FindAllIterating/A_TALE_OF_TWO_CITIES/new/tukey.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/
+lines iterators/FindAllIterating/BACILLUS_EMBL/default/
+lines iterators/FindAllIterating/BACILLUS_EMBL/default/benchmark.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/default/estimates.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/default/sample.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/default/tukey.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-avx/
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-avx/benchmark.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-avx/estimates.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-avx/sample.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-avx/tukey.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-avx2/
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-avx2/benchmark.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-avx2/estimates.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-avx2/sample.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-avx2/tukey.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-sse2/
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-sse2/benchmark.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-sse2/estimates.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-sse2/sample.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-sse2/tukey.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-sse4/
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-sse4/benchmark.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-sse4/estimates.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-sse4/sample.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native-sse4/tukey.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native/
+lines iterators/FindAllIterating/BACILLUS_EMBL/native/benchmark.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native/estimates.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native/sample.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/native/tukey.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/new/
+lines iterators/FindAllIterating/BACILLUS_EMBL/new/benchmark.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/new/estimates.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/new/sample.json
+lines iterators/FindAllIterating/BACILLUS_EMBL/new/tukey.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/
+lines iterators/FindAllIterating/BACILLUS_FASTA/default/
+lines iterators/FindAllIterating/BACILLUS_FASTA/default/benchmark.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/default/estimates.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/default/sample.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/default/tukey.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-avx/
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-avx/benchmark.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-avx/estimates.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-avx/sample.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-avx/tukey.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-avx2/
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-avx2/benchmark.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-avx2/estimates.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-avx2/sample.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-avx2/tukey.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-sse2/
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-sse2/benchmark.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-sse2/estimates.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-sse2/sample.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-sse2/tukey.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-sse4/
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-sse4/benchmark.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-sse4/estimates.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-sse4/sample.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native-sse4/tukey.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native/
+lines iterators/FindAllIterating/BACILLUS_FASTA/native/benchmark.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native/estimates.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native/sample.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/native/tukey.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/new/
+lines iterators/FindAllIterating/BACILLUS_FASTA/new/benchmark.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/new/estimates.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/new/sample.json
+lines iterators/FindAllIterating/BACILLUS_FASTA/new/tukey.json
+lines iterators/FindAllMemchrCrate/
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/default/
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/default/benchmark.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/default/estimates.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/default/sample.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/default/tukey.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx/
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx2/
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse2/
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse4/
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native/
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native/benchmark.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native/estimates.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native/sample.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/native/tukey.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/new/
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/new/benchmark.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/new/estimates.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/new/sample.json
+lines iterators/FindAllMemchrCrate/A_TALE_OF_TWO_CITIES/new/tukey.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/default/
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/default/benchmark.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/default/estimates.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/default/sample.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/default/tukey.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-avx/
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-avx/benchmark.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-avx/estimates.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-avx/sample.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-avx/tukey.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-avx2/
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-avx2/benchmark.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-avx2/estimates.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-avx2/sample.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-avx2/tukey.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-sse2/
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-sse2/benchmark.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-sse2/estimates.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-sse2/sample.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-sse2/tukey.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-sse4/
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-sse4/benchmark.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-sse4/estimates.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-sse4/sample.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native-sse4/tukey.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native/
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native/benchmark.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native/estimates.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native/sample.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/native/tukey.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/new/
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/new/benchmark.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/new/estimates.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/new/sample.json
+lines iterators/FindAllMemchrCrate/BACILLUS_EMBL/new/tukey.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/default/
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/default/benchmark.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/default/estimates.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/default/sample.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/default/tukey.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-avx/
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-avx/benchmark.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-avx/estimates.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-avx/sample.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-avx/tukey.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-avx2/
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-avx2/benchmark.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-avx2/estimates.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-avx2/sample.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-avx2/tukey.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-sse2/
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-sse2/benchmark.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-sse2/estimates.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-sse2/sample.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-sse2/tukey.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-sse4/
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-sse4/benchmark.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-sse4/estimates.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-sse4/sample.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native-sse4/tukey.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native/
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native/benchmark.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native/estimates.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native/sample.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/native/tukey.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/new/
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/new/benchmark.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/new/estimates.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/new/sample.json
+lines iterators/FindAllMemchrCrate/BACILLUS_FASTA/new/tukey.json
+lines iterators/FindAllViaSimd16/
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/default/
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/default/benchmark.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/default/estimates.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/default/sample.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/default/tukey.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx/
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx2/
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse2/
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse4/
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native/
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native/benchmark.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native/estimates.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native/sample.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/native/tukey.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/new/
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/new/benchmark.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/new/estimates.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/new/sample.json
+lines iterators/FindAllViaSimd16/A_TALE_OF_TWO_CITIES/new/tukey.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/default/
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/default/benchmark.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/default/estimates.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/default/sample.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/default/tukey.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-avx/
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-avx/benchmark.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-avx/estimates.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-avx/sample.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-avx/tukey.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-avx2/
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-avx2/benchmark.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-avx2/estimates.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-avx2/sample.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-avx2/tukey.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-sse2/
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-sse2/benchmark.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-sse2/estimates.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-sse2/sample.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-sse2/tukey.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-sse4/
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-sse4/benchmark.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-sse4/estimates.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-sse4/sample.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native-sse4/tukey.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native/
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native/benchmark.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native/estimates.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native/sample.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/native/tukey.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/new/
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/new/benchmark.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/new/estimates.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/new/sample.json
+lines iterators/FindAllViaSimd16/BACILLUS_EMBL/new/tukey.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/default/
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/default/benchmark.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/default/estimates.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/default/sample.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/default/tukey.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-avx/
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-avx/benchmark.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-avx/estimates.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-avx/sample.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-avx/tukey.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-avx2/
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-avx2/benchmark.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-avx2/estimates.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-avx2/sample.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-avx2/tukey.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-sse2/
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-sse2/benchmark.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-sse2/estimates.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-sse2/sample.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-sse2/tukey.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-sse4/
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-sse4/benchmark.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-sse4/estimates.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-sse4/sample.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native-sse4/tukey.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native/
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native/benchmark.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native/estimates.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native/sample.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/native/tukey.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/new/
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/new/benchmark.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/new/estimates.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/new/sample.json
+lines iterators/FindAllViaSimd16/BACILLUS_FASTA/new/tukey.json
+lines iterators/FindAllViaSimd32/
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/default/
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/default/benchmark.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/default/estimates.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/default/sample.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/default/tukey.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx/
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx2/
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse2/
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse4/
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native/
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native/benchmark.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native/estimates.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native/sample.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/native/tukey.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/new/
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/new/benchmark.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/new/estimates.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/new/sample.json
+lines iterators/FindAllViaSimd32/A_TALE_OF_TWO_CITIES/new/tukey.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/default/
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/default/benchmark.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/default/estimates.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/default/sample.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/default/tukey.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-avx/
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-avx/benchmark.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-avx/estimates.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-avx/sample.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-avx/tukey.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-avx2/
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-avx2/benchmark.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-avx2/estimates.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-avx2/sample.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-avx2/tukey.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-sse2/
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-sse2/benchmark.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-sse2/estimates.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-sse2/sample.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-sse2/tukey.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-sse4/
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-sse4/benchmark.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-sse4/estimates.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-sse4/sample.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native-sse4/tukey.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native/
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native/benchmark.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native/estimates.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native/sample.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/native/tukey.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/new/
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/new/benchmark.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/new/estimates.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/new/sample.json
+lines iterators/FindAllViaSimd32/BACILLUS_EMBL/new/tukey.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/default/
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/default/benchmark.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/default/estimates.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/default/sample.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/default/tukey.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-avx/
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-avx/benchmark.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-avx/estimates.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-avx/sample.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-avx/tukey.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-avx2/
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-avx2/benchmark.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-avx2/estimates.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-avx2/sample.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-avx2/tukey.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-sse2/
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-sse2/benchmark.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-sse2/estimates.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-sse2/sample.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-sse2/tukey.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-sse4/
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-sse4/benchmark.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-sse4/estimates.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-sse4/sample.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native-sse4/tukey.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native/
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native/benchmark.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native/estimates.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native/sample.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/native/tukey.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/new/
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/new/benchmark.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/new/estimates.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/new/sample.json
+lines iterators/FindAllViaSimd32/BACILLUS_FASTA/new/tukey.json
+lines iterators/FindAllViaSimd64/
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/default/
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/default/benchmark.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/default/estimates.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/default/sample.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/default/tukey.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx/
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx2/
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse2/
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse4/
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native/
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native/benchmark.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native/estimates.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native/sample.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/native/tukey.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/new/
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/new/benchmark.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/new/estimates.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/new/sample.json
+lines iterators/FindAllViaSimd64/A_TALE_OF_TWO_CITIES/new/tukey.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/default/
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/default/benchmark.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/default/estimates.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/default/sample.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/default/tukey.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-avx/
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-avx/benchmark.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-avx/estimates.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-avx/sample.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-avx/tukey.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-avx2/
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-avx2/benchmark.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-avx2/estimates.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-avx2/sample.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-avx2/tukey.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-sse2/
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-sse2/benchmark.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-sse2/estimates.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-sse2/sample.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-sse2/tukey.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-sse4/
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-sse4/benchmark.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-sse4/estimates.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-sse4/sample.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native-sse4/tukey.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native/
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native/benchmark.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native/estimates.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native/sample.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/native/tukey.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/new/
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/new/benchmark.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/new/estimates.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/new/sample.json
+lines iterators/FindAllViaSimd64/BACILLUS_EMBL/new/tukey.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/default/
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/default/benchmark.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/default/estimates.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/default/sample.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/default/tukey.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-avx/
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-avx/benchmark.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-avx/estimates.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-avx/sample.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-avx/tukey.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-avx2/
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-avx2/benchmark.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-avx2/estimates.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-avx2/sample.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-avx2/tukey.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-sse2/
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-sse2/benchmark.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-sse2/estimates.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-sse2/sample.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-sse2/tukey.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-sse4/
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-sse4/benchmark.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-sse4/estimates.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-sse4/sample.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native-sse4/tukey.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native/
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native/benchmark.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native/estimates.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native/sample.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/native/tukey.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/new/
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/new/benchmark.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/new/estimates.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/new/sample.json
+lines iterators/FindAllViaSimd64/BACILLUS_FASTA/new/tukey.json
+lines iterators/FindAllViaU16/
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/default/
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/default/benchmark.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/default/estimates.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/default/sample.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/default/tukey.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx/
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx2/
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse2/
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse4/
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native/
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native/benchmark.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native/estimates.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native/sample.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/native/tukey.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/new/
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/new/benchmark.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/new/estimates.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/new/sample.json
+lines iterators/FindAllViaU16/A_TALE_OF_TWO_CITIES/new/tukey.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/
+lines iterators/FindAllViaU16/BACILLUS_EMBL/default/
+lines iterators/FindAllViaU16/BACILLUS_EMBL/default/benchmark.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/default/estimates.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/default/sample.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/default/tukey.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-avx/
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-avx/benchmark.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-avx/estimates.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-avx/sample.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-avx/tukey.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-avx2/
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-avx2/benchmark.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-avx2/estimates.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-avx2/sample.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-avx2/tukey.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-sse2/
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-sse2/benchmark.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-sse2/estimates.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-sse2/sample.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-sse2/tukey.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-sse4/
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-sse4/benchmark.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-sse4/estimates.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-sse4/sample.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native-sse4/tukey.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native/
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native/benchmark.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native/estimates.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native/sample.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/native/tukey.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/new/
+lines iterators/FindAllViaU16/BACILLUS_EMBL/new/benchmark.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/new/estimates.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/new/sample.json
+lines iterators/FindAllViaU16/BACILLUS_EMBL/new/tukey.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/
+lines iterators/FindAllViaU16/BACILLUS_FASTA/default/
+lines iterators/FindAllViaU16/BACILLUS_FASTA/default/benchmark.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/default/estimates.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/default/sample.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/default/tukey.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-avx/
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-avx/benchmark.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-avx/estimates.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-avx/sample.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-avx/tukey.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-avx2/
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-avx2/benchmark.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-avx2/estimates.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-avx2/sample.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-avx2/tukey.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-sse2/
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-sse2/benchmark.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-sse2/estimates.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-sse2/sample.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-sse2/tukey.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-sse4/
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-sse4/benchmark.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-sse4/estimates.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-sse4/sample.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native-sse4/tukey.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native/
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native/benchmark.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native/estimates.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native/sample.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/native/tukey.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/new/
+lines iterators/FindAllViaU16/BACILLUS_FASTA/new/benchmark.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/new/estimates.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/new/sample.json
+lines iterators/FindAllViaU16/BACILLUS_FASTA/new/tukey.json
+lines iterators/FindAllViaU32/
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/default/
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/default/benchmark.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/default/estimates.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/default/sample.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/default/tukey.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx/
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx2/
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse2/
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse4/
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native/
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native/benchmark.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native/estimates.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native/sample.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/native/tukey.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/new/
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/new/benchmark.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/new/estimates.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/new/sample.json
+lines iterators/FindAllViaU32/A_TALE_OF_TWO_CITIES/new/tukey.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/
+lines iterators/FindAllViaU32/BACILLUS_EMBL/default/
+lines iterators/FindAllViaU32/BACILLUS_EMBL/default/benchmark.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/default/estimates.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/default/sample.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/default/tukey.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-avx/
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-avx/benchmark.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-avx/estimates.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-avx/sample.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-avx/tukey.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-avx2/
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-avx2/benchmark.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-avx2/estimates.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-avx2/sample.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-avx2/tukey.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-sse2/
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-sse2/benchmark.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-sse2/estimates.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-sse2/sample.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-sse2/tukey.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-sse4/
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-sse4/benchmark.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-sse4/estimates.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-sse4/sample.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native-sse4/tukey.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native/
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native/benchmark.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native/estimates.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native/sample.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/native/tukey.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/new/
+lines iterators/FindAllViaU32/BACILLUS_EMBL/new/benchmark.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/new/estimates.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/new/sample.json
+lines iterators/FindAllViaU32/BACILLUS_EMBL/new/tukey.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/
+lines iterators/FindAllViaU32/BACILLUS_FASTA/default/
+lines iterators/FindAllViaU32/BACILLUS_FASTA/default/benchmark.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/default/estimates.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/default/sample.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/default/tukey.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-avx/
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-avx/benchmark.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-avx/estimates.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-avx/sample.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-avx/tukey.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-avx2/
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-avx2/benchmark.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-avx2/estimates.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-avx2/sample.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-avx2/tukey.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-sse2/
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-sse2/benchmark.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-sse2/estimates.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-sse2/sample.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-sse2/tukey.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-sse4/
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-sse4/benchmark.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-sse4/estimates.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-sse4/sample.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native-sse4/tukey.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native/
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native/benchmark.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native/estimates.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native/sample.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/native/tukey.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/new/
+lines iterators/FindAllViaU32/BACILLUS_FASTA/new/benchmark.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/new/estimates.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/new/sample.json
+lines iterators/FindAllViaU32/BACILLUS_FASTA/new/tukey.json
+lines iterators/FindAllViaU64/
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/default/
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/default/benchmark.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/default/estimates.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/default/sample.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/default/tukey.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx/
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx2/
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse2/
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse4/
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native/
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native/benchmark.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native/estimates.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native/sample.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/native/tukey.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/new/
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/new/benchmark.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/new/estimates.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/new/sample.json
+lines iterators/FindAllViaU64/A_TALE_OF_TWO_CITIES/new/tukey.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/
+lines iterators/FindAllViaU64/BACILLUS_EMBL/default/
+lines iterators/FindAllViaU64/BACILLUS_EMBL/default/benchmark.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/default/estimates.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/default/sample.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/default/tukey.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-avx/
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-avx/benchmark.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-avx/estimates.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-avx/sample.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-avx/tukey.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-avx2/
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-avx2/benchmark.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-avx2/estimates.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-avx2/sample.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-avx2/tukey.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-sse2/
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-sse2/benchmark.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-sse2/estimates.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-sse2/sample.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-sse2/tukey.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-sse4/
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-sse4/benchmark.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-sse4/estimates.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-sse4/sample.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native-sse4/tukey.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native/
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native/benchmark.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native/estimates.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native/sample.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/native/tukey.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/new/
+lines iterators/FindAllViaU64/BACILLUS_EMBL/new/benchmark.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/new/estimates.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/new/sample.json
+lines iterators/FindAllViaU64/BACILLUS_EMBL/new/tukey.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/
+lines iterators/FindAllViaU64/BACILLUS_FASTA/default/
+lines iterators/FindAllViaU64/BACILLUS_FASTA/default/benchmark.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/default/estimates.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/default/sample.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/default/tukey.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-avx/
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-avx/benchmark.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-avx/estimates.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-avx/sample.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-avx/tukey.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-avx2/
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-avx2/benchmark.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-avx2/estimates.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-avx2/sample.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-avx2/tukey.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-sse2/
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-sse2/benchmark.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-sse2/estimates.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-sse2/sample.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-sse2/tukey.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-sse4/
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-sse4/benchmark.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-sse4/estimates.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-sse4/sample.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native-sse4/tukey.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native/
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native/benchmark.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native/estimates.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native/sample.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/native/tukey.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/new/
+lines iterators/FindAllViaU64/BACILLUS_FASTA/new/benchmark.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/new/estimates.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/new/sample.json
+lines iterators/FindAllViaU64/BACILLUS_FASTA/new/tukey.json
+lines iterators/str__lines/
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/default/
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/default/benchmark.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/default/estimates.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/default/sample.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/default/tukey.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-avx/
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-avx/benchmark.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-avx/estimates.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-avx/sample.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-avx/tukey.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-avx2/
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-avx2/benchmark.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-avx2/estimates.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-avx2/sample.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-avx2/tukey.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-sse2/
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-sse2/benchmark.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-sse2/estimates.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-sse2/sample.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-sse2/tukey.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-sse4/
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-sse4/benchmark.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-sse4/estimates.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-sse4/sample.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native-sse4/tukey.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native/
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native/benchmark.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native/estimates.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native/sample.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/native/tukey.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/new/
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/new/benchmark.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/new/estimates.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/new/sample.json
+lines iterators/str__lines/A_TALE_OF_TWO_CITIES/new/tukey.json
+lines iterators/str__lines/BACILLUS_EMBL/
+lines iterators/str__lines/BACILLUS_EMBL/default/
+lines iterators/str__lines/BACILLUS_EMBL/default/benchmark.json
+lines iterators/str__lines/BACILLUS_EMBL/default/estimates.json
+lines iterators/str__lines/BACILLUS_EMBL/default/sample.json
+lines iterators/str__lines/BACILLUS_EMBL/default/tukey.json
+lines iterators/str__lines/BACILLUS_EMBL/native-avx/
+lines iterators/str__lines/BACILLUS_EMBL/native-avx/benchmark.json
+lines iterators/str__lines/BACILLUS_EMBL/native-avx/estimates.json
+lines iterators/str__lines/BACILLUS_EMBL/native-avx/sample.json
+lines iterators/str__lines/BACILLUS_EMBL/native-avx/tukey.json
+lines iterators/str__lines/BACILLUS_EMBL/native-avx2/
+lines iterators/str__lines/BACILLUS_EMBL/native-avx2/benchmark.json
+lines iterators/str__lines/BACILLUS_EMBL/native-avx2/estimates.json
+lines iterators/str__lines/BACILLUS_EMBL/native-avx2/sample.json
+lines iterators/str__lines/BACILLUS_EMBL/native-avx2/tukey.json
+lines iterators/str__lines/BACILLUS_EMBL/native-sse2/
+lines iterators/str__lines/BACILLUS_EMBL/native-sse2/benchmark.json
+lines iterators/str__lines/BACILLUS_EMBL/native-sse2/estimates.json
+lines iterators/str__lines/BACILLUS_EMBL/native-sse2/sample.json
+lines iterators/str__lines/BACILLUS_EMBL/native-sse2/tukey.json
+lines iterators/str__lines/BACILLUS_EMBL/native-sse4/
+lines iterators/str__lines/BACILLUS_EMBL/native-sse4/benchmark.json
+lines iterators/str__lines/BACILLUS_EMBL/native-sse4/estimates.json
+lines iterators/str__lines/BACILLUS_EMBL/native-sse4/sample.json
+lines iterators/str__lines/BACILLUS_EMBL/native-sse4/tukey.json
+lines iterators/str__lines/BACILLUS_EMBL/native/
+lines iterators/str__lines/BACILLUS_EMBL/native/benchmark.json
+lines iterators/str__lines/BACILLUS_EMBL/native/estimates.json
+lines iterators/str__lines/BACILLUS_EMBL/native/sample.json
+lines iterators/str__lines/BACILLUS_EMBL/native/tukey.json
+lines iterators/str__lines/BACILLUS_EMBL/new/
+lines iterators/str__lines/BACILLUS_EMBL/new/benchmark.json
+lines iterators/str__lines/BACILLUS_EMBL/new/estimates.json
+lines iterators/str__lines/BACILLUS_EMBL/new/sample.json
+lines iterators/str__lines/BACILLUS_EMBL/new/tukey.json
+lines iterators/str__lines/BACILLUS_FASTA/
+lines iterators/str__lines/BACILLUS_FASTA/default/
+lines iterators/str__lines/BACILLUS_FASTA/default/benchmark.json
+lines iterators/str__lines/BACILLUS_FASTA/default/estimates.json
+lines iterators/str__lines/BACILLUS_FASTA/default/sample.json
+lines iterators/str__lines/BACILLUS_FASTA/default/tukey.json
+lines iterators/str__lines/BACILLUS_FASTA/native-avx/
+lines iterators/str__lines/BACILLUS_FASTA/native-avx/benchmark.json
+lines iterators/str__lines/BACILLUS_FASTA/native-avx/estimates.json
+lines iterators/str__lines/BACILLUS_FASTA/native-avx/sample.json
+lines iterators/str__lines/BACILLUS_FASTA/native-avx/tukey.json
+lines iterators/str__lines/BACILLUS_FASTA/native-avx2/
+lines iterators/str__lines/BACILLUS_FASTA/native-avx2/benchmark.json
+lines iterators/str__lines/BACILLUS_FASTA/native-avx2/estimates.json
+lines iterators/str__lines/BACILLUS_FASTA/native-avx2/sample.json
+lines iterators/str__lines/BACILLUS_FASTA/native-avx2/tukey.json
+lines iterators/str__lines/BACILLUS_FASTA/native-sse2/
+lines iterators/str__lines/BACILLUS_FASTA/native-sse2/benchmark.json
+lines iterators/str__lines/BACILLUS_FASTA/native-sse2/estimates.json
+lines iterators/str__lines/BACILLUS_FASTA/native-sse2/sample.json
+lines iterators/str__lines/BACILLUS_FASTA/native-sse2/tukey.json
+lines iterators/str__lines/BACILLUS_FASTA/native-sse4/
+lines iterators/str__lines/BACILLUS_FASTA/native-sse4/benchmark.json
+lines iterators/str__lines/BACILLUS_FASTA/native-sse4/estimates.json
+lines iterators/str__lines/BACILLUS_FASTA/native-sse4/sample.json
+lines iterators/str__lines/BACILLUS_FASTA/native-sse4/tukey.json
+lines iterators/str__lines/BACILLUS_FASTA/native/
+lines iterators/str__lines/BACILLUS_FASTA/native/benchmark.json
+lines iterators/str__lines/BACILLUS_FASTA/native/estimates.json
+lines iterators/str__lines/BACILLUS_FASTA/native/sample.json
+lines iterators/str__lines/BACILLUS_FASTA/native/tukey.json
+lines iterators/str__lines/BACILLUS_FASTA/new/
+lines iterators/str__lines/BACILLUS_FASTA/new/benchmark.json
+lines iterators/str__lines/BACILLUS_FASTA/new/estimates.json
+lines iterators/str__lines/BACILLUS_FASTA/new/sample.json
+lines iterators/str__lines/BACILLUS_FASTA/new/tukey.json
+parse full csv flat/
+parse full csv flat/FindAllIterating/
+parse full csv flat/FindAllIterating/flat parsing/
+parse full csv flat/FindAllIterating/flat parsing/default/
+parse full csv flat/FindAllIterating/flat parsing/default/benchmark.json
+parse full csv flat/FindAllIterating/flat parsing/default/estimates.json
+parse full csv flat/FindAllIterating/flat parsing/default/sample.json
+parse full csv flat/FindAllIterating/flat parsing/default/tukey.json
+parse full csv flat/FindAllIterating/flat parsing/native-avx/
+parse full csv flat/FindAllIterating/flat parsing/native-avx/benchmark.json
+parse full csv flat/FindAllIterating/flat parsing/native-avx/estimates.json
+parse full csv flat/FindAllIterating/flat parsing/native-avx/sample.json
+parse full csv flat/FindAllIterating/flat parsing/native-avx/tukey.json
+parse full csv flat/FindAllIterating/flat parsing/native-avx2/
+parse full csv flat/FindAllIterating/flat parsing/native-avx2/benchmark.json
+parse full csv flat/FindAllIterating/flat parsing/native-avx2/estimates.json
+parse full csv flat/FindAllIterating/flat parsing/native-avx2/sample.json
+parse full csv flat/FindAllIterating/flat parsing/native-avx2/tukey.json
+parse full csv flat/FindAllIterating/flat parsing/native-sse2/
+parse full csv flat/FindAllIterating/flat parsing/native-sse2/benchmark.json
+parse full csv flat/FindAllIterating/flat parsing/native-sse2/estimates.json
+parse full csv flat/FindAllIterating/flat parsing/native-sse2/sample.json
+parse full csv flat/FindAllIterating/flat parsing/native-sse2/tukey.json
+parse full csv flat/FindAllIterating/flat parsing/native-sse4/
+parse full csv flat/FindAllIterating/flat parsing/native-sse4/benchmark.json
+parse full csv flat/FindAllIterating/flat parsing/native-sse4/estimates.json
+parse full csv flat/FindAllIterating/flat parsing/native-sse4/sample.json
+parse full csv flat/FindAllIterating/flat parsing/native-sse4/tukey.json
+parse full csv flat/FindAllIterating/flat parsing/native/
+parse full csv flat/FindAllIterating/flat parsing/native/benchmark.json
+parse full csv flat/FindAllIterating/flat parsing/native/estimates.json
+parse full csv flat/FindAllIterating/flat parsing/native/sample.json
+parse full csv flat/FindAllIterating/flat parsing/native/tukey.json
+parse full csv flat/FindAllIterating/flat parsing/new/
+parse full csv flat/FindAllIterating/flat parsing/new/benchmark.json
+parse full csv flat/FindAllIterating/flat parsing/new/estimates.json
+parse full csv flat/FindAllIterating/flat parsing/new/sample.json
+parse full csv flat/FindAllIterating/flat parsing/new/tukey.json
+parse full csv flat/FindAllMemchrCrate/
+parse full csv flat/FindAllMemchrCrate/flat parsing/
+parse full csv flat/FindAllMemchrCrate/flat parsing/default/
+parse full csv flat/FindAllMemchrCrate/flat parsing/default/benchmark.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/default/estimates.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/default/sample.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/default/tukey.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-avx/
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-avx/benchmark.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-avx/estimates.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-avx/sample.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-avx/tukey.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-avx2/
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-avx2/benchmark.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-avx2/estimates.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-avx2/sample.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-avx2/tukey.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-sse2/
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-sse2/benchmark.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-sse2/estimates.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-sse2/sample.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-sse2/tukey.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-sse4/
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-sse4/benchmark.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-sse4/estimates.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-sse4/sample.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native-sse4/tukey.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native/
+parse full csv flat/FindAllMemchrCrate/flat parsing/native/benchmark.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native/estimates.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native/sample.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/native/tukey.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/new/
+parse full csv flat/FindAllMemchrCrate/flat parsing/new/benchmark.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/new/estimates.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/new/sample.json
+parse full csv flat/FindAllMemchrCrate/flat parsing/new/tukey.json
+parse full csv flat/FindAllViaSimd16/
+parse full csv flat/FindAllViaSimd16/flat parsing/
+parse full csv flat/FindAllViaSimd16/flat parsing/default/
+parse full csv flat/FindAllViaSimd16/flat parsing/default/benchmark.json
+parse full csv flat/FindAllViaSimd16/flat parsing/default/estimates.json
+parse full csv flat/FindAllViaSimd16/flat parsing/default/sample.json
+parse full csv flat/FindAllViaSimd16/flat parsing/default/tukey.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-avx/
+parse full csv flat/FindAllViaSimd16/flat parsing/native-avx/benchmark.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-avx/estimates.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-avx/sample.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-avx/tukey.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-avx2/
+parse full csv flat/FindAllViaSimd16/flat parsing/native-avx2/benchmark.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-avx2/estimates.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-avx2/sample.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-avx2/tukey.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-sse2/
+parse full csv flat/FindAllViaSimd16/flat parsing/native-sse2/benchmark.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-sse2/estimates.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-sse2/sample.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-sse2/tukey.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-sse4/
+parse full csv flat/FindAllViaSimd16/flat parsing/native-sse4/benchmark.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-sse4/estimates.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-sse4/sample.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native-sse4/tukey.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native/
+parse full csv flat/FindAllViaSimd16/flat parsing/native/benchmark.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native/estimates.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native/sample.json
+parse full csv flat/FindAllViaSimd16/flat parsing/native/tukey.json
+parse full csv flat/FindAllViaSimd16/flat parsing/new/
+parse full csv flat/FindAllViaSimd16/flat parsing/new/benchmark.json
+parse full csv flat/FindAllViaSimd16/flat parsing/new/estimates.json
+parse full csv flat/FindAllViaSimd16/flat parsing/new/sample.json
+parse full csv flat/FindAllViaSimd16/flat parsing/new/tukey.json
+parse full csv flat/FindAllViaSimd32/
+parse full csv flat/FindAllViaSimd32/flat parsing/
+parse full csv flat/FindAllViaSimd32/flat parsing/default/
+parse full csv flat/FindAllViaSimd32/flat parsing/default/benchmark.json
+parse full csv flat/FindAllViaSimd32/flat parsing/default/estimates.json
+parse full csv flat/FindAllViaSimd32/flat parsing/default/sample.json
+parse full csv flat/FindAllViaSimd32/flat parsing/default/tukey.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-avx/
+parse full csv flat/FindAllViaSimd32/flat parsing/native-avx/benchmark.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-avx/estimates.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-avx/sample.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-avx/tukey.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-avx2/
+parse full csv flat/FindAllViaSimd32/flat parsing/native-avx2/benchmark.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-avx2/estimates.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-avx2/sample.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-avx2/tukey.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-sse2/
+parse full csv flat/FindAllViaSimd32/flat parsing/native-sse2/benchmark.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-sse2/estimates.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-sse2/sample.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-sse2/tukey.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-sse4/
+parse full csv flat/FindAllViaSimd32/flat parsing/native-sse4/benchmark.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-sse4/estimates.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-sse4/sample.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native-sse4/tukey.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native/
+parse full csv flat/FindAllViaSimd32/flat parsing/native/benchmark.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native/estimates.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native/sample.json
+parse full csv flat/FindAllViaSimd32/flat parsing/native/tukey.json
+parse full csv flat/FindAllViaSimd32/flat parsing/new/
+parse full csv flat/FindAllViaSimd32/flat parsing/new/benchmark.json
+parse full csv flat/FindAllViaSimd32/flat parsing/new/estimates.json
+parse full csv flat/FindAllViaSimd32/flat parsing/new/sample.json
+parse full csv flat/FindAllViaSimd32/flat parsing/new/tukey.json
+parse full csv flat/FindAllViaSimd64/
+parse full csv flat/FindAllViaSimd64/flat parsing/
+parse full csv flat/FindAllViaSimd64/flat parsing/default/
+parse full csv flat/FindAllViaSimd64/flat parsing/default/benchmark.json
+parse full csv flat/FindAllViaSimd64/flat parsing/default/estimates.json
+parse full csv flat/FindAllViaSimd64/flat parsing/default/sample.json
+parse full csv flat/FindAllViaSimd64/flat parsing/default/tukey.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-avx/
+parse full csv flat/FindAllViaSimd64/flat parsing/native-avx/benchmark.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-avx/estimates.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-avx/sample.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-avx/tukey.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-avx2/
+parse full csv flat/FindAllViaSimd64/flat parsing/native-avx2/benchmark.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-avx2/estimates.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-avx2/sample.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-avx2/tukey.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-sse2/
+parse full csv flat/FindAllViaSimd64/flat parsing/native-sse2/benchmark.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-sse2/estimates.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-sse2/sample.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-sse2/tukey.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-sse4/
+parse full csv flat/FindAllViaSimd64/flat parsing/native-sse4/benchmark.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-sse4/estimates.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-sse4/sample.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native-sse4/tukey.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native/
+parse full csv flat/FindAllViaSimd64/flat parsing/native/benchmark.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native/estimates.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native/sample.json
+parse full csv flat/FindAllViaSimd64/flat parsing/native/tukey.json
+parse full csv flat/FindAllViaSimd64/flat parsing/new/
+parse full csv flat/FindAllViaSimd64/flat parsing/new/benchmark.json
+parse full csv flat/FindAllViaSimd64/flat parsing/new/estimates.json
+parse full csv flat/FindAllViaSimd64/flat parsing/new/sample.json
+parse full csv flat/FindAllViaSimd64/flat parsing/new/tukey.json
+parse full csv flat/FindAllViaU16/
+parse full csv flat/FindAllViaU16/flat parsing/
+parse full csv flat/FindAllViaU16/flat parsing/default/
+parse full csv flat/FindAllViaU16/flat parsing/default/benchmark.json
+parse full csv flat/FindAllViaU16/flat parsing/default/estimates.json
+parse full csv flat/FindAllViaU16/flat parsing/default/sample.json
+parse full csv flat/FindAllViaU16/flat parsing/default/tukey.json
+parse full csv flat/FindAllViaU16/flat parsing/native-avx/
+parse full csv flat/FindAllViaU16/flat parsing/native-avx/benchmark.json
+parse full csv flat/FindAllViaU16/flat parsing/native-avx/estimates.json
+parse full csv flat/FindAllViaU16/flat parsing/native-avx/sample.json
+parse full csv flat/FindAllViaU16/flat parsing/native-avx/tukey.json
+parse full csv flat/FindAllViaU16/flat parsing/native-avx2/
+parse full csv flat/FindAllViaU16/flat parsing/native-avx2/benchmark.json
+parse full csv flat/FindAllViaU16/flat parsing/native-avx2/estimates.json
+parse full csv flat/FindAllViaU16/flat parsing/native-avx2/sample.json
+parse full csv flat/FindAllViaU16/flat parsing/native-avx2/tukey.json
+parse full csv flat/FindAllViaU16/flat parsing/native-sse2/
+parse full csv flat/FindAllViaU16/flat parsing/native-sse2/benchmark.json
+parse full csv flat/FindAllViaU16/flat parsing/native-sse2/estimates.json
+parse full csv flat/FindAllViaU16/flat parsing/native-sse2/sample.json
+parse full csv flat/FindAllViaU16/flat parsing/native-sse2/tukey.json
+parse full csv flat/FindAllViaU16/flat parsing/native-sse4/
+parse full csv flat/FindAllViaU16/flat parsing/native-sse4/benchmark.json
+parse full csv flat/FindAllViaU16/flat parsing/native-sse4/estimates.json
+parse full csv flat/FindAllViaU16/flat parsing/native-sse4/sample.json
+parse full csv flat/FindAllViaU16/flat parsing/native-sse4/tukey.json
+parse full csv flat/FindAllViaU16/flat parsing/native/
+parse full csv flat/FindAllViaU16/flat parsing/native/benchmark.json
+parse full csv flat/FindAllViaU16/flat parsing/native/estimates.json
+parse full csv flat/FindAllViaU16/flat parsing/native/sample.json
+parse full csv flat/FindAllViaU16/flat parsing/native/tukey.json
+parse full csv flat/FindAllViaU16/flat parsing/new/
+parse full csv flat/FindAllViaU16/flat parsing/new/benchmark.json
+parse full csv flat/FindAllViaU16/flat parsing/new/estimates.json
+parse full csv flat/FindAllViaU16/flat parsing/new/sample.json
+parse full csv flat/FindAllViaU16/flat parsing/new/tukey.json
+parse full csv flat/FindAllViaU32/
+parse full csv flat/FindAllViaU32/flat parsing/
+parse full csv flat/FindAllViaU32/flat parsing/default/
+parse full csv flat/FindAllViaU32/flat parsing/default/benchmark.json
+parse full csv flat/FindAllViaU32/flat parsing/default/estimates.json
+parse full csv flat/FindAllViaU32/flat parsing/default/sample.json
+parse full csv flat/FindAllViaU32/flat parsing/default/tukey.json
+parse full csv flat/FindAllViaU32/flat parsing/native-avx/
+parse full csv flat/FindAllViaU32/flat parsing/native-avx/benchmark.json
+parse full csv flat/FindAllViaU32/flat parsing/native-avx/estimates.json
+parse full csv flat/FindAllViaU32/flat parsing/native-avx/sample.json
+parse full csv flat/FindAllViaU32/flat parsing/native-avx/tukey.json
+parse full csv flat/FindAllViaU32/flat parsing/native-avx2/
+parse full csv flat/FindAllViaU32/flat parsing/native-avx2/benchmark.json
+parse full csv flat/FindAllViaU32/flat parsing/native-avx2/estimates.json
+parse full csv flat/FindAllViaU32/flat parsing/native-avx2/sample.json
+parse full csv flat/FindAllViaU32/flat parsing/native-avx2/tukey.json
+parse full csv flat/FindAllViaU32/flat parsing/native-sse2/
+parse full csv flat/FindAllViaU32/flat parsing/native-sse2/benchmark.json
+parse full csv flat/FindAllViaU32/flat parsing/native-sse2/estimates.json
+parse full csv flat/FindAllViaU32/flat parsing/native-sse2/sample.json
+parse full csv flat/FindAllViaU32/flat parsing/native-sse2/tukey.json
+parse full csv flat/FindAllViaU32/flat parsing/native-sse4/
+parse full csv flat/FindAllViaU32/flat parsing/native-sse4/benchmark.json
+parse full csv flat/FindAllViaU32/flat parsing/native-sse4/estimates.json
+parse full csv flat/FindAllViaU32/flat parsing/native-sse4/sample.json
+parse full csv flat/FindAllViaU32/flat parsing/native-sse4/tukey.json
+parse full csv flat/FindAllViaU32/flat parsing/native/
+parse full csv flat/FindAllViaU32/flat parsing/native/benchmark.json
+parse full csv flat/FindAllViaU32/flat parsing/native/estimates.json
+parse full csv flat/FindAllViaU32/flat parsing/native/sample.json
+parse full csv flat/FindAllViaU32/flat parsing/native/tukey.json
+parse full csv flat/FindAllViaU32/flat parsing/new/
+parse full csv flat/FindAllViaU32/flat parsing/new/benchmark.json
+parse full csv flat/FindAllViaU32/flat parsing/new/estimates.json
+parse full csv flat/FindAllViaU32/flat parsing/new/sample.json
+parse full csv flat/FindAllViaU32/flat parsing/new/tukey.json
+parse full csv flat/FindAllViaU64/
+parse full csv flat/FindAllViaU64/flat parsing/
+parse full csv flat/FindAllViaU64/flat parsing/default/
+parse full csv flat/FindAllViaU64/flat parsing/default/benchmark.json
+parse full csv flat/FindAllViaU64/flat parsing/default/estimates.json
+parse full csv flat/FindAllViaU64/flat parsing/default/sample.json
+parse full csv flat/FindAllViaU64/flat parsing/default/tukey.json
+parse full csv flat/FindAllViaU64/flat parsing/native-avx/
+parse full csv flat/FindAllViaU64/flat parsing/native-avx/benchmark.json
+parse full csv flat/FindAllViaU64/flat parsing/native-avx/estimates.json
+parse full csv flat/FindAllViaU64/flat parsing/native-avx/sample.json
+parse full csv flat/FindAllViaU64/flat parsing/native-avx/tukey.json
+parse full csv flat/FindAllViaU64/flat parsing/native-avx2/
+parse full csv flat/FindAllViaU64/flat parsing/native-avx2/benchmark.json
+parse full csv flat/FindAllViaU64/flat parsing/native-avx2/estimates.json
+parse full csv flat/FindAllViaU64/flat parsing/native-avx2/sample.json
+parse full csv flat/FindAllViaU64/flat parsing/native-avx2/tukey.json
+parse full csv flat/FindAllViaU64/flat parsing/native-sse2/
+parse full csv flat/FindAllViaU64/flat parsing/native-sse2/benchmark.json
+parse full csv flat/FindAllViaU64/flat parsing/native-sse2/estimates.json
+parse full csv flat/FindAllViaU64/flat parsing/native-sse2/sample.json
+parse full csv flat/FindAllViaU64/flat parsing/native-sse2/tukey.json
+parse full csv flat/FindAllViaU64/flat parsing/native-sse4/
+parse full csv flat/FindAllViaU64/flat parsing/native-sse4/benchmark.json
+parse full csv flat/FindAllViaU64/flat parsing/native-sse4/estimates.json
+parse full csv flat/FindAllViaU64/flat parsing/native-sse4/sample.json
+parse full csv flat/FindAllViaU64/flat parsing/native-sse4/tukey.json
+parse full csv flat/FindAllViaU64/flat parsing/native/
+parse full csv flat/FindAllViaU64/flat parsing/native/benchmark.json
+parse full csv flat/FindAllViaU64/flat parsing/native/estimates.json
+parse full csv flat/FindAllViaU64/flat parsing/native/sample.json
+parse full csv flat/FindAllViaU64/flat parsing/native/tukey.json
+parse full csv flat/FindAllViaU64/flat parsing/new/
+parse full csv flat/FindAllViaU64/flat parsing/new/benchmark.json
+parse full csv flat/FindAllViaU64/flat parsing/new/estimates.json
+parse full csv flat/FindAllViaU64/flat parsing/new/sample.json
+parse full csv flat/FindAllViaU64/flat parsing/new/tukey.json
+parse full csv flat/flat parsing/
+parse full csv nested/
+parse full csv nested/FindAllIterating/
+parse full csv nested/FindAllIterating/nested parsing/
+parse full csv nested/FindAllIterating/nested parsing/default/
+parse full csv nested/FindAllIterating/nested parsing/default/benchmark.json
+parse full csv nested/FindAllIterating/nested parsing/default/estimates.json
+parse full csv nested/FindAllIterating/nested parsing/default/sample.json
+parse full csv nested/FindAllIterating/nested parsing/default/tukey.json
+parse full csv nested/FindAllIterating/nested parsing/native-avx/
+parse full csv nested/FindAllIterating/nested parsing/native-avx/benchmark.json
+parse full csv nested/FindAllIterating/nested parsing/native-avx/estimates.json
+parse full csv nested/FindAllIterating/nested parsing/native-avx/sample.json
+parse full csv nested/FindAllIterating/nested parsing/native-avx/tukey.json
+parse full csv nested/FindAllIterating/nested parsing/native-avx2/
+parse full csv nested/FindAllIterating/nested parsing/native-avx2/benchmark.json
+parse full csv nested/FindAllIterating/nested parsing/native-avx2/estimates.json
+parse full csv nested/FindAllIterating/nested parsing/native-avx2/sample.json
+parse full csv nested/FindAllIterating/nested parsing/native-avx2/tukey.json
+parse full csv nested/FindAllIterating/nested parsing/native-sse2/
+parse full csv nested/FindAllIterating/nested parsing/native-sse2/benchmark.json
+parse full csv nested/FindAllIterating/nested parsing/native-sse2/estimates.json
+parse full csv nested/FindAllIterating/nested parsing/native-sse2/sample.json
+parse full csv nested/FindAllIterating/nested parsing/native-sse2/tukey.json
+parse full csv nested/FindAllIterating/nested parsing/native-sse4/
+parse full csv nested/FindAllIterating/nested parsing/native-sse4/benchmark.json
+parse full csv nested/FindAllIterating/nested parsing/native-sse4/estimates.json
+parse full csv nested/FindAllIterating/nested parsing/native-sse4/sample.json
+parse full csv nested/FindAllIterating/nested parsing/native-sse4/tukey.json
+parse full csv nested/FindAllIterating/nested parsing/native/
+parse full csv nested/FindAllIterating/nested parsing/native/benchmark.json
+parse full csv nested/FindAllIterating/nested parsing/native/estimates.json
+parse full csv nested/FindAllIterating/nested parsing/native/sample.json
+parse full csv nested/FindAllIterating/nested parsing/native/tukey.json
+parse full csv nested/FindAllIterating/nested parsing/new/
+parse full csv nested/FindAllIterating/nested parsing/new/benchmark.json
+parse full csv nested/FindAllIterating/nested parsing/new/estimates.json
+parse full csv nested/FindAllIterating/nested parsing/new/sample.json
+parse full csv nested/FindAllIterating/nested parsing/new/tukey.json
+parse full csv nested/FindAllMemchrCrate/
+parse full csv nested/FindAllMemchrCrate/nested parsing/
+parse full csv nested/FindAllMemchrCrate/nested parsing/default/
+parse full csv nested/FindAllMemchrCrate/nested parsing/default/benchmark.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/default/estimates.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/default/sample.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/default/tukey.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-avx/
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-avx/benchmark.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-avx/estimates.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-avx/sample.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-avx/tukey.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-avx2/
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-avx2/benchmark.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-avx2/estimates.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-avx2/sample.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-avx2/tukey.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-sse2/
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-sse2/benchmark.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-sse2/estimates.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-sse2/sample.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-sse2/tukey.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-sse4/
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-sse4/benchmark.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-sse4/estimates.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-sse4/sample.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native-sse4/tukey.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native/
+parse full csv nested/FindAllMemchrCrate/nested parsing/native/benchmark.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native/estimates.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native/sample.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/native/tukey.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/new/
+parse full csv nested/FindAllMemchrCrate/nested parsing/new/benchmark.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/new/estimates.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/new/sample.json
+parse full csv nested/FindAllMemchrCrate/nested parsing/new/tukey.json
+parse full csv nested/FindAllViaSimd16/
+parse full csv nested/FindAllViaSimd16/nested parsing/
+parse full csv nested/FindAllViaSimd16/nested parsing/default/
+parse full csv nested/FindAllViaSimd16/nested parsing/default/benchmark.json
+parse full csv nested/FindAllViaSimd16/nested parsing/default/estimates.json
+parse full csv nested/FindAllViaSimd16/nested parsing/default/sample.json
+parse full csv nested/FindAllViaSimd16/nested parsing/default/tukey.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-avx/
+parse full csv nested/FindAllViaSimd16/nested parsing/native-avx/benchmark.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-avx/estimates.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-avx/sample.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-avx/tukey.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-avx2/
+parse full csv nested/FindAllViaSimd16/nested parsing/native-avx2/benchmark.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-avx2/estimates.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-avx2/sample.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-avx2/tukey.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-sse2/
+parse full csv nested/FindAllViaSimd16/nested parsing/native-sse2/benchmark.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-sse2/estimates.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-sse2/sample.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-sse2/tukey.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-sse4/
+parse full csv nested/FindAllViaSimd16/nested parsing/native-sse4/benchmark.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-sse4/estimates.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-sse4/sample.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native-sse4/tukey.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native/
+parse full csv nested/FindAllViaSimd16/nested parsing/native/benchmark.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native/estimates.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native/sample.json
+parse full csv nested/FindAllViaSimd16/nested parsing/native/tukey.json
+parse full csv nested/FindAllViaSimd16/nested parsing/new/
+parse full csv nested/FindAllViaSimd16/nested parsing/new/benchmark.json
+parse full csv nested/FindAllViaSimd16/nested parsing/new/estimates.json
+parse full csv nested/FindAllViaSimd16/nested parsing/new/sample.json
+parse full csv nested/FindAllViaSimd16/nested parsing/new/tukey.json
+parse full csv nested/FindAllViaSimd32/
+parse full csv nested/FindAllViaSimd32/nested parsing/
+parse full csv nested/FindAllViaSimd32/nested parsing/default/
+parse full csv nested/FindAllViaSimd32/nested parsing/default/benchmark.json
+parse full csv nested/FindAllViaSimd32/nested parsing/default/estimates.json
+parse full csv nested/FindAllViaSimd32/nested parsing/default/sample.json
+parse full csv nested/FindAllViaSimd32/nested parsing/default/tukey.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-avx/
+parse full csv nested/FindAllViaSimd32/nested parsing/native-avx/benchmark.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-avx/estimates.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-avx/sample.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-avx/tukey.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-avx2/
+parse full csv nested/FindAllViaSimd32/nested parsing/native-avx2/benchmark.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-avx2/estimates.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-avx2/sample.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-avx2/tukey.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-sse2/
+parse full csv nested/FindAllViaSimd32/nested parsing/native-sse2/benchmark.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-sse2/estimates.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-sse2/sample.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-sse2/tukey.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-sse4/
+parse full csv nested/FindAllViaSimd32/nested parsing/native-sse4/benchmark.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-sse4/estimates.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-sse4/sample.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native-sse4/tukey.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native/
+parse full csv nested/FindAllViaSimd32/nested parsing/native/benchmark.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native/estimates.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native/sample.json
+parse full csv nested/FindAllViaSimd32/nested parsing/native/tukey.json
+parse full csv nested/FindAllViaSimd32/nested parsing/new/
+parse full csv nested/FindAllViaSimd32/nested parsing/new/benchmark.json
+parse full csv nested/FindAllViaSimd32/nested parsing/new/estimates.json
+parse full csv nested/FindAllViaSimd32/nested parsing/new/sample.json
+parse full csv nested/FindAllViaSimd32/nested parsing/new/tukey.json
+parse full csv nested/FindAllViaSimd64/
+parse full csv nested/FindAllViaSimd64/nested parsing/
+parse full csv nested/FindAllViaSimd64/nested parsing/default/
+parse full csv nested/FindAllViaSimd64/nested parsing/default/benchmark.json
+parse full csv nested/FindAllViaSimd64/nested parsing/default/estimates.json
+parse full csv nested/FindAllViaSimd64/nested parsing/default/sample.json
+parse full csv nested/FindAllViaSimd64/nested parsing/default/tukey.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-avx/
+parse full csv nested/FindAllViaSimd64/nested parsing/native-avx/benchmark.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-avx/estimates.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-avx/sample.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-avx/tukey.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-avx2/
+parse full csv nested/FindAllViaSimd64/nested parsing/native-avx2/benchmark.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-avx2/estimates.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-avx2/sample.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-avx2/tukey.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-sse2/
+parse full csv nested/FindAllViaSimd64/nested parsing/native-sse2/benchmark.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-sse2/estimates.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-sse2/sample.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-sse2/tukey.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-sse4/
+parse full csv nested/FindAllViaSimd64/nested parsing/native-sse4/benchmark.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-sse4/estimates.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-sse4/sample.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native-sse4/tukey.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native/
+parse full csv nested/FindAllViaSimd64/nested parsing/native/benchmark.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native/estimates.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native/sample.json
+parse full csv nested/FindAllViaSimd64/nested parsing/native/tukey.json
+parse full csv nested/FindAllViaSimd64/nested parsing/new/
+parse full csv nested/FindAllViaSimd64/nested parsing/new/benchmark.json
+parse full csv nested/FindAllViaSimd64/nested parsing/new/estimates.json
+parse full csv nested/FindAllViaSimd64/nested parsing/new/sample.json
+parse full csv nested/FindAllViaSimd64/nested parsing/new/tukey.json
+parse full csv nested/FindAllViaU16/
+parse full csv nested/FindAllViaU16/nested parsing/
+parse full csv nested/FindAllViaU16/nested parsing/default/
+parse full csv nested/FindAllViaU16/nested parsing/default/benchmark.json
+parse full csv nested/FindAllViaU16/nested parsing/default/estimates.json
+parse full csv nested/FindAllViaU16/nested parsing/default/sample.json
+parse full csv nested/FindAllViaU16/nested parsing/default/tukey.json
+parse full csv nested/FindAllViaU16/nested parsing/native-avx/
+parse full csv nested/FindAllViaU16/nested parsing/native-avx/benchmark.json
+parse full csv nested/FindAllViaU16/nested parsing/native-avx/estimates.json
+parse full csv nested/FindAllViaU16/nested parsing/native-avx/sample.json
+parse full csv nested/FindAllViaU16/nested parsing/native-avx/tukey.json
+parse full csv nested/FindAllViaU16/nested parsing/native-avx2/
+parse full csv nested/FindAllViaU16/nested parsing/native-avx2/benchmark.json
+parse full csv nested/FindAllViaU16/nested parsing/native-avx2/estimates.json
+parse full csv nested/FindAllViaU16/nested parsing/native-avx2/sample.json
+parse full csv nested/FindAllViaU16/nested parsing/native-avx2/tukey.json
+parse full csv nested/FindAllViaU16/nested parsing/native-sse2/
+parse full csv nested/FindAllViaU16/nested parsing/native-sse2/benchmark.json
+parse full csv nested/FindAllViaU16/nested parsing/native-sse2/estimates.json
+parse full csv nested/FindAllViaU16/nested parsing/native-sse2/sample.json
+parse full csv nested/FindAllViaU16/nested parsing/native-sse2/tukey.json
+parse full csv nested/FindAllViaU16/nested parsing/native-sse4/
+parse full csv nested/FindAllViaU16/nested parsing/native-sse4/benchmark.json
+parse full csv nested/FindAllViaU16/nested parsing/native-sse4/estimates.json
+parse full csv nested/FindAllViaU16/nested parsing/native-sse4/sample.json
+parse full csv nested/FindAllViaU16/nested parsing/native-sse4/tukey.json
+parse full csv nested/FindAllViaU16/nested parsing/native/
+parse full csv nested/FindAllViaU16/nested parsing/native/benchmark.json
+parse full csv nested/FindAllViaU16/nested parsing/native/estimates.json
+parse full csv nested/FindAllViaU16/nested parsing/native/sample.json
+parse full csv nested/FindAllViaU16/nested parsing/native/tukey.json
+parse full csv nested/FindAllViaU16/nested parsing/new/
+parse full csv nested/FindAllViaU16/nested parsing/new/benchmark.json
+parse full csv nested/FindAllViaU16/nested parsing/new/estimates.json
+parse full csv nested/FindAllViaU16/nested parsing/new/sample.json
+parse full csv nested/FindAllViaU16/nested parsing/new/tukey.json
+parse full csv nested/FindAllViaU32/
+parse full csv nested/FindAllViaU32/nested parsing/
+parse full csv nested/FindAllViaU32/nested parsing/default/
+parse full csv nested/FindAllViaU32/nested parsing/default/benchmark.json
+parse full csv nested/FindAllViaU32/nested parsing/default/estimates.json
+parse full csv nested/FindAllViaU32/nested parsing/default/sample.json
+parse full csv nested/FindAllViaU32/nested parsing/default/tukey.json
+parse full csv nested/FindAllViaU32/nested parsing/native-avx/
+parse full csv nested/FindAllViaU32/nested parsing/native-avx/benchmark.json
+parse full csv nested/FindAllViaU32/nested parsing/native-avx/estimates.json
+parse full csv nested/FindAllViaU32/nested parsing/native-avx/sample.json
+parse full csv nested/FindAllViaU32/nested parsing/native-avx/tukey.json
+parse full csv nested/FindAllViaU32/nested parsing/native-avx2/
+parse full csv nested/FindAllViaU32/nested parsing/native-avx2/benchmark.json
+parse full csv nested/FindAllViaU32/nested parsing/native-avx2/estimates.json
+parse full csv nested/FindAllViaU32/nested parsing/native-avx2/sample.json
+parse full csv nested/FindAllViaU32/nested parsing/native-avx2/tukey.json
+parse full csv nested/FindAllViaU32/nested parsing/native-sse2/
+parse full csv nested/FindAllViaU32/nested parsing/native-sse2/benchmark.json
+parse full csv nested/FindAllViaU32/nested parsing/native-sse2/estimates.json
+parse full csv nested/FindAllViaU32/nested parsing/native-sse2/sample.json
+parse full csv nested/FindAllViaU32/nested parsing/native-sse2/tukey.json
+parse full csv nested/FindAllViaU32/nested parsing/native-sse4/
+parse full csv nested/FindAllViaU32/nested parsing/native-sse4/benchmark.json
+parse full csv nested/FindAllViaU32/nested parsing/native-sse4/estimates.json
+parse full csv nested/FindAllViaU32/nested parsing/native-sse4/sample.json
+parse full csv nested/FindAllViaU32/nested parsing/native-sse4/tukey.json
+parse full csv nested/FindAllViaU32/nested parsing/native/
+parse full csv nested/FindAllViaU32/nested parsing/native/benchmark.json
+parse full csv nested/FindAllViaU32/nested parsing/native/estimates.json
+parse full csv nested/FindAllViaU32/nested parsing/native/sample.json
+parse full csv nested/FindAllViaU32/nested parsing/native/tukey.json
+parse full csv nested/FindAllViaU32/nested parsing/new/
+parse full csv nested/FindAllViaU32/nested parsing/new/benchmark.json
+parse full csv nested/FindAllViaU32/nested parsing/new/estimates.json
+parse full csv nested/FindAllViaU32/nested parsing/new/sample.json
+parse full csv nested/FindAllViaU32/nested parsing/new/tukey.json
+parse full csv nested/FindAllViaU64/
+parse full csv nested/FindAllViaU64/nested parsing/
+parse full csv nested/FindAllViaU64/nested parsing/default/
+parse full csv nested/FindAllViaU64/nested parsing/default/benchmark.json
+parse full csv nested/FindAllViaU64/nested parsing/default/estimates.json
+parse full csv nested/FindAllViaU64/nested parsing/default/sample.json
+parse full csv nested/FindAllViaU64/nested parsing/default/tukey.json
+parse full csv nested/FindAllViaU64/nested parsing/native-avx/
+parse full csv nested/FindAllViaU64/nested parsing/native-avx/benchmark.json
+parse full csv nested/FindAllViaU64/nested parsing/native-avx/estimates.json
+parse full csv nested/FindAllViaU64/nested parsing/native-avx/sample.json
+parse full csv nested/FindAllViaU64/nested parsing/native-avx/tukey.json
+parse full csv nested/FindAllViaU64/nested parsing/native-avx2/
+parse full csv nested/FindAllViaU64/nested parsing/native-avx2/benchmark.json
+parse full csv nested/FindAllViaU64/nested parsing/native-avx2/estimates.json
+parse full csv nested/FindAllViaU64/nested parsing/native-avx2/sample.json
+parse full csv nested/FindAllViaU64/nested parsing/native-avx2/tukey.json
+parse full csv nested/FindAllViaU64/nested parsing/native-sse2/
+parse full csv nested/FindAllViaU64/nested parsing/native-sse2/benchmark.json
+parse full csv nested/FindAllViaU64/nested parsing/native-sse2/estimates.json
+parse full csv nested/FindAllViaU64/nested parsing/native-sse2/sample.json
+parse full csv nested/FindAllViaU64/nested parsing/native-sse2/tukey.json
+parse full csv nested/FindAllViaU64/nested parsing/native-sse4/
+parse full csv nested/FindAllViaU64/nested parsing/native-sse4/benchmark.json
+parse full csv nested/FindAllViaU64/nested parsing/native-sse4/estimates.json
+parse full csv nested/FindAllViaU64/nested parsing/native-sse4/sample.json
+parse full csv nested/FindAllViaU64/nested parsing/native-sse4/tukey.json
+parse full csv nested/FindAllViaU64/nested parsing/native/
+parse full csv nested/FindAllViaU64/nested parsing/native/benchmark.json
+parse full csv nested/FindAllViaU64/nested parsing/native/estimates.json
+parse full csv nested/FindAllViaU64/nested parsing/native/sample.json
+parse full csv nested/FindAllViaU64/nested parsing/native/tukey.json
+parse full csv nested/FindAllViaU64/nested parsing/new/
+parse full csv nested/FindAllViaU64/nested parsing/new/benchmark.json
+parse full csv nested/FindAllViaU64/nested parsing/new/estimates.json
+parse full csv nested/FindAllViaU64/nested parsing/new/sample.json
+parse full csv nested/FindAllViaU64/nested parsing/new/tukey.json
+parse full csv nested/nested parsing/
+report/
+report/index.html
+
+sent 1,507,223 bytes  received 38,311 bytes  3,091,068.00 bytes/sec
+total size is 1,358,589  speedup is 0.88
+[0;32m[SUCCESS][0m Criterion results copied (excluding reports): 9.7M (was 35M)
+[0;34m[INFO][0m Found benchmark results for default - generating focused assembly
+[0;34m[INFO][0m Generating focused assembly for target default...
+[0;32m[SUCCESS][0m Focused assembly extraction completed for default
+[0;32m[SUCCESS][0m Assembly extraction completed for default
+[0;34m[INFO][0m Found benchmark results for native - generating focused assembly
+[0;34m[INFO][0m Generating focused assembly for target native...
+[0;32m[SUCCESS][0m Focused assembly extraction completed for native
+[0;32m[SUCCESS][0m Assembly extraction completed for native
+[0;34m[INFO][0m Found benchmark results for native-sse2 - generating focused assembly
+[0;34m[INFO][0m Generating focused assembly for target native-sse2...
+[0;32m[SUCCESS][0m Focused assembly extraction completed for native-sse2
+[0;32m[SUCCESS][0m Assembly extraction completed for native-sse2
+[0;34m[INFO][0m Found benchmark results for native-sse4 - generating focused assembly
+[0;34m[INFO][0m Generating focused assembly for target native-sse4...
+[0;32m[SUCCESS][0m Focused assembly extraction completed for native-sse4
+[0;32m[SUCCESS][0m Assembly extraction completed for native-sse4
+[0;34m[INFO][0m Found benchmark results for native-avx - generating focused assembly
+[0;34m[INFO][0m Generating focused assembly for target native-avx...
+[0;32m[SUCCESS][0m Focused assembly extraction completed for native-avx
+[0;32m[SUCCESS][0m Assembly extraction completed for native-avx
+[0;34m[INFO][0m Found benchmark results for native-avx2 - generating focused assembly
+[0;34m[INFO][0m Generating focused assembly for target native-avx2...
+[0;32m[SUCCESS][0m Focused assembly extraction completed for native-avx2
+[0;32m[SUCCESS][0m Assembly extraction completed for native-avx2
+[0;34m[INFO][0m Found benchmark results for native-avx512 - generating focused assembly
+[0;34m[INFO][0m Generating focused assembly for target native-avx512...
+[0;32m[SUCCESS][0m Focused assembly extraction completed for native-avx512
+[0;32m[SUCCESS][0m Assembly extraction completed for native-avx512
 [0;34m[INFO][0m Updating index...
 [0;32m[SUCCESS][0m Comprehensive benchmark data collection completed!
 [0;34m[INFO][0m Results stored in: results/runs/taiwaif_f4f39234_1_92_0_nightly

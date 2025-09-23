@@ -1,0 +1,43 @@
+{
+  "analysis_time": "2025-09-23T02:04:55+01:00",
+  "target": "native-avx",
+  "analysis_method": "grep_pattern_matching",
+  "functions": [
+{
+  "function": "full_library",
+  "simd_detected": false,
+  "detected_instructions": [],
+  "assembly_file": "full_library.s"
+},{
+  "function": "via_simd16_find_all",
+  "simd_detected": false,
+  "detected_instructions": [],
+  "assembly_file": "via_simd16_find_all.s"
+},{
+  "function": "via_simd32_find_all",
+  "simd_detected": false,
+  "detected_instructions": [],
+  "assembly_file": "via_simd32_find_all.s"
+},{
+  "function": "via_simd64_find_all",
+  "simd_detected": false,
+  "detected_instructions": [],
+  "assembly_file": "via_simd64_find_all.s"
+},{
+  "function": "via_u16_find_all",
+  "simd_detected": false,
+  "detected_instructions": [],
+  "assembly_file": "via_u16_find_all.s"
+},{
+  "function": "via_u32_find_all",
+  "simd_detected": false,
+  "detected_instructions": [],
+  "assembly_file": "via_u32_find_all.s"
+},{
+  "function": "via_u64_find_all",
+  "simd_detected": false,
+  "detected_instructions": [],
+  "assembly_file": "via_u64_find_all.s"
+}
+  ]
+}

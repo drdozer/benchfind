@@ -1,0 +1,30 @@
+Find All Implementations Assembly Extract - Target: native
+Generated: 2025-09-23T02:04:53+01:00
+Source Assembly: benchfind-1d77dd47a17b9571.s
+
+Functions Extracted:
+- via_u16: results/runs/taiwaif_f4f39234_1_92_0_nightly/assembly_extracts/native/via_u16_find_all.s
+  Symbol: _ZN76_$LT$benchfind..FindAllViaU16$u20$as$u20$benchfind..FindNeedleInHaystack$GT$8find_all17hc484579355deefcaE
+  Size: 60 lines, 4.0K
+
+- via_u32: results/runs/taiwaif_f4f39234_1_92_0_nightly/assembly_extracts/native/via_u32_find_all.s
+  Symbol: _ZN76_$LT$benchfind..FindAllViaU32$u20$as$u20$benchfind..FindNeedleInHaystack$GT$8find_all17ha9b7f2b8a9396a01E
+  Size: 61 lines, 4.0K
+
+- via_u64: results/runs/taiwaif_f4f39234_1_92_0_nightly/assembly_extracts/native/via_u64_find_all.s
+  Symbol: _ZN76_$LT$benchfind..FindAllViaU64$u20$as$u20$benchfind..FindNeedleInHaystack$GT$8find_all17hb4bb784d05055020E
+  Size: 61 lines, 4.0K
+
+- via_simd16: results/runs/taiwaif_f4f39234_1_92_0_nightly/assembly_extracts/native/via_simd16_find_all.s
+  Symbol: _ZN79_$LT$benchfind..FindAllViaSimd16$u20$as$u20$benchfind..FindNeedleInHaystack$GT$8find_all17h988827eea7004512E
+  Size: 63 lines, 4.0K
+
+- via_simd32: results/runs/taiwaif_f4f39234_1_92_0_nightly/assembly_extracts/native/via_simd32_find_all.s
+  Symbol: _ZN79_$LT$benchfind..FindAllViaSimd32$u20$as$u20$benchfind..FindNeedleInHaystack$GT$8find_all17hd7127a3e58e3fd06E
+  Size: 63 lines, 4.0K
+
+- via_simd64: results/runs/taiwaif_f4f39234_1_92_0_nightly/assembly_extracts/native/via_simd64_find_all.s
+  Symbol: _ZN79_$LT$benchfind..FindAllViaSimd64$u20$as$u20$benchfind..FindNeedleInHaystack$GT$8find_all17h815df586cbbb76a6E
+  Size: 61 lines, 4.0K
+
+Total functions extracted: 6

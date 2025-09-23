@@ -1,5 +1,5 @@
 {
-  "collection_time": "2025-09-22T20:42:57+01:00",
+  "collection_time": "2025-09-23T02:04:51+01:00",
   "hostname": "taiwaif",
   "os": {
     "name": "Linux",
@@ -17,7 +17,7 @@
   },
   "memory": {
     "total_kb": "65798996",
-    "available_kb": "57123416"
+    "available_kb": "56415840"
   },
   "environment": {
     "shell": "/bin/bash",

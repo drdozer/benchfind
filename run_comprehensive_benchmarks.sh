@@ -182,42 +182,22 @@ collect_run_config() {
 EOF
 }
 
-# Function to generate assembly for a specific implementation
-generate_assembly_for_impl() {
-    local benchmark_name="$1"
-    local target="$2"
-    local output_dir="$3"
+# Function to generate focused assembly for a specific target
+generate_assembly_for_target() {
+    local target="$1"
+    local output_dir="$2"
 
-    log_info "Generating assembly for $benchmark_name with target $target..."
+    log_info "Generating focused assembly for target $target..."
 
-    # Clean previous artifacts
-    rm -rf target/release/deps/${benchmark_name}*.s
-    rm -rf target/release/deps/${benchmark_name}*.o
-    rm -rf target/release/deps/lib${benchmark_name}*.rlib
-    rm -rf target/release/deps/lib${benchmark_name}*.rmeta
-    find target/release/deps/ -name "${benchmark_name}-*.s" -delete 2>/dev/null || true
-    find target/release/deps/ -name "${benchmark_name}-*.o" -delete 2>/dev/null || true
-
+    # Create output directory first
     mkdir -p "$output_dir"
 
-    # Compile with assembly output
-    local compile_cmd="cargo rustc --bench $benchmark_name --release -- -C target-cpu=$target --emit asm"
-
-    if $compile_cmd > "$output_dir/compilation.log" 2>&1; then
-        # Find the generated assembly file
-        local asm_file=$(find target/release/deps/ -name "${benchmark_name}*.s" -type f -print0 | xargs -0 ls -t | head -n 1)
-
-        if [ -n "$asm_file" ] && [ -f "$asm_file" ]; then
-            cp "$asm_file" "$output_dir/complete_benchmark.s"
-            log_success "Assembly generated for $benchmark_name/$target"
-        else
-            log_warning "No assembly file found for $benchmark_name/$target"
-        fi
-
-        # Clean up
-        rm -f "$asm_file"
+    # Use the single target extraction script
+    if ./extract_single_target.sh --target "$target" --output "$output_dir" > "$output_dir/extraction.log" 2>&1; then
+        log_success "Focused assembly extraction completed for $target"
+        return 0
     else
-        log_error "Failed to compile $benchmark_name for target $target"
+        log_error "Focused assembly extraction failed for $target"
         return 1
     fi
 }
@@ -433,23 +413,36 @@ main() {
         copy_criterion_results "$run_dir"
 
         # Generate assembly and SIMD analysis for each benchmark/target combination
-        local targets=("default" "native" "x86-64-v2" "x86-64-v3" "x86-64-v4")
+        local targets=("default" "native" "native-sse2" "native-sse4" "native-avx" "native-avx2" "native-avx512")
         local benchmarks=("bench_newlines" "bench_csv")
 
-        for benchmark in "${benchmarks[@]}"; do
-            for target in "${targets[@]}"; do
-                local assembly_dir="$run_dir/assembly/$benchmark/$target"
+        # Generate assembly once per target (not per benchmark)
+        local targets_with_results=()
+        for target in "${targets[@]}"; do
+            # Check if target has any benchmark results
+            local has_results=false
 
-                # Only generate assembly if the benchmark actually ran for this target
-                if find target/criterion -path "*$target*" -name "estimates.json" 2>/dev/null | grep -q .; then
-                    if generate_assembly_for_impl "$benchmark" "$target" "$assembly_dir"; then
-                        run_simd_analysis "$benchmark" "$target" "$assembly_dir" "$assembly_dir/simd-analysis.json"
-                    fi
+            # Check for existing results in our raw-results copy
+            if find "$run_dir/raw-results/criterion" -type d -name "$target" -exec test -f {}/estimates.json \; 2>/dev/null; then
+                has_results=true
+            fi
+
+            if [ "$has_results" = true ] && [[ ! " ${targets_with_results[@]} " =~ " ${target} " ]]; then
+                targets_with_results+=("$target")
+                local target_assembly_dir="$run_dir/assembly_extracts/$target"
+                log_info "Found benchmark results for $target - generating focused assembly"
+
+                if generate_assembly_for_target "$target" "$target_assembly_dir"; then
+                    log_success "Assembly extraction completed for $target"
                 else
-                    log_warning "Skipping assembly generation for $benchmark/$target - no benchmark results found"
+                    log_warning "Assembly extraction failed for $target"
                 fi
-            done
+            fi
         done
+
+        if [ ${#targets_with_results[@]} -eq 0 ]; then
+            log_warning "No benchmark results found for any target"
+        fi
 
         # Update index
         update_index "$run_folder"
