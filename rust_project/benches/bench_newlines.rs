@@ -33,6 +33,7 @@ fn bench_large_texts(c: &mut Criterion) {
     group.finish();
 }
 
+#[inline(never)]
 fn bench_with_finder<F: FindNeedleInHaystack>(
     group: &mut BenchmarkGroup<WallTime>,
     bench_name: &str,
@@ -90,6 +91,7 @@ fn bench_lines_iterators(c: &mut Criterion) {
     }
 }
 
+#[inline(never)]
 fn bench_lines_with_finder<F: FindNeedleInHaystack>(
     group: &mut BenchmarkGroup<WallTime>,
     bench_name: &str,
@@ -108,6 +110,7 @@ fn bench_lines_with_finder<F: FindNeedleInHaystack>(
     });
 }
 
+#[inline(never)]
 fn bench_lines_with_lines(
     group: &mut BenchmarkGroup<WallTime>,
     bench_name: &str,

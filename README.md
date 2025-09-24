@@ -86,7 +86,7 @@ This progressive approach reveals how explicit SIMD feature enablement affects c
 
 ### Automated SIMD Detection
 
-The `check_simd.sh` script automatically analyzes generated assembly code after each benchmark run:
+The Python orchestration system automatically analyzes generated assembly code after each benchmark run:
 
 1. Compiles benchmarks with assembly output enabled
 2. Searches for common SIMD instruction mnemonics
@@ -94,12 +94,27 @@ The `check_simd.sh` script automatically analyzes generated assembly code after 
 
 ## Usage
 
+### Prerequisites
+
+1. Install Python dependencies:
+```bash
+cd orchestration
+pip install -r requirements.txt
+```
+
+2. Activate the Python environment and verify installation:
+```bash
+source .venv/bin/activate
+benchfind --help
+```
+
 ### Quick Benchmarking
 
-To run benchmarks with basic SIMD detection:
+For fast development iteration with basic SIMD detection:
 
 ```bash
-./bench_all.sh
+benchfind quick
+benchfind quick --targets native,native-avx2
 ```
 
 ### Comprehensive Data Collection
@@ -107,7 +122,8 @@ To run benchmarks with basic SIMD detection:
 For complete benchmark data collection with metadata, assembly analysis, and structured results storage:
 
 ```bash
-./run_comprehensive_benchmarks.sh
+benchfind comprehensive
+benchfind comprehensive --all-targets
 ```
 
 This comprehensive system:
@@ -118,26 +134,31 @@ This comprehensive system:
 - Automatically skips runs if results already exist for the current source code and compiler version
 - Provides progress feedback and timing estimates during long runs
 
-### Testing the Data Collection System
+### Configuration and System Validation
 
-To verify the data collection system works correctly:
+To verify the system configuration and validate the environment:
 
 ```bash
-./test_data_collection.sh
+benchfind config validate
+benchfind config targets
+benchfind info
 ```
 
 ## Assembly Analysis
 
-### Focused Function Extraction
+### Assembly Analysis and Results
 
-The system can extract individual `find_all` method implementations (instead of full 19MB benchmark files):
+The Python orchestration system automatically handles assembly extraction and analysis as part of comprehensive benchmarking. Results are stored in a structured format:
 
 ```bash
-# Extract for specific existing run
-./extract_find_all_assembly.sh --run hostname_sourcehash_rustcversion
+# Analyze existing benchmark results
+benchfind analyze --latest
+benchfind analyze --run-id hostname_sourcehash_rustcversion
 
-# Extract for single target to custom location  
-./extract_single_target.sh --target native-avx2 --output results/assembly/native-avx2
+# For advanced analysis (using standalone script)
+cd orchestration
+python scripts/analyze_results.py --simd-summary
+python scripts/analyze_results.py --compare --runs 3
 ```
 
 ### What Gets Extracted
@@ -225,18 +246,23 @@ All necessary metadata is captured to enable unforeseen future analysis requirem
 
 ## Files Overview
 
-### Core Scripts
-- **`bench_all.sh`** - Progressive target benchmarking with error handling
-- **`check_simd.sh`** - Assembly analysis and SIMD instruction detection
-- **`run_comprehensive_benchmarks.sh`** - Complete data collection orchestration
+### Python CLI Commands
+- **`benchfind quick`** - Fast development iteration benchmarking
+- **`benchfind comprehensive`** - Complete benchmark suite with full analysis
+- **`benchfind analyze`** - Results analysis and comparison tools
+- **`benchfind config`** - Configuration management and validation
+- **`benchfind manage`** - Storage management and cleanup operations
 
-### Assembly Analysis
-- **`extract_find_all_assembly.sh`** - Focused function extraction for all targets
-- **`extract_single_target.sh`** - Single target assembly extraction
-- **`test_data_collection.sh`** - System validation and testing
+### Key Features
+- **Intelligent Caching** - Automatically skips expensive re-runs when source unchanged
+- **Progressive SIMD Testing** - 7 CPU instruction set targets from generic to AVX-512
+- **Comprehensive Metadata** - System, build environment, and execution context tracking
+- **Assembly Analysis** - Automatic SIMD instruction detection and performance analysis
+- **Structured Storage** - Deterministic organization enabling cross-system collaboration
 
 ### Results Management
-- **`cleanup_results.sh`** - Remove large non-essential files from results
+- **`benchfind manage stats`** - Show storage statistics and run information
+- **`benchfind manage cleanup`** - Remove old benchmark results
 - **`results/`** - Structured storage for all benchmark data and analysis
 
 The system is designed for both individual development and collaborative multi-system performance analysis.

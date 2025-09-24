@@ -1,0 +1,10 @@
+{
+  "individual_files": {
+    "src/lib.rs": "3c83ea58512f4525f8d9768f6307ea0ee3ce21c541af04271645ea9923393c85",
+    "benches/bench_newlines.rs": "bab76d70e036b497592c49462967c89d3b39fa5885d40410df6247c29753fadd",
+    "benches/bench_csv.rs": "c83fd6d6a1a22ca7ace9318d7eefd45841023169af7dc7e941c43992e176c5c7",
+    "Cargo.toml": "faaea581600dfd9cce10f3682e41da6ea5c99965de4ada8ba96a7c3e4c7f1ee1"
+  },
+  "combined_hash": "8389d06a",
+  "calculation_timestamp": "2025-09-23T21:13:12.279947+00:00"
+}

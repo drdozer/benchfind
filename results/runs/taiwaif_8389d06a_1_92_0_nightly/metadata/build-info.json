@@ -1,0 +1,26 @@
+{
+  "collection_time": "2025-09-23 21:13:09.625256+00:00",
+  "rustc_version": "rustc 1.92.0-nightly (f6092f224 2025-09-22)",
+  "rustc_verbose_info": {
+    "binary": "rustc",
+    "commit-hash": "f6092f224d2b1774b31033f12d0bee626943b02f",
+    "commit-date": "2025-09-22",
+    "host": "x86_64-unknown-linux-gnu",
+    "release": "1.92.0-nightly",
+    "LLVM version": "21.1.1"
+  },
+  "cargo_version": "cargo 1.92.0-nightly (966f94733 2025-09-16)",
+  "git_commit_hash": "66fab1c913b0fb771d6653dfb46ff172e150b36f",
+  "git_branch": "main",
+  "git_is_clean": false,
+  "git_status_summary": [
+    "modified files",
+    "untracked files"
+  ],
+  "git_remote_url": "git@github.com:drdozer/benchfind.git",
+  "rust_target_triple": "x86_64-unknown-linux-gnu",
+  "cargo_target_dir": "/home/nmrp3/devel/turingatemyhamster/benchfind/rust_project/target",
+  "relevant_env_vars": {
+    "PATH": "/home/nmrp3/devel/turingatemyhamster/benchfind/orchestration/.venv/bin:/home/nmrp3/.local/share/pnpm:/home/nmrp3/.juliaup/bin:/home/nmrp3/bin:/home/nmrp3/.local/bin:/home/nmrp3/bin:/home/nmrp3/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+  }
+}

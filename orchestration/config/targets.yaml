@@ -1,0 +1,217 @@
+# Benchmark Target Definitions
+#
+# This file defines the compilation targets used for systematic SIMD benchmarking.
+# Each target represents a specific RUSTFLAGS configuration designed to test
+# different CPU instruction set capabilities.
+#
+# ## Target Design Philosophy
+#
+# The targets progress from most conservative (generic x86-64) to most aggressive
+# (AVX-512), allowing us to analyze:
+# 1. Baseline performance without SIMD optimizations
+# 2. Conservative native optimization that Rust enables by default
+# 3. Progressive SIMD enablement to see which features matter
+# 4. Maximum optimization for modern CPUs
+#
+# ## Target Structure
+#
+# Each target contains:
+# - name: Human-readable identifier used in results
+# - instruction_set: Semantic CPU capability level being tested
+# - rustflags: RUSTFLAGS value (null for default)
+# - description: What this target tests and why it matters
+# - cpu_features: List of CPU features required for this target
+# - expected_on_modern_cpu: Whether this should work on typical modern hardware
+# - expected_simd_instructions: SIMD instructions we expect to see in assembly
+# - performance_expectation: Expected performance characteristics
+
+targets:
+  default:
+    name: "default"
+    instruction_set: "baseline"
+    rustflags: null
+    description: |
+      Generic x86-64 compilation with default Rust settings.
+      This serves as our baseline - we don't expect SIMD instructions
+      unless Rust's auto-vectorizer generates them.
+    cpu_features: []
+    expected_on_modern_cpu: true
+    expected_simd_instructions: []
+    performance_expectation: "baseline"
+
+  native:
+    name: "native"
+    instruction_set: "conservative"
+    rustflags: "-C target-cpu=native"
+    description: |
+      Native CPU optimization using Rust's conservative defaults.
+      This enables CPU-specific optimizations but may not enable
+      all available instruction sets due to Rust's conservative approach.
+    cpu_features: []
+    expected_on_modern_cpu: true
+    expected_simd_instructions:
+      - "movdqa"
+      - "paddb"
+      - "pcmpgtb"
+    performance_expectation: "modest improvement over baseline"
+
+  native-sse2:
+    name: "native-sse2"
+    instruction_set: "sse2"
+    rustflags: "-C target-cpu=native -C target-feature=+sse2"
+    description: |
+      Native CPU with explicit SSE2 enablement.
+      SSE2 is guaranteed to be available on all x86-64 CPUs,
+      so this should work everywhere and give us our first
+      explicit SIMD instructions.
+    cpu_features:
+      - "sse2"
+    expected_on_modern_cpu: true
+    expected_simd_instructions:
+      - "movdqa"
+      - "paddb"
+      - "pcmpgtb"
+      - "pxor"
+    performance_expectation: "significant improvement for byte operations"
+
+  native-sse4:
+    name: "native-sse4"
+    instruction_set: "sse4"
+    rustflags: "-C target-cpu=native -C target-feature=+sse4.2,+ssse3,+sse3,+sse2"
+    description: |
+      Native CPU with SSE4.2 and all earlier SSE versions.
+      SSE4.2 adds string processing instructions that could be
+      particularly beneficial for byte scanning operations.
+      Available since Intel Core 2 (circa 2008).
+    cpu_features:
+      - "sse2"
+      - "sse3"
+      - "ssse3"
+      - "sse4_2"
+    expected_on_modern_cpu: true
+    expected_simd_instructions:
+      - "movdqa"
+      - "paddb"
+      - "pcmpgtb"
+      - "pshufb"
+    performance_expectation: "improved string and byte processing"
+
+  native-avx:
+    name: "native-avx"
+    instruction_set: "avx"
+    rustflags: "-C target-cpu=native -C target-feature=+avx,+sse4.2,+ssse3,+sse3,+sse2"
+    description: |
+      Native CPU with AVX and all SSE versions.
+      AVX introduces 256-bit SIMD registers and 3-operand instructions,
+      potentially doubling throughput for parallel byte operations.
+      Available since Intel Sandy Bridge (circa 2011).
+    cpu_features:
+      - "sse2"
+      - "sse3"
+      - "ssse3"
+      - "sse4_2"
+      - "avx"
+    expected_on_modern_cpu: true
+    expected_simd_instructions:
+      - "vmovdqa"
+      - "vpaddb"
+      - "vpcmpgtb"
+      - "vpxor"
+    performance_expectation: "up to 2x improvement in parallel operations"
+
+  native-avx2:
+    name: "native-avx2"
+    instruction_set: "avx2"
+    rustflags: "-C target-cpu=native -C target-feature=+avx2,+avx,+sse4.2,+ssse3,+sse3,+sse2"
+    description: |
+      Native CPU with AVX2 and all previous instruction sets.
+      AVX2 extends integer operations to 256-bit registers and adds
+      new instructions ideal for byte scanning and data manipulation.
+      Available since Intel Haswell (circa 2013).
+    cpu_features:
+      - "sse2"
+      - "sse3"
+      - "ssse3"
+      - "sse4_2"
+      - "avx"
+      - "avx2"
+    expected_on_modern_cpu: true
+    expected_simd_instructions:
+      - "vmovdqa"
+      - "vpaddb"
+      - "vpcmpgtb"
+      - "vpshufb"
+      - "vperm2i128"
+    performance_expectation: "significant improvement for integer and byte operations"
+
+  native-avx512:
+    name: "native-avx512"
+    instruction_set: "avx512"
+    rustflags: "-C target-cpu=native -C target-feature=+avx512f,+avx512bw,+avx2,+avx,+sse4.2,+ssse3,+sse3,+sse2"
+    description: |
+      Native CPU with AVX-512 and all previous instruction sets.
+      AVX-512 provides 512-bit registers and is primarily available
+      on server CPUs. Expected to fail on most consumer hardware.
+      Available since Intel Skylake-SP (circa 2016).
+    cpu_features:
+      - "sse2"
+      - "sse3"
+      - "ssse3"
+      - "sse4_2"
+      - "avx"
+      - "avx2"
+      - "avx512f"
+      - "avx512bw"
+    expected_on_modern_cpu: false
+    expected_simd_instructions:
+      - "vmovdqa64"
+      - "vpaddb"
+      - "vpcmpgtb"
+      - "vpshufb"
+    performance_expectation: "up to 4x improvement on compatible server hardware"
+
+# Predefined target groups for common usage patterns
+target_groups:
+  # All available targets
+  all:
+    - "default"
+    - "native"
+    - "native-sse2"
+    - "native-sse4"
+    - "native-avx"
+    - "native-avx2"
+    - "native-avx512"
+
+  # Production-ready targets (excludes experimental/rarely-supported)
+  production:
+    - "default"
+    - "native"
+    - "native-sse2"
+    - "native-sse4"
+    - "native-avx"
+    - "native-avx2"
+
+  # Development targets (quick iteration)
+  development:
+    - "default"
+    - "native"
+    - "native-avx2"
+
+  # SIMD progression (good for analysis)
+  simd_progression:
+    - "default"
+    - "native-sse2"
+    - "native-avx"
+    - "native-avx2"
+    - "native-avx512"
+
+# Metadata about this configuration
+metadata:
+  version: "1.0.0"
+  description: "Standard benchmarking targets for progressive SIMD analysis"
+  last_updated: "2024-01-01"
+  notes: |
+    These targets are designed to reveal how explicit SIMD feature
+    enablement affects code generation in Rust. The progression from
+    baseline to AVX-512 shows the impact of different instruction sets
+    on byte scanning performance.

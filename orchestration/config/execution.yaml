@@ -1,0 +1,196 @@
+# Execution Configuration
+#
+# This file defines execution parameters, timeouts, and runtime settings
+# for the benchmarking orchestration system. These settings control how
+# benchmarks are executed, how long they're allowed to run, and what
+# system resources they can use.
+#
+# ## Philosophy
+#
+# Benchmark execution needs to balance thoroughness with practicality:
+# - Long enough measurement periods to get stable results
+# - Short enough to allow reasonable iteration during development
+# - Appropriate timeouts to prevent hanging on unsupported targets
+# - Resource limits to prevent system overload
+#
+# ## Configuration Structure
+#
+# Settings are organized by:
+# - timing: How long benchmarks run and measurement parameters
+# - timeouts: Maximum time allowed for various operations
+# - resources: System resource limits and management
+# - error_handling: How to handle failures and edge cases
+
+# Benchmark timing and measurement configuration
+timing:
+  # Criterion measurement settings
+  measurement_time_seconds: 15
+  warm_up_time_seconds: 3
+  cooldown_time_seconds: 2
+
+  # Sample sizes for statistical analysis
+  sample_sizes:
+    default: 100
+    bench_newlines: 50  # Faster benchmarks, fewer samples needed
+    bench_csv: 100     # More complex benchmarks, more samples for stability
+
+  # Confidence intervals and statistical parameters
+  confidence_level: 0.95
+  significance_level: 0.05
+
+# Timeout configuration (all times in seconds)
+timeouts:
+  # Per-operation timeouts
+  single_benchmark_run: 1800    # 30 minutes per individual benchmark
+  target_compilation: 600       # 10 minutes for compilation per target
+  assembly_generation: 300      # 5 minutes for assembly extraction
+
+  # Per-suite timeouts
+  benchmark_suite_total: 3600   # 1 hour per benchmark suite (all targets)
+  target_configuration: 7200    # 2 hours per target across all benchmarks
+
+  # Overall session timeouts
+  comprehensive_run: 28800      # 8 hours for complete comprehensive run
+  quick_run: 1800              # 30 minutes for development iteration
+
+  # System command timeouts
+  rustc_check: 30              # Quick compiler availability check
+  git_operations: 60           # Git status, hash calculation, etc.
+  system_info_collection: 120   # System metadata gathering
+
+# Resource management and system limits
+resources:
+  # CPU and memory limits
+  max_cpu_usage_percent: 95    # Don't use more than 95% of available CPU
+  max_memory_usage_percent: 80 # Don't use more than 80% of available memory
+
+  # Concurrent execution limits
+  max_parallel_targets: 1      # Run one target at a time for now
+  max_parallel_benchmarks: 1   # Run one benchmark suite at a time
+
+  # Disk space management
+  min_free_disk_gb: 5          # Require at least 5GB free before starting
+  max_result_size_gb: 50       # Alert if results exceed 50GB
+
+  # Process management
+  process_priority: 0          # Normal priority (can be adjusted)
+  cpu_affinity: null           # Let OS handle CPU assignment
+
+# Error handling and recovery configuration
+error_handling:
+  # Retry behavior
+  max_retries: 2               # Retry failed operations up to 2 times
+  retry_delay_seconds: 30      # Wait 30 seconds between retries
+
+  # Failure tolerance
+  continue_on_target_failure: true    # Keep going if one target fails
+  continue_on_benchmark_failure: true # Keep going if one benchmark fails
+  fail_fast_on_system_error: true     # Stop immediately on system errors
+
+  # Expected failure handling
+  expect_avx512_failures: true        # AVX-512 failures are normal
+  expect_old_cpu_failures: true       # Older CPUs may not support newer targets
+
+  # Logging and diagnostics
+  save_failure_logs: true             # Save detailed logs for failed runs
+  capture_stderr: true                # Capture stderr from failed commands
+  verbose_error_reporting: true       # Include system context in error reports
+
+# Progress reporting and user feedback
+progress:
+  # What to show during execution
+  show_estimated_time_remaining: true
+  show_current_operation: true
+  show_target_progress: true
+  show_benchmark_progress: true
+
+  # Update frequency
+  progress_update_interval_seconds: 10
+
+  # Output formatting
+  use_colors: true                    # Colorized output when supported
+  use_progress_bars: true             # Show progress bars
+  show_performance_hints: true        # Show tips during long operations
+
+# Result caching and reuse configuration
+caching:
+  # When to reuse existing results
+  skip_existing_results: true         # Skip if results already exist
+  check_source_hash: true             # Verify source code hasn't changed
+  check_compiler_version: true        # Verify compiler version matches
+  check_system_compatibility: false   # Don't require identical system
+
+  # Cache invalidation
+  max_cache_age_days: 30              # Re-run if results are older than 30 days
+  invalidate_on_git_change: true      # Re-run if git state changed
+
+  # Cache management
+  auto_cleanup_old_results: false     # Don't automatically delete old results
+  warn_on_large_cache: true           # Warn if result cache gets large
+
+# Development and debugging configuration
+development:
+  # Quick iteration settings
+  quick_mode_targets: ["default", "native", "native-avx2"]
+  quick_mode_measurement_time: 5      # Faster measurement for development
+  quick_mode_sample_size: 20          # Fewer samples for development
+
+  # Debugging options
+  dry_run_mode: false                 # Set true to simulate without running
+  verbose_logging: false              # Set true for detailed operation logs
+  save_intermediate_files: false      # Keep temporary files for debugging
+
+  # Performance profiling
+  enable_profiling: false             # Enable performance profiling of orchestration
+  profile_memory_usage: false         # Track memory usage during execution
+  profile_cpu_usage: false            # Track CPU usage patterns
+
+# Platform-specific configuration
+platform_specific:
+  linux:
+    # Linux-specific optimizations
+    use_perf_counters: false          # Enable hardware performance counters
+    set_cpu_governor: null            # Don't change CPU governor by default
+    disable_swap: false               # Don't disable swap during benchmarks
+
+  macos:
+    # macOS-specific settings
+    respect_thermal_state: true       # Back off if system is hot
+    use_instruments: false            # Don't use Instruments profiling
+
+  windows:
+    # Windows-specific settings
+    adjust_process_priority: false    # Don't adjust process priority
+    disable_defender_scanning: false  # Don't disable real-time scanning
+
+# Integration with external tools
+external_tools:
+  # Git integration
+  git:
+    auto_commit_results: false        # Don't automatically commit results
+    tag_successful_runs: false        # Don't automatically create git tags
+
+  # CI/CD integration
+  ci_cd:
+    export_junit_xml: false           # Export results in JUnit XML format
+    export_github_actions: false      # Export GitHub Actions annotations
+    fail_on_regression: false         # Don't fail CI on performance regression
+
+  # Monitoring and alerting
+  monitoring:
+    webhook_on_completion: null       # URL to POST completion notifications
+    email_on_failure: null            # Email address for failure notifications
+    slack_notifications: null         # Slack webhook for notifications
+
+# Metadata about this configuration
+metadata:
+  version: "1.0.0"
+  description: "Execution parameters for benchmarking orchestration"
+  last_updated: "2024-01-01"
+  notes: |
+    These settings provide a balance between thorough measurement and
+    practical execution times. They can be overridden via environment
+    variables or command-line flags for specific use cases.
+
+    For development iteration, consider using quick_mode settings.
+    For production analysis, use the default comprehensive settings.

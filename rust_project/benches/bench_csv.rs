@@ -9,6 +9,7 @@ const COUNTRY_CODES: &str = include_str!("../fixtures/country_codes.txt");
 fn bench_parse_full_nested_csv(c: &mut Criterion) {
     let mut group = c.benchmark_group("parse full csv nested");
     group.measurement_time(std::time::Duration::from_secs(15));
+    group.sample_size(50);
 
     parse_csv_nested::<FindAllIterating>(&mut group, stringify!(FindAllIterating), COUNTRY_CODES);
     parse_csv_nested::<FindAllMemchrCrate>(
@@ -41,6 +42,7 @@ fn bench_parse_full_flat_csv(c: &mut Criterion) {
 // This is a very bad way to parse a CSV file.
 // It doesn't handle escaping, last lines that lack a trailing newline, and has other issues.
 // It' just here for benchnarking.
+#[inline(never)]
 fn parse_csv_nested<F: FindNeedleInHaystack>(
     group: &mut BenchmarkGroup<WallTime>,
     bench_name: &str,
@@ -71,6 +73,7 @@ fn parse_csv_nested<F: FindNeedleInHaystack>(
 
 // This is a better way to parse a CSV file.
 // However, it' just here for benchnarking.
+#[inline(never)]
 fn parse_csv_flat<F: FindNeedleInHaystack>(
     group: &mut BenchmarkGroup<WallTime>,
     bench_name: &str,

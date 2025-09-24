@@ -1,0 +1,34 @@
+{
+  "runs": [
+    {
+      "run_id": "taiwaif_8389d06a_1_92_0_nightly",
+      "timestamp": "2025-09-23T20:45:56.587434+00:00",
+      "hostname": "taiwaif",
+      "source_hash": "8389d06a",
+      "rustc_version": "1_92_0_nightly",
+      "status": "in_progress",
+      "targets_completed": [
+        "default",
+        "native",
+        "native-sse2",
+        "native-sse4",
+        "native-avx",
+        "native-avx2"
+      ],
+      "benchmarks_completed": [
+        "bench_newlines",
+        "bench_csv"
+      ]
+    },
+    {
+      "run_id": "taiwaif_f4f39234_1_92_0_nightly",
+      "timestamp": "2025-09-23T02:04:56+01:00",
+      "hostname": "taiwaif",
+      "source_hash": "f4f39234",
+      "rustc_version": "1_92_0_nightly"
+    }
+  ],
+  "last_updated": "2025-09-23T21:11:54.450078+00:00",
+  "schema_version": "1.0.0",
+  "description": "Index of all benchmark runs collected by the comprehensive benchmarking system"
+}

@@ -1,0 +1,10 @@
+{
+  "collection_time": "2025-09-23 21:13:11.265427+00:00",
+  "cpu_percent_current": 8.9,
+  "cpu_percent_1min": 27.0263671875,
+  "memory_percent_used": 18.5,
+  "benchmark_process_priority": 0,
+  "cpu_temperature_celsius": 86.5,
+  "power_source": "ac",
+  "battery_percent": null
+}

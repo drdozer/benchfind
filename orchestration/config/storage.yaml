@@ -1,0 +1,308 @@
+# Storage Configuration
+#
+# This file defines how benchmark results are organized, stored, and managed
+# within the results directory structure. The storage system handles result
+# deduplication, caching logic, and structured organization of benchmark data.
+#
+# ## Storage Philosophy
+#
+# Results storage should be:
+# 1. **Deterministic**: Same inputs produce same storage location
+# 2. **Discoverable**: Clear organization that supports analysis
+# 3. **Efficient**: Avoid duplication while preserving important data
+# 4. **Extensible**: Easy to add new data types and analysis results
+# 5. **Portable**: Results can be easily shared between systems
+#
+# ## Storage Architecture
+#
+# We organize results by unique run identifiers that capture:
+# - **System identity**: Where the benchmarks were run
+# - **Source state**: What code was benchmarked
+# - **Build environment**: How the code was compiled
+#
+# This allows us to cache results intelligently and compare performance
+# across different conditions while avoiding expensive re-runs.
+
+# Path configuration - all paths relative to project root
+paths:
+  # Base results directory
+  results_base: "results"
+
+  # Run-specific results (organized by run_id)
+  runs_dir: "results/runs"
+
+  # Shared analysis results (cross-run comparisons)
+  analysis_dir: "results/analysis"
+
+  # Schemas and documentation
+  schema_dir: "results/schema"
+
+  # Temporary storage during processing
+  temp_dir: "results/.tmp"
+
+  # Global index and metadata
+  index_file: "results/index.json"
+
+  # Rust project paths (for result extraction)
+  rust_target_dir: "target"
+  rust_criterion_dir: "target/criterion"
+
+# Run identification and naming
+run_identification:
+  # Components that make up a unique run identifier
+  id_components:
+    - "hostname"      # System where benchmarks were run
+    - "source_hash"   # Hash of benchmark-relevant source files
+    - "rustc_version" # Rust compiler version (sanitized)
+
+  # Character limits and sanitization
+  hostname_max_length: 20
+  source_hash_length: 8    # First 8 characters of SHA256
+
+  # Sanitization rules
+  sanitization:
+    replace_chars: ".-"     # Replace these with underscores
+    lowercase: true         # Convert to lowercase
+    remove_special: true    # Remove non-alphanumeric except underscores
+
+  # Source files included in hash calculation
+  source_files:
+    - "src/lib.rs"
+    - "benches/bench_newlines.rs"
+    - "benches/bench_csv.rs"
+    - "Cargo.toml"
+    # Note: Cargo.lock is intentionally excluded as it changes frequently
+    # but doesn't affect benchmark code generation
+
+# Run directory structure
+run_structure:
+  # Required directories in each run
+  directories:
+    metadata:
+      description: "System, build, and execution metadata"
+      required_files:
+        - "system-info.json"
+        - "build-info.json"
+        - "source-hashes.json"
+        - "run-config.json"
+
+    raw_results:
+      description: "Complete benchmark output from Criterion"
+      subdirectories:
+        - "criterion"  # Criterion's native output structure
+      exclude_patterns:
+        - "**/*.html"  # Skip HTML report files (large, non-essential)
+        - "**/report/**"  # Skip report directories
+
+    assembly_extracts:
+      description: "Extracted assembly functions per target"
+      organization: "by_target"  # One subdirectory per target
+      required_files_per_target:
+        - "simd-analysis.json"
+        - "extraction-metadata.json"
+      optional_files_per_target:
+        - "*.s"  # Individual function assembly files
+        - "complete_assembly.s"  # Full assembly if preserved
+
+    logs:
+      description: "Execution logs and error reports"
+      required_files:
+        - "orchestration.log"
+      optional_files:
+        - "benchmark-*.log"
+        - "assembly-*.log"
+        - "errors.log"
+
+# Data collection and extraction rules
+data_extraction:
+  # What to copy from Rust target directory
+  criterion_results:
+    source_pattern: "target/criterion/**"
+    exclude_patterns:
+      - "**/*.html"
+      - "**/report/**"
+      - "**/.criterion/**"  # Internal Criterion state
+    preserve_structure: true
+
+  # Assembly extraction rules
+  assembly_files:
+    source_patterns:
+      - "target/benchmark_assembly_*.s"
+      - "target/benchmark_*.s"
+    organize_by: "target_name"  # Extract target name from filename
+
+  # Log file collection
+  logs:
+    capture_stdout: true
+    capture_stderr: true
+    max_log_size_mb: 50  # Truncate logs larger than 50MB
+    rotate_on_size: true
+
+# Caching and deduplication logic
+caching:
+  # Cache decision criteria
+  cache_key_components:
+    - "source_hash"      # Source code state
+    - "rustc_version"    # Compiler version
+    - "target_config"    # Compilation target settings
+
+  # When to skip expensive operations
+  skip_benchmark_if_exists: true
+  skip_assembly_if_exists: false  # Always regenerate assembly analysis
+  skip_metadata_if_exists: false  # Always collect fresh metadata
+
+  # Cache validation
+  validate_cache_integrity: true
+  max_cache_age_days: 90  # Warn if cache is very old
+
+  # Cache management
+  auto_cleanup_incomplete_runs: true
+  preserve_failed_runs: true  # Keep failed runs for debugging
+
+# Index management
+index:
+  # What goes into the global index
+  index_fields:
+    - "run_id"
+    - "timestamp"
+    - "hostname"
+    - "source_hash"
+    - "rustc_version"
+    - "targets_completed"
+    - "benchmarks_completed"
+    - "status"  # "completed", "failed", "in_progress"
+
+  # Index maintenance
+  update_on_run_start: true
+  update_on_run_completion: true
+  backup_index_on_update: true
+  max_index_history: 10
+
+  # Performance optimization
+  lazy_load_run_details: true
+  cache_index_queries: true
+
+# Data preservation and cleanup
+data_management:
+  # What to preserve long-term
+  essential_data:
+    - "metadata/**"
+    - "assembly_extracts/**/*.json"  # Analysis results
+    - "raw_results/**/estimates.json"  # Key performance data
+
+  # What can be cleaned up
+  optional_data:
+    - "raw_results/**/*.html"
+    - "raw_results/**/report/**"
+    - "logs/*.log"  # Logs older than retention period
+    - "assembly_extracts/**/*.s"  # Large assembly files
+
+  # Cleanup policies
+  cleanup_policies:
+    auto_cleanup: false  # Don't automatically delete anything
+    retention_period_days: 180  # Suggest cleanup after 6 months
+    compress_old_results: false  # Don't automatically compress
+
+# Error handling and recovery
+error_handling:
+  # How to handle storage failures
+  continue_on_storage_error: false  # Fail fast on storage issues
+  retry_failed_operations: true
+  max_retries: 3
+  retry_delay_seconds: 5
+
+  # Incomplete run handling
+  resume_incomplete_runs: true
+  mark_interrupted_runs: true
+  cleanup_failed_temp_files: true
+
+  # Corruption detection
+  verify_file_integrity: true
+  checksum_critical_files: true
+  detect_partial_writes: true
+
+# Cross-system compatibility
+portability:
+  # Path handling
+  use_forward_slashes: true  # Normalize to forward slashes
+  case_insensitive_systems: false  # Assume case-sensitive by default
+  max_path_length: 260  # Windows compatibility
+
+  # File naming
+  avoid_reserved_names: true  # Avoid Windows reserved names
+  sanitize_special_chars: true
+  unicode_normalization: true
+
+  # Archive format (for sharing results)
+  preferred_archive_format: "tar.gz"
+  compression_level: 6
+  include_metadata_in_archive: true
+
+# Analysis integration
+analysis_integration:
+  # How analysis results are stored
+  analysis_output_dir: "analysis"
+  analysis_cache_dir: ".analysis_cache"
+
+  # Cross-run analysis support
+  enable_comparison_queries: true
+  index_performance_metrics: true
+  track_performance_trends: true
+
+  # External tool integration
+  export_formats:
+    - "json"     # Native format
+    - "csv"      # For spreadsheet analysis
+    - "parquet"  # For big data analysis (optional)
+
+  export_locations:
+    json: "analysis/exports/json"
+    csv: "analysis/exports/csv"
+    parquet: "analysis/exports/parquet"
+
+# Development and debugging
+development:
+  # Development mode settings
+  preserve_temp_files: false
+  verbose_storage_operations: false
+  dry_run_mode: false
+
+  # Testing and validation
+  validate_storage_structure: true
+  test_mode_cleanup: true  # Clean up test runs automatically
+  mock_expensive_operations: false
+
+# Monitoring and diagnostics
+monitoring:
+  # Storage space monitoring
+  warn_on_low_disk_space: true
+  min_free_space_gb: 5
+  max_total_storage_gb: 100  # Warn if results exceed this
+
+  # Performance monitoring
+  track_storage_operation_times: false
+  log_slow_operations: true
+  slow_operation_threshold_seconds: 30
+
+  # Health checks
+  verify_index_consistency: true
+  detect_orphaned_files: true
+  report_storage_statistics: false
+
+# Metadata about this configuration
+metadata:
+  version: "1.0.0"
+  description: "Storage configuration for benchfind orchestration system"
+  last_updated: "2024-01-01"
+  notes: |
+    This configuration defines how benchmark results are organized and stored.
+    The storage system is designed to handle large amounts of benchmark data
+    efficiently while supporting both caching for performance and comprehensive
+    data collection for analysis.
+
+    Key design decisions:
+    - Run identification includes system, source, and compiler to ensure
+      meaningful comparisons while avoiding unnecessary re-runs
+    - Assembly analysis is always regenerated to catch analysis improvements
+    - Metadata is always collected fresh to capture current system state
+    - Large, non-essential files (HTML reports) are excluded by default

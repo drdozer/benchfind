@@ -1,0 +1,486 @@
+# Instruction Pattern Definitions
+#
+# This file defines comprehensive patterns for classifying assembly instructions
+# by type, SIMD capabilities, and analysis characteristics. This centralizes
+# all instruction knowledge that was previously scattered between Python code
+# and other configuration files.
+#
+# ## Design Philosophy
+#
+# Rather than hardcoding instruction patterns in Python code, we define them
+# here as data that can be easily updated, extended, and maintained by anyone
+# familiar with x86-64 assembly, not just Python programmers.
+#
+# ## Pattern Structure
+#
+# Each instruction type contains:
+# - patterns: List of instruction mnemonics or regex patterns
+# - description: What this instruction type represents
+# - register_widths: Typical register widths for SIMD instructions
+# - characteristics: Analysis hints for performance implications
+#
+# ## Extension Strategy
+#
+# New instruction sets (future Intel/AMD extensions) can be added simply by
+# extending this file without touching any Python code. The classification
+# system automatically picks up new patterns.
+
+# Primary instruction type classification
+instruction_types:
+  # SIMD instruction categories
+  simd_sse:
+    description: "SSE/SSE2/SSE3/SSE4 128-bit SIMD instructions"
+    register_widths: [128]
+    characteristics:
+      - "128-bit packed operations"
+      - "Available on all x86-64 CPUs"
+      - "Foundation of modern SIMD"
+    patterns:
+      # Data movement
+      - "movdqa"     # Move aligned double quadword
+      - "movdqu"     # Move unaligned double quadword
+      - "movaps"     # Move aligned packed singles
+      - "movups"     # Move unaligned packed singles
+      - "movss"      # Move scalar single
+      - "movsd"      # Move scalar double
+      - "movq"       # Move quadword
+
+      # Packed arithmetic
+      - "paddb"      # Packed add bytes
+      - "paddw"      # Packed add words
+      - "paddd"      # Packed add doublewords
+      - "paddq"      # Packed add quadwords
+      - "psubb"      # Packed subtract bytes
+      - "psubw"      # Packed subtract words
+      - "psubd"      # Packed subtract doublewords
+      - "psubq"      # Packed subtract quadwords
+
+      # Packed multiply
+      - "pmullw"     # Packed multiply low words
+      - "pmulld"     # Packed multiply low doublewords
+      - "pmulhw"     # Packed multiply high words
+      - "pmulhuw"    # Packed multiply high unsigned words
+
+      # Logical operations
+      - "pand"       # Packed AND
+      - "por"        # Packed OR
+      - "pxor"       # Packed XOR
+      - "pandn"      # Packed AND NOT
+
+      # Comparison
+      - "pcmpgtb"    # Packed compare greater than bytes
+      - "pcmpgtw"    # Packed compare greater than words
+      - "pcmpgtd"    # Packed compare greater than doublewords
+      - "pcmpgtq"    # Packed compare greater than quadwords
+      - "pcmpeqb"    # Packed compare equal bytes
+      - "pcmpeqw"    # Packed compare equal words
+      - "pcmpeqd"    # Packed compare equal doublewords
+
+      # Shuffle and permute
+      - "pshufb"     # Packed shuffle bytes
+      - "pshufw"     # Packed shuffle words
+      - "pshufd"     # Packed shuffle doublewords
+      - "pslldq"     # Packed shift left logical double quadword
+      - "psrldq"     # Packed shift right logical double quadword
+
+      # Shifts
+      - "psllw"      # Packed shift left logical words
+      - "pslld"      # Packed shift left logical doublewords
+      - "psllq"      # Packed shift left logical quadwords
+      - "psrlw"      # Packed shift right logical words
+      - "psrld"      # Packed shift right logical doublewords
+      - "psrlq"      # Packed shift right logical quadwords
+      - "psraw"      # Packed shift right arithmetic words
+      - "psrad"      # Packed shift right arithmetic doublewords
+
+      # Statistical operations
+      - "pavgb"      # Packed average bytes
+      - "pavgw"      # Packed average words
+      - "pmaxub"     # Packed maximum unsigned bytes
+      - "pmaxsw"     # Packed maximum signed words
+      - "pminub"     # Packed minimum unsigned bytes
+      - "pminsw"     # Packed minimum signed words
+
+      # Conversion
+      - "punpcklbw"  # Unpack low bytes to words
+      - "punpckhbw"  # Unpack high bytes to words
+      - "punpcklwd"  # Unpack low words to doublewords
+      - "punpckhwd"  # Unpack high words to doublewords
+
+  simd_avx:
+    description: "AVX/AVX2 256-bit SIMD instructions"
+    register_widths: [128, 256]
+    characteristics:
+      - "256-bit packed operations"
+      - "3-operand instruction format"
+      - "Available since Intel Sandy Bridge (2011)"
+      - "Potential 2x performance improvement"
+    patterns:
+      # VEX-encoded versions of SSE instructions
+      - "vmovdqa"    # VEX Move aligned double quadword
+      - "vmovdqu"    # VEX Move unaligned double quadword
+      - "vmovaps"    # VEX Move aligned packed singles
+      - "vmovups"    # VEX Move unaligned packed singles
+      - "vmovss"     # VEX Move scalar single
+      - "vmovsd"     # VEX Move scalar double
+
+      # VEX arithmetic
+      - "vpaddb"     # VEX Packed add bytes
+      - "vpaddw"     # VEX Packed add words
+      - "vpaddd"     # VEX Packed add doublewords
+      - "vpaddq"     # VEX Packed add quadwords
+      - "vpsubb"     # VEX Packed subtract bytes
+      - "vpsubw"     # VEX Packed subtract words
+      - "vpsubd"     # VEX Packed subtract doublewords
+      - "vpsubq"     # VEX Packed subtract quadwords
+
+      # VEX multiply
+      - "vpmullw"    # VEX Packed multiply low words
+      - "vpmulld"    # VEX Packed multiply low doublewords
+      - "vpmulhw"    # VEX Packed multiply high words
+      - "vpmulhuw"   # VEX Packed multiply high unsigned words
+
+      # VEX logical
+      - "vpand"      # VEX Packed AND
+      - "vpor"       # VEX Packed OR
+      - "vpxor"      # VEX Packed XOR
+      - "vpandn"     # VEX Packed AND NOT
+
+      # VEX comparison
+      - "vpcmpgtb"   # VEX Packed compare greater than bytes
+      - "vpcmpgtw"   # VEX Packed compare greater than words
+      - "vpcmpgtd"   # VEX Packed compare greater than doublewords
+      - "vpcmpgtq"   # VEX Packed compare greater than quadwords
+      - "vpcmpeqb"   # VEX Packed compare equal bytes
+      - "vpcmpeqw"   # VEX Packed compare equal words
+      - "vpcmpeqd"   # VEX Packed compare equal doublewords
+
+      # VEX shuffle and permute
+      - "vpshufb"    # VEX Packed shuffle bytes
+      - "vpshufd"    # VEX Packed shuffle doublewords
+      - "vpslldq"    # VEX Packed shift left logical double quadword
+      - "vpsrldq"    # VEX Packed shift right logical double quadword
+
+      # VEX shifts
+      - "vpsllw"     # VEX Packed shift left logical words
+      - "vpslld"     # VEX Packed shift left logical doublewords
+      - "vpsllq"     # VEX Packed shift left logical quadwords
+      - "vpsrlw"     # VEX Packed shift right logical words
+      - "vpsrld"     # VEX Packed shift right logical doublewords
+      - "vpsrlq"     # VEX Packed shift right logical quadwords
+      - "vpsraw"     # VEX Packed shift right arithmetic words
+      - "vpsrad"     # VEX Packed shift right arithmetic doublewords
+
+      # VEX statistical
+      - "vpavgb"     # VEX Packed average bytes
+      - "vpavgw"     # VEX Packed average words
+      - "vpmaxub"    # VEX Packed maximum unsigned bytes
+      - "vpmaxsw"    # VEX Packed maximum signed words
+      - "vpminub"    # VEX Packed minimum unsigned bytes
+      - "vpminsw"    # VEX Packed minimum signed words
+
+      # AVX2-specific 256-bit operations
+      - "vperm2i128" # Permute 128-bit integers
+      - "vpermq"     # Permute quadwords
+      - "vpermd"     # Permute doublewords
+      - "vpermps"    # Permute packed singles
+      - "vpermpd"    # Permute packed doubles
+      - "vblendw"    # Blend words
+      - "vblendvb"   # Variable blend bytes
+      - "vblendps"   # Blend packed singles
+      - "vblendpd"   # Blend packed doubles
+
+      # Gather operations (AVX2)
+      - "vgatherdps" # Gather packed singles using doubleword indices
+      - "vgatherqps" # Gather packed singles using quadword indices
+      - "vgatherdpd" # Gather packed doubles using doubleword indices
+      - "vgatherqpd" # Gather packed doubles using quadword indices
+
+  simd_avx512:
+    description: "AVX-512 512-bit SIMD instructions"
+    register_widths: [128, 256, 512]
+    characteristics:
+      - "512-bit packed operations"
+      - "Mask registers for predication"
+      - "Available on server-class CPUs since 2016"
+      - "Up to 4x performance improvement"
+      - "Expected to fail on most consumer hardware"
+    patterns:
+      # AVX-512 Foundation (AVX-512F)
+      - "vmovdqa32"  # Move aligned packed doublewords
+      - "vmovdqa64"  # Move aligned packed quadwords
+      - "vmovdqu8"   # Move unaligned packed bytes
+      - "vmovdqu16"  # Move unaligned packed words
+      - "vmovdqu32"  # Move unaligned packed doublewords
+      - "vmovdqu64"  # Move unaligned packed quadwords
+
+      # AVX-512 arithmetic (extends AVX2 to 512-bit)
+      - "vpaddb"     # Extended to 512-bit in AVX-512
+      - "vpaddw"     # Extended to 512-bit
+      - "vpaddd"     # Extended to 512-bit
+      - "vpaddq"     # Extended to 512-bit
+      - "vpsubb"     # Extended to 512-bit
+      - "vpsubw"     # Extended to 512-bit
+      - "vpsubd"     # Extended to 512-bit
+      - "vpsubq"     # Extended to 512-bit
+
+      # AVX-512 comparison
+      - "vpcmpgtb"   # Extended to 512-bit
+      - "vpcmpgtw"   # Extended to 512-bit
+      - "vpcmpgtd"   # Extended to 512-bit
+      - "vpcmpgtq"   # Extended to 512-bit
+      - "vpcmpeqb"   # Extended to 512-bit
+      - "vpcmpeqw"   # Extended to 512-bit
+      - "vpcmpeqd"   # Extended to 512-bit
+      - "vpcmpeqq"   # Extended to 512-bit
+
+      # AVX-512 new permute instructions
+      - "vpermi2b"   # Full permute of bytes using indices
+      - "vpermi2w"   # Full permute of words using indices
+      - "vpermi2d"   # Full permute of doublewords using indices
+      - "vpermi2q"   # Full permute of quadwords using indices
+      - "vpermt2b"   # Full permute of bytes using table
+      - "vpermt2w"   # Full permute of words using table
+      - "vpermt2d"   # Full permute of doublewords using table
+      - "vpermt2q"   # Full permute of quadwords using table
+
+      # AVX-512BW (Byte and Word) specific
+      - "vpermb"     # Permute bytes
+      - "vpermw"     # Permute words
+
+      # AVX-512DQ (Doubleword and Quadword) specific
+      - "vpermd"     # Extended permute doublewords
+      - "vpermq"     # Extended permute quadwords
+
+  # Non-SIMD instruction categories
+  memory:
+    description: "Memory access and data movement instructions"
+    characteristics:
+      - "Load/store operations"
+      - "Address calculation"
+      - "Stack manipulation"
+    patterns:
+      - "mov"        # Move (covers movq, movl, etc.)
+      - "lea"        # Load effective address
+      - "push"       # Push to stack
+      - "pop"        # Pop from stack
+      - "load"       # Load operations
+      - "store"      # Store operations
+
+  arithmetic:
+    description: "Basic arithmetic and logical operations"
+    characteristics:
+      - "Integer arithmetic"
+      - "Bitwise operations"
+      - "Single-element operations"
+    patterns:
+      - "add"        # Add
+      - "sub"        # Subtract
+      - "mul"        # Multiply
+      - "div"        # Divide
+      - "inc"        # Increment
+      - "dec"        # Decrement
+      - "neg"        # Negate
+      - "and"        # Bitwise AND
+      - "or"         # Bitwise OR
+      - "xor"        # Bitwise XOR
+      - "not"        # Bitwise NOT
+      - "shl"        # Shift left
+      - "shr"        # Shift right
+      - "sar"        # Shift arithmetic right
+      - "rol"        # Rotate left
+      - "ror"        # Rotate right
+
+  control_flow:
+    description: "Control flow and branching instructions"
+    characteristics:
+      - "Conditional/unconditional jumps"
+      - "Function calls and returns"
+      - "Loop control"
+    patterns:
+      - "jmp"        # Unconditional jump
+      - "je"         # Jump if equal
+      - "jne"        # Jump if not equal
+      - "jl"         # Jump if less
+      - "jle"        # Jump if less or equal
+      - "jg"         # Jump if greater
+      - "jge"        # Jump if greater or equal
+      - "js"         # Jump if sign
+      - "jns"        # Jump if not sign
+      - "jc"         # Jump if carry
+      - "jnc"        # Jump if not carry
+      - "jo"         # Jump if overflow
+      - "jno"        # Jump if not overflow
+      - "jz"         # Jump if zero
+      - "jnz"        # Jump if not zero
+      - "call"       # Function call
+      - "ret"        # Return
+      - "retq"       # Return (64-bit)
+      - "loop"       # Loop control
+
+  system:
+    description: "System-level and privileged instructions"
+    characteristics:
+      - "System calls"
+      - "Interrupt handling"
+      - "Processor state management"
+    patterns:
+      - "syscall"    # System call
+      - "int"        # Interrupt
+      - "iret"       # Interrupt return
+      - "cli"        # Clear interrupts
+      - "sti"        # Set interrupts
+      - "hlt"        # Halt
+      - "nop"        # No operation
+      - "cpuid"      # CPU identification
+
+# Register patterns for width detection
+register_patterns:
+  simd_128bit:
+    description: "128-bit SIMD registers (SSE)"
+    patterns:
+      - "xmm0"
+      - "xmm1"
+      - "xmm2"
+      - "xmm3"
+      - "xmm4"
+      - "xmm5"
+      - "xmm6"
+      - "xmm7"
+      - "xmm8"
+      - "xmm9"
+      - "xmm10"
+      - "xmm11"
+      - "xmm12"
+      - "xmm13"
+      - "xmm14"
+      - "xmm15"
+
+  simd_256bit:
+    description: "256-bit SIMD registers (AVX)"
+    patterns:
+      - "ymm0"
+      - "ymm1"
+      - "ymm2"
+      - "ymm3"
+      - "ymm4"
+      - "ymm5"
+      - "ymm6"
+      - "ymm7"
+      - "ymm8"
+      - "ymm9"
+      - "ymm10"
+      - "ymm11"
+      - "ymm12"
+      - "ymm13"
+      - "ymm14"
+      - "ymm15"
+
+  simd_512bit:
+    description: "512-bit SIMD registers (AVX-512)"
+    patterns:
+      - "zmm0"
+      - "zmm1"
+      - "zmm2"
+      - "zmm3"
+      - "zmm4"
+      - "zmm5"
+      - "zmm6"
+      - "zmm7"
+      - "zmm8"
+      - "zmm9"
+      - "zmm10"
+      - "zmm11"
+      - "zmm12"
+      - "zmm13"
+      - "zmm14"
+      - "zmm15"
+      - "zmm16"
+      - "zmm17"
+      - "zmm18"
+      - "zmm19"
+      - "zmm20"
+      - "zmm21"
+      - "zmm22"
+      - "zmm23"
+      - "zmm24"
+      - "zmm25"
+      - "zmm26"
+      - "zmm27"
+      - "zmm28"
+      - "zmm29"
+      - "zmm30"
+      - "zmm31"
+
+  mask_registers:
+    description: "AVX-512 mask registers"
+    patterns:
+      - "k0"
+      - "k1"
+      - "k2"
+      - "k3"
+      - "k4"
+      - "k5"
+      - "k6"
+      - "k7"
+
+# Analysis configuration
+analysis_settings:
+  # Default patterns for quick SIMD detection
+  quick_simd_patterns:
+    - "movdqa"
+    - "vmovdqa"
+    - "vmovdqa32"
+    - "vmovdqa64"
+    - "paddb"
+    - "vpaddb"
+    - "pcmpgtb"
+    - "vpcmpgtb"
+    - "pxor"
+    - "vpxor"
+    - "pshufb"
+    - "vpshufb"
+
+  # Patterns that indicate high-performance SIMD usage
+  optimization_indicators:
+    - "vperm"     # Advanced permutation operations
+    - "vblend"    # Efficient blending
+    - "vgather"   # Memory gather operations
+    - "vmovdqu"   # Unaligned moves (shows compiler optimization)
+
+  # Patterns that might indicate suboptimal code generation
+  performance_concerns:
+    - "movss"     # Scalar operations in SIMD code
+    - "movsd"     # Scalar operations in SIMD code
+    - "extractps" # Extracting single elements (potential inefficiency)
+
+# Pattern compilation settings
+compilation:
+  case_sensitive: false
+  regex_support: true
+  prefix_matching: true  # "mov" matches "movq", "movl", etc.
+
+  # Performance tuning
+  cache_compiled_patterns: true
+  max_pattern_cache_size: 1000
+
+# Metadata
+metadata:
+  version: "1.0.0"
+  description: "Comprehensive x86-64 instruction pattern definitions for assembly analysis"
+  last_updated: "2024-01-01"
+  notes: |
+    This file centralizes all instruction pattern knowledge for the assembly
+    analysis system. Patterns are organized by instruction type and SIMD
+    capability level, enabling precise classification without hardcoded
+    instruction lists in Python code.
+
+    To extend support for new instruction sets:
+    1. Add new instruction type category
+    2. Define patterns for the new instructions
+    3. Specify register widths and characteristics
+    4. No Python code changes required
+
+    Pattern matching supports both exact matching and regex patterns.
+    The system automatically determines register widths by analyzing
+    operands against the register patterns defined above.
