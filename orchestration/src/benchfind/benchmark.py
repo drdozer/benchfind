@@ -599,13 +599,16 @@ class BenchmarkOrchestrator:
             OrchestrationSession with complete results
         """
 
-        session = self._create_session(target_group)
+        # Collect metadata once for the session
+        metadata = self.metadata_collector.collect_all()
+
+        session = self._create_session(target_group, metadata)
 
         try:
             self._display_session_header(session)
 
-            # Collect metadata once for the session
-            session.metadata = self.metadata_collector.collect_all()
+            # Metadata already collected above
+            session.metadata = metadata
 
             # Plan execution for all targets
             execution_plan = self._plan_execution(session)

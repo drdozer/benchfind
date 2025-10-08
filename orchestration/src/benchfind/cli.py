@@ -80,6 +80,7 @@ try:
     from .config import Config, ConfigurationLoader
     from .storage import ResultsStorage, RunIdentifier
     from .metadata import MetadataCollector
+    from .benchmark import BenchmarkOrchestrator, run_comprehensive_benchmarks
 except ImportError:
     # Handle standalone usage
     import sys
@@ -92,6 +93,7 @@ except ImportError:
     from config import Config, ConfigurationLoader
     from storage import ResultsStorage, RunIdentifier
     from metadata import MetadataCollector
+    from benchmark import BenchmarkOrchestrator, run_comprehensive_benchmarks
 
 
 # Initialize Rich console for beautiful output
@@ -345,83 +347,40 @@ def comprehensive(ctx: CliContext, all_targets: bool, targets: Optional[str],
                 console.print("[yellow]Warning: cargo command not found[/yellow]")
 
         if not target_list:
-            console.print("[green]All requested targets have current results[/green]")
-            return
+            raise click.ClickException("No targets specified")
 
-        # Confirm long-running operation
-        if not ctx.dry_run and len(target_list) > 3:
-            estimated_minutes = len(target_list) * 15
-            if not Confirm.ask(f"This will take approximately {estimated_minutes} minutes. Continue?"):
-                console.print("Cancelled")
-                return
+        console.print(Panel.fit(
+            f"[bold]Comprehensive Benchmark Suite[/bold]\n"
+            f"Targets: {', '.join(target_list)}\n"
+            f"Force rebuild results: {force_rebuild_results}\n"
+            f"Force rebuild benchmarks: {force_rebuild_benchmarks}",
+            title="🎯 Benchmarking Configuration"
+        ))
 
         if not ctx.dry_run:
-            # Initialize storage for run
-            layout = ctx.storage.start_run(run_id, target_list, ['bench_newlines', 'bench_csv'])
+            # Create proper Config object for BenchmarkOrchestrator
+            console.print("[dim]Loading configuration...[/dim]")
+            from .config import Config
+            config = Config.from_defaults()
 
-            # Collect and store metadata
-            console.print("[dim]Collecting system metadata...[/dim]")
-            metadata_collector = MetadataCollector(ctx.project_root)
-            comprehensive_metadata = metadata_collector.collect_all()
+            console.print("[dim]Initializing benchmark orchestrator...[/dim]")
+            orchestrator = BenchmarkOrchestrator(config)
 
-            ctx.storage.store_metadata(
-                layout,
-                comprehensive_metadata.system_info,
-                comprehensive_metadata.build_info,
-                comprehensive_metadata.execution_context,
-                run_id.source_hash
-            )
+            # Run comprehensive benchmarks
+            session = orchestrator.run_comprehensive()
 
-            # Run benchmarks with progress tracking
-            with Progress(
-                SpinnerColumn(),
-                TextColumn("[progress.description]{task.description}"),
-                BarColumn(),
-                TaskProgressColumn(),
-                console=console
-            ) as progress:
-                main_task = progress.add_task("Running comprehensive benchmarks...", total=len(target_list))
+            # Show results summary
+            console.print(f"\n[bold]Benchmark Session Complete[/bold]")
+            console.print(f"Session ID: [cyan]{session.session_id}[/cyan]")
+            console.print(f"Duration: {session.duration_seconds:.1f}s")
+            console.print(f"Success Rate: {session.success_rate:.1f}%")
 
-                completed_targets = []
-                failed_targets = []
-
-                for target_name in target_list:
-                    progress.update(main_task, description=f"Benchmarking {target_name}")
-
-                    try:
-                        # Get the actual target definition
-                        target_def = None
-                        all_targets = ctx.config.get_all_targets()
-                        for t in all_targets:
-                            if t.name == target_name:
-                                target_def = t
-                                break
-
-                        if target_def is None:
-                            raise ValueError(f"Target definition not found: {target_name}")
-
-                        # Execute real benchmark for this target
-                        result = _execute_target_benchmark(progress, target_def, ctx.project_root)
-
-                        if result.success:
-                            completed_targets.append(target_name)
-                            console.print(f"[green]✓[/green] {target_name} completed successfully")
-                        else:
-                            failed_targets.append(target_name)
-                            console.print(f"[red]✗[/red] {target_name} failed: {result.error_message}")
-
-                    except Exception as e:
-                        console.print(f"[red]Failed to benchmark {target_name}: {e}[/red]")
-                        failed_targets.append(target_name)
-
-                    progress.advance(main_task)
-
-                # Complete the run
-                success = len(failed_targets) == 0
-                ctx.storage.complete_run(run_id, completed_targets, ['bench_newlines', 'bench_csv'], success)
-
-                # Show results summary
-                _show_comprehensive_summary(completed_targets, failed_targets, run_id)
+            if session.successful_targets > 0:
+                console.print(f"[green]✓ {session.successful_targets} targets completed successfully[/green]")
+            if session.cached_targets > 0:
+                console.print(f"[blue]📋 {session.cached_targets} targets used cached results[/blue]")
+            if session.failed_targets > 0:
+                console.print(f"[red]✗ {session.failed_targets} targets failed[/red]")
         else:
             console.print(f"[dim]Dry run: would benchmark {len(target_list)} targets[/dim]")
 
@@ -1024,8 +983,23 @@ def info(ctx: CliContext):
 
 # Helper functions
 
+# Legacy simple benchmark execution function - kept for reference but no longer used
 def _execute_target_benchmark(progress: Progress, target: 'TargetDefinition', project_root: Path):
-    """Execute actual benchmark for a target"""
+    """
+    DEPRECATED: This function is replaced by the proper BenchmarkOrchestrator.
+
+    The comprehensive command now uses BenchmarkOrchestrator which includes:
+    - Proper data collection and storage
+    - Assembly analysis and SIMD detection
+    - Result organization in structured directories
+    - Intelligent caching and error handling
+
+    This function only ran cargo bench without collecting or storing the results,
+    which is why users saw empty directories in their run folders.
+    """
+    console.print("[yellow]Warning: Using deprecated _execute_target_benchmark function[/yellow]")
+    console.print("[yellow]Please use BenchmarkOrchestrator for complete data collection[/yellow]")
+
     import subprocess
     import os
     from datetime import datetime, timezone
